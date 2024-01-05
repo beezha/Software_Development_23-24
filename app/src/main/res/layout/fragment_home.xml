@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/homeToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/avatarImage"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/account_circle" />
+
+        <TextView
+            android:id="@+id/coinText"
+            android:layout_width="295dp"
+            android:layout_height="37dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="right|center"
+            android:text="100"
+            android:textColor="@color/gold"
+            android:textSize="25sp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageView
+            android:id="@+id/coincountImage"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <TextView
+        android:id="@+id/greetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/greetings"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameText"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeToolbar" />
+
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="250dp"
+        android:fontFamily="sans-serif-black"
+        android:text="USER"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeToolbar" />
+
+    <TextView
+        android:id="@+id/quoteText"
+        android:layout_width="203dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Let's make today your greatest!"
+        android:textColor="@color/cold_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+
+    <TextView
+        android:id="@+id/taskText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/daily_tasks"
+        android:textColor="@color/purple_200"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quoteText" />
+
+    <ProgressBar
+        android:id="@+id/taskprogressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="336dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:maxHeight="30dip"
+        android:minHeight="30dip"
+        android:progressDrawable="@drawable/task_progress_bar"
+        android:scrollbarSize="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskText" />
+
+    <TextView
+        android:id="@+id/progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="0/10"
+        android:textColor="@color/cold_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/taskprogressBar"
+        app:layout_constraintEnd_toEndOf="@+id/taskprogressBar"
+        app:layout_constraintStart_toStartOf="@+id/taskprogressBar"
+        app:layout_constraintTop_toTopOf="@+id/taskprogressBar" />
+
+
+<!--    Redirects to fragment_calendar onclick-->
+
+    <ImageView
+        android:id="@+id/petWidget"
+        android:layout_width="168dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/pet_widget_white"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskprogressBar" />
+
+    <ImageView
+        android:id="@+id/petstatsWidget"
+        android:layout_width="168dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/pet_widget_yellow"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/petWidget"
+        app:layout_constraintTop_toBottomOf="@+id/taskprogressBar" />
+
+    <TextView
+        android:id="@+id/petnameText"
+        android:layout_width="100dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="15dp"
+        android:elevation="100dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="@string/pet_name"
+        android:textColor="@color/purple_200"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
+        app:layout_constraintStart_toEndOf="@+id/petWidget"
+        app:layout_constraintTop_toTopOf="@+id/petstatsWidget" />
+
+    <ProgressBar
+        android:id="@+id/hungerprogressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
+        android:elevation="100dp"
+        android:progressDrawable="@drawable/hunger_progress_bar"
+        app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
+        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+
+    <TextView
+        android:id="@+id/hungerText"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:elevation="100dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/title_hunger"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/hungerprogressBar"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toEndOf="@+id/petWidget"
+        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+
+    <ProgressBar
+        android:id="@+id/thirstprogressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
+        android:elevation="100dp"
+        android:progressDrawable="@drawable/thirst_progress_bar"
+        app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
+        app:layout_constraintTop_toBottomOf="@+id/hungerprogressBar" />
+
+    <TextView
+        android:id="@+id/thirstText"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:elevation="100dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/title_thirst"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/thirstprogressBar"
+        app:layout_constraintHorizontal_bias="0.717"
+        app:layout_constraintStart_toEndOf="@+id/petWidget"
+        app:layout_constraintTop_toBottomOf="@+id/hungerText" />
+
+
+    <ProgressBar
+        android:id="@+id/funprogressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="18dp"
+        android:elevation="100dp"
+        android:progressDrawable="@drawable/fun_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@+id/petstatsWidget"
+        app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
+        app:layout_constraintTop_toBottomOf="@+id/thirstprogressBar" />
+
+    <TextView
+        android:id="@+id/funText"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="18dp"
+        android:elevation="100dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/title_fun"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/petstatsWidget"
+        app:layout_constraintEnd_toStartOf="@+id/funprogressBar"
+        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintStart_toEndOf="@+id/petWidget"
+        app:layout_constraintTop_toBottomOf="@+id/thirstText" />
+
+    <ImageView
+        android:id="@+id/petImage"
+        android:layout_width="122dp"
+        android:layout_height="99dp"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/petWidget"
+        app:layout_constraintEnd_toEndOf="@+id/petWidget"
+        app:layout_constraintStart_toStartOf="@+id/petWidget"
+        app:layout_constraintTop_toTopOf="@+id/petWidget"
+        app:layout_constraintVertical_bias="0.495"
+        tools:src="@android:drawable/btn_star_big_on" />
+
+<!--    Redirects to Calendar fragment-->
+    <ImageView
+        android:id="@+id/calendarWidget"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/calendar_background"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/petWidget"
+        app:layout_constraintVertical_bias="0.0" />
+
+<!--    Redirects to start of "TODAY'S TASK" in Calendar fragment-->
+    <ImageView
+        android:id="@+id/tasktitleWidget"
+        android:layout_width="155dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/task_title_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/calendarWidget"
+        app:layout_constraintTop_toBottomOf="@+id/petstatsWidget" />
+
+    <ImageView
+        android:id="@+id/taskWidget"
+        android:layout_width="155dp"
+        android:layout_height="123dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/task_background"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/calendarWidget"
+        app:layout_constraintTop_toBottomOf="@+id/tasktitleWidget"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

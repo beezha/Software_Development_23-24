@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Software Development 23-24</string>
+    <string name="title_home">Home</string>
+    <string name="title_chat">CHAT</string>
+    <string name="title_calendar">CALENDAR</string>
+    <string name="title_pet">PET</string>
+    <string name="title_settings">Settings</string>
+    <string name="greetings">Hi</string>
+    <string name="pet_name">Pet Name</string>
+    <string name="title_hunger">Hunger</string>
+    <string name="title_thirst">Thirst</string>
+    <string name="title_fun">Fun</string>
+    <string name="daily_tasks">TODAY\'S TASKS</string>
+    <string name="task_name1">TASKNAME1</string>
+    <string name="task_description1">This is a placeholder for the task description.</string>
+    <string name="task_name2">TASKNAME2</string>
+    <string name="task_description2">This is a placeholder for the task description.</string>
+    <string name="task_name3">TASKNAME3</string>
+    <string name="task_description3">This is a placeholder for the task description.</string>
+    <string name="task_name4">TASKNAME4</string>
+    <string name="task_description4">This is a placeholder for the task description.</string>
+    <string name="task_name5">TASKNAME5</string>
+    <string name="task_description5">This is a placeholder for the task description.</string>
+    <string name="task_name6">TASKNAME6</string>
+    <string name="task_description6">This is a placeholder for the task description.</string>
+    <string name="task_name7">TASKNAME7</string>
+    <string name="task_description7">This is a placeholder for the task description.</string>
+    <string name="task_name8">TASKNAME8</string>
+    <string name="task_description8">This is a placeholder for the task description.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+</resources>

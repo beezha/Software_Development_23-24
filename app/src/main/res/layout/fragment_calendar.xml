@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.calendar.CalendarFragment">
+
+<!--Collapses into a toolbar like in fragment_home with "Calendar" in the middle-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="@drawable/curved_toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+<!--avatarImage, coinText, coinImage-->
+
+            <TextView
+                android:id="@+id/calendarText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/title_calendar"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="103dp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/calendarBackground"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="172dp"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"
+            app:srcCompat="@drawable/calendar_background" />
+
+
+        <TextView
+            android:id="@+id/monthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/month"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/calendarBackground"
+            app:layout_constraintTop_toTopOf="@+id/calendarBackground" />
+
+        <TextView
+            android:id="@+id/yearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="16dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/year"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/calendarBackground"
+            app:layout_constraintTop_toTopOf="@+id/calendarBackground" />
+
+<!--        Calendar Adapter for days and day names, text color change to white, yellow circle around selected day -->
+        <GridView
+            android:id="@+id/daysText"
+            android:layout_width="298dp"
+            android:layout_height="232dp"
+            android:elevation="100dp"
+            android:numColumns="7"
+            app:layout_constraintBottom_toBottomOf="@+id/calendarBackground"
+            app:layout_constraintEnd_toEndOf="@+id/calendarBackground"
+            app:layout_constraintStart_toStartOf="@+id/calendarBackground"
+            app:layout_constraintTop_toBottomOf="@+id/yearText" />
+
+<!--        Display previous tasks but with a lowered coin earning?-->
+        <ImageView
+            android:id="@+id/tasktitleBackground"
+            android:layout_width="336dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/task_title_background"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendarBackground" />
+
+        <ImageView
+            android:id="@+id/taskBackground"
+            android:layout_width="336dp"
+            android:layout_height="1180dp"
+            android:layout_marginBottom="86dp"
+            android:background="@drawable/task_background"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasktitleBackground" />
+
+        <TextView
+            android:id="@+id/tasktitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/daily_tasks"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tasktitleBackground"
+            app:layout_constraintEnd_toEndOf="@+id/tasktitleBackground"
+            app:layout_constraintHorizontal_bias="0.116"
+            app:layout_constraintStart_toStartOf="@+id/tasktitleBackground"
+            app:layout_constraintTop_toTopOf="@+id/tasktitleBackground" />
+
+        <TextView
+            android:id="@+id/task1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="1."
+            android:textColor="@color/purple_200"
+            android:textSize="25sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toTopOf="@+id/taskBackground" />
+
+        <TextView
+            android:id="@+id/taskText1"
+            android:layout_width="120dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/task_name1"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/task1"
+            app:layout_constraintTop_toTopOf="@+id/taskBackground" />
+
+        <TextView
+            android:id="@+id/taskcoinCount1"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:gravity="center"
+            android:text="+10"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/taskText1"
+            app:layout_constraintTop_toTopOf="@+id/taskBackground" />
+
+        <ImageView
+            android:id="@+id/coincountImage1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="22dp"
+            android:elevation="100dp"
+            app:layout_constraintStart_toEndOf="@+id/taskcoinCount1"
+            app:layout_constraintTop_toTopOf="@+id/taskBackground"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription1"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description1"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText1" />
+
+        <ImageView
+            android:id="@+id/dottedLine1"
+            android:layout_width="301dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription1"
+            app:srcCompat="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/task2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="2."
+            android:textColor="@color/purple_200"
+            android:textSize="25sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine1" />
+
+        <TextView
+            android:id="@+id/taskText2"
+            android:layout_width="120dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/task_name2"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/task2"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine1" />
+
+        <TextView
+            android:id="@+id/taskcoinCount2"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:gravity="center"
+            android:text="+10"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/taskText2"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine1" />
+
+        <ImageView
+            android:id="@+id/coincountImage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="22dp"
+            android:elevation="100dp"
+            app:layout_constraintStart_toEndOf="@+id/taskcoinCount2"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine1"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription2"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description2"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText2" />
+
+        <ImageView
+            android:id="@+id/dottedLine2"
+            android:layout_width="301dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription2"
+            app:srcCompat="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/task3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="3."
+            android:textColor="@color/purple_200"
+            android:textSize="25sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+
+        <TextView
+            android:id="@+id/taskText3"
+            android:layout_width="120dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/task_name3"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/task3"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+
+        <TextView
+            android:id="@+id/taskcoinCount3"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:gravity="center"
+            android:text="+10"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/taskText3"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+
+        <ImageView
+            android:id="@+id/coincountImage3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="22dp"
+            android:elevation="100dp"
+            app:layout_constraintStart_toEndOf="@+id/taskcoinCount3"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine2"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription3"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description3"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText3" />
+
+        <ImageView
+            android:id="@+id/dottedLine3"
+            android:layout_width="301dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription3"
+            app:srcCompat="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/task4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="4."
+            android:textColor="@color/purple_200"
+            android:textSize="25sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine3" />
+
+        <TextView
+            android:id="@+id/taskText4"
+            android:layout_width="120dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/task_name4"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/task4"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine3" />
+
+        <TextView
+            android:id="@+id/taskcoinCount4"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            android:gravity="center"
+            android:text="+10"
+            android:textColor="@color/gold"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/taskText4"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine3" />
+
+        <ImageView
+            android:id="@+id/coincountImage4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="22dp"
+            android:elevation="100dp"
+            app:layout_constraintStart_toEndOf="@+id/taskcoinCount4"
+            app:layout_constraintTop_toBottomOf="@+id/dottedLine3"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription4"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description4"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText4" />
+
+        <ImageView
+            android:id="@+id/dottedLine4"
+            android:layout_width="301dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:elevation="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription4"
+            app:srcCompat="@drawable/dotted_line" />
+
+            <TextView
+                android:id="@+id/task5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="5."
+                android:textColor="@color/purple_200"
+                android:textSize="25sp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine4" />
+
+            <TextView
+                android:id="@+id/taskText5"
+                android:layout_width="120dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/task_name5"
+                android:textColor="@color/purple_200"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/task5"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine4" />
+
+            <TextView
+                android:id="@+id/taskcoinCount5"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:gravity="center"
+                android:text="+10"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/taskText5"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine4" />
+
+            <ImageView
+                android:id="@+id/coincountImage5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="22dp"
+                android:elevation="100dp"
+                app:layout_constraintStart_toEndOf="@+id/taskcoinCount5"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine4"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription5"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description5"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText5" />
+
+            <ImageView
+                android:id="@+id/dottedLine5"
+                android:layout_width="301dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskDescription5"
+                app:srcCompat="@drawable/dotted_line" />
+
+            <TextView
+                android:id="@+id/task6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="6."
+                android:textColor="@color/purple_200"
+                android:textSize="25sp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine5" />
+
+            <TextView
+                android:id="@+id/taskText6"
+                android:layout_width="120dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/task_name6"
+                android:textColor="@color/purple_200"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/task6"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine5" />
+
+            <TextView
+                android:id="@+id/taskcoinCount6"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:gravity="center"
+                android:text="+10"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/taskText6"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine5" />
+
+            <ImageView
+                android:id="@+id/coincountImage6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="22dp"
+                android:elevation="100dp"
+                app:layout_constraintStart_toEndOf="@+id/taskcoinCount6"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine5"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <TextView
+            android:id="@+id/taskDescription6"
+            android:layout_width="246dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="44dp"
+            android:elevation="100dp"
+            android:text="@string/task_description6"
+            android:textColor="@color/purple_200"
+            app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/taskBackground"
+            app:layout_constraintTop_toBottomOf="@+id/taskText6" />
+
+            <ImageView
+                android:id="@+id/dottedLine6"
+                android:layout_width="301dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskDescription6"
+                app:srcCompat="@drawable/dotted_line" />
+
+            <TextView
+                android:id="@+id/task7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="7."
+                android:textColor="@color/purple_200"
+                android:textSize="25sp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine6" />
+
+            <TextView
+                android:id="@+id/taskText7"
+                android:layout_width="120dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/task_name7"
+                android:textColor="@color/purple_200"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/task7"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine6" />
+
+            <TextView
+                android:id="@+id/taskcoinCount7"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:gravity="center"
+                android:text="+10"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/taskText7"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine6" />
+
+            <ImageView
+                android:id="@+id/coincountImage7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="22dp"
+                android:elevation="100dp"
+                app:layout_constraintStart_toEndOf="@+id/taskcoinCount7"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine6"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription7"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:elevation="100dp"
+                android:text="@string/task_description7"
+                android:textColor="@color/purple_200"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText7" />
+
+            <ImageView
+                android:id="@+id/dottedLine7"
+                android:layout_width="301dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskDescription7"
+                app:srcCompat="@drawable/dotted_line" />
+
+            <TextView
+                android:id="@+id/task8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="8."
+                android:textColor="@color/purple_200"
+                android:textSize="25sp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine7" />
+
+            <TextView
+                android:id="@+id/taskText8"
+                android:layout_width="120dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/task_name8"
+                android:textColor="@color/purple_200"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/task8"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine7" />
+
+            <TextView
+                android:id="@+id/taskcoinCount8"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:elevation="100dp"
+                android:gravity="center"
+                android:text="+10"
+                android:textColor="@color/gold"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/taskText8"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine7" />
+
+            <ImageView
+                android:id="@+id/coincountImage8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="22dp"
+                android:elevation="100dp"
+                app:layout_constraintStart_toEndOf="@+id/taskcoinCount8"
+                app:layout_constraintTop_toBottomOf="@+id/dottedLine7"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/taskDescription8"
+                android:layout_width="246dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="100dp"
+                android:text="@string/task_description8"
+                android:textColor="@color/purple_200"
+                app:layout_constraintBottom_toBottomOf="@+id/taskBackground"
+                app:layout_constraintEnd_toEndOf="@+id/taskBackground"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/taskBackground"
+                app:layout_constraintTop_toBottomOf="@+id/taskText8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
