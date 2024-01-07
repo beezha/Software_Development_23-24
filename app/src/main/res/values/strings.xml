@@ -27,7 +27,13 @@
     <string name="task_description7">This is a placeholder for the task description.</string>
     <string name="task_name8">TASKNAME8</string>
     <string name="task_description8">This is a placeholder for the task description.</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="tasks">TASKS</string>
+    <string name="task_extended">MORE…</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 </resources>

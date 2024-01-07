@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#59344F</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple">#59344F</color>
+    <color name="purple_unactivated">#A0844A</color>
     <color name="yellow">#E0CA3C</color>
+    <color name="light_yellow">#F1E7A6</color>
     <color name="red">#FF3E41</color>
     <color name="blue">#7D84B2</color>
     <color name="orange">#E57A44</color>
@@ -11,5 +11,6 @@
     <color name="white">#EEF0F2</color>
     <color name="cold_gray">#81909F</color>
     <color name="warm_gray">#D0CECE</color>
+    <color name="purple_gray">#786A75</color>
     <color name="gold">#BF9000</color>
 </resources>
