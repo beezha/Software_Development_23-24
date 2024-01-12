@@ -36,4 +36,6 @@
     <string name="email">Email</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+    <string name="save">SAVE</string>
+    <string name="logout">LOGOUT</string>
 </resources>
