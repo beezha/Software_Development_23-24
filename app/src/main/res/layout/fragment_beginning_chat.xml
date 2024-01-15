@@ -178,7 +178,7 @@
             android:layout_marginBottom="15dp"
             android:elevation="100dp"
             android:src="@drawable/forward_arrow"
-            android:tint="@color/purple" />
+            app:tint="@color/purple" />
 
     </RelativeLayout>
 
