@@ -10,7 +10,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#EEF0F2</color>
     <color name="cold_gray">#81909F</color>
+    <color name="light_cold_gray">#D7DCE1</color>
     <color name="warm_gray">#D0CECE</color>
+    <color name="light_warm_gray">#BDC5CD</color>
     <color name="purple_gray">#786A75</color>
     <color name="gold">#BF9000</color>
 </resources>
