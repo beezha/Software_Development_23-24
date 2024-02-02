@@ -31,4 +31,9 @@
         android:name="com.example.softwaredevelopment23_24.beginningChat"
         android:label="fragment_beginning_chat"
         tools:layout="@layout/fragment_beginning_chat" />
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.example.softwaredevelopment23_24.Chat"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 </navigation>

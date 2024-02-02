@@ -2,57 +2,57 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/petFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BlankFragment">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/petToolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/yellow"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:paddingEnd="16dp"
         android:elevation="0.1dp"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingEnd="16dp"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/petavatarImage"
-        android:layout_width="40dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/account_circle" />
-
-    <TextView
-        android:id="@+id/petcoinText"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="right"
-        android:layout_gravity="center"
-        android:text="100"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="8dp" />
-
         <ImageView
-            android:id="@+id/petcoincountImage"
+            android:id="@+id/petavatarImage"
             android:layout_width="40dp"
             android:layout_height="37dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/account_circle" />
+
+        <TextView
+            android:id="@+id/petcoinText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="right"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageView
+            android:id="@+id/petcoincountImage"
+            android:layout_width="40dp"
+            android:layout_height="37dp"
             android:layout_gravity="right"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -98,8 +98,8 @@
         android:id="@+id/petwidgetImage"
         android:layout_width="146dp"
         android:layout_height="138dp"
-        android:src="@android:drawable/btn_star_big_on"
         android:elevation="100dp"
+        android:src="@android:drawable/btn_star_big_on"
         app:layout_constraintBottom_toBottomOf="@+id/petbackgroundImage"
         app:layout_constraintEnd_toEndOf="@+id/petbackgroundImage"
         app:layout_constraintStart_toStartOf="@+id/petbackgroundImage"
@@ -138,10 +138,10 @@
         android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="@string/title_hunger"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
         app:layout_constraintTop_toBottomOf="@+id/petnameText" />
 
@@ -167,10 +167,10 @@
         android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="@string/title_thirst"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
         app:layout_constraintTop_toBottomOf="@+id/hungerprogressBar" />
 
@@ -196,10 +196,10 @@
         android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="@string/title_fun"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
         app:layout_constraintTop_toBottomOf="@+id/thirstprogressBar" />
 
@@ -278,7 +278,7 @@
         android:id="@+id/thirstImage"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:background="@drawable/fun_image"
+        android:background="@android:drawable/btn_star_big_on"
         android:backgroundTint="@color/white"
         android:elevation="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/thirstButton"
@@ -290,7 +290,7 @@
         android:id="@+id/funImage"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:background="@drawable/fun_image"
+        android:background="@android:drawable/btn_star_big_on"
         android:backgroundTint="@color/white"
         android:elevation="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/funButton"

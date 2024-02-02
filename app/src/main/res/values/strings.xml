@@ -43,4 +43,8 @@
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="confirm_logout">CONFIRM LOGOUT</string>
     <string name="cancel">CANCEL</string>
+    <string name="upload">Upload Photo</string>
+    <string name="change">Change Avatar</string>
+    <string name="disconnect">DISCONNECT</string>
+    <string name="message">Message USER</string>
 </resources>

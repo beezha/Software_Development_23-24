@@ -6,6 +6,7 @@
         android:icon="@drawable/baseline_calendar_month_24"
         android:title="@string/title_calendar" />
 
+<!--    Redirects to fragment_beginning_chat-->
     <item
         android:id="@+id/navigation_chat"
         android:icon="@android:drawable/stat_notify_chat"
