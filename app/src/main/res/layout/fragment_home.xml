@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
@@ -13,8 +14,8 @@
         android:background="@color/white"
         android:elevation="5dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         android:paddingEnd="16dp"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,9 +36,9 @@
             android:id="@+id/coinText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="sans-serif-medium"
             android:gravity="right"
-            android:layout_gravity="center"
             android:text="100"
             android:textColor="@color/gold"
             android:textSize="25sp"
@@ -48,17 +49,16 @@
             android:id="@+id/coincountImage"
             android:layout_width="40dp"
             android:layout_height="37dp"
+            android:layout_gravity="right"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_gravity="right"
             app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <TextView
         android:id="@+id/greetings"
@@ -170,7 +170,7 @@
         app:layout_constraintTop_toBottomOf="@+id/taskprogressBar" />
 
     <TextView
-        android:id="@+id/petnameText"
+        android:id="@+id/petnamewidgetText"
         android:layout_width="121dp"
         android:layout_height="28dp"
         android:layout_marginTop="15dp"
@@ -185,7 +185,7 @@
         app:layout_constraintTop_toTopOf="@+id/petstatsWidget" />
 
     <ProgressBar
-        android:id="@+id/hungerprogressBar"
+        android:id="@+id/hungerwidgetProgress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="80dp"
         android:layout_height="15dp"
@@ -194,10 +194,10 @@
         android:elevation="100dp"
         android:progressDrawable="@drawable/hunger_progress_bar"
         app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
-        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+        app:layout_constraintTop_toBottomOf="@+id/petnamewidgetText" />
 
     <TextView
-        android:id="@+id/hungerText"
+        android:id="@+id/hungerwidgetText"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -206,13 +206,13 @@
         android:gravity="center"
         android:text="@string/title_hunger"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/hungerprogressBar"
+        app:layout_constraintEnd_toStartOf="@+id/hungerwidgetProgress"
         app:layout_constraintHorizontal_bias="0.72"
         app:layout_constraintStart_toEndOf="@+id/petWidget"
-        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+        app:layout_constraintTop_toBottomOf="@+id/petnamewidgetText" />
 
     <ProgressBar
-        android:id="@+id/thirstprogressBar"
+        android:id="@+id/thirstwidgetProgress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="80dp"
         android:layout_height="15dp"
@@ -221,10 +221,10 @@
         android:elevation="100dp"
         android:progressDrawable="@drawable/thirst_progress_bar"
         app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
-        app:layout_constraintTop_toBottomOf="@+id/hungerprogressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/hungerwidgetProgress" />
 
     <TextView
-        android:id="@+id/thirstText"
+        android:id="@+id/thirstwidgetText"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -233,14 +233,14 @@
         android:gravity="center"
         android:text="@string/title_thirst"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/thirstprogressBar"
+        app:layout_constraintEnd_toStartOf="@+id/thirstwidgetProgress"
         app:layout_constraintHorizontal_bias="0.717"
         app:layout_constraintStart_toEndOf="@+id/petWidget"
-        app:layout_constraintTop_toBottomOf="@+id/hungerText" />
+        app:layout_constraintTop_toBottomOf="@+id/hungerwidgetText" />
 
 
     <ProgressBar
-        android:id="@+id/funprogressBar"
+        android:id="@+id/funwidgetProgress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="80dp"
         android:layout_height="15dp"
@@ -251,10 +251,10 @@
         android:progressDrawable="@drawable/fun_progress_bar"
         app:layout_constraintBottom_toBottomOf="@+id/petstatsWidget"
         app:layout_constraintEnd_toEndOf="@+id/petstatsWidget"
-        app:layout_constraintTop_toBottomOf="@+id/thirstprogressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/thirstwidgetProgress" />
 
     <TextView
-        android:id="@+id/funText"
+        android:id="@+id/funwidgetText"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -265,13 +265,13 @@
         android:text="@string/title_fun"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/petstatsWidget"
-        app:layout_constraintEnd_toStartOf="@+id/funprogressBar"
+        app:layout_constraintEnd_toStartOf="@+id/funwidgetProgress"
         app:layout_constraintHorizontal_bias="0.695"
         app:layout_constraintStart_toEndOf="@+id/petWidget"
-        app:layout_constraintTop_toBottomOf="@+id/thirstText" />
+        app:layout_constraintTop_toBottomOf="@+id/thirstwidgetText" />
 
     <ImageView
-        android:id="@+id/petImage"
+        android:id="@+id/petwidgetImage"
         android:layout_width="122dp"
         android:layout_height="99dp"
         android:elevation="100dp"
@@ -348,7 +348,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:text="1."
@@ -390,7 +390,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:text="2."
@@ -435,7 +435,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/task_extended"
         android:textColor="@color/purple_gray"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/taskWidget"
         app:layout_constraintEnd_toEndOf="@+id/taskWidget"
         app:layout_constraintStart_toStartOf="@+id/taskWidget"
