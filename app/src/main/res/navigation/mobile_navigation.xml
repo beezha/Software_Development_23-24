@@ -10,17 +10,21 @@
         android:name="com.example.softwaredevelopment23_24.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.example.softwaredevelopment23_24.ui.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/navigation_settings_authenticated"
         android:name="com.example.softwaredevelopment23_24.navigation_settings"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/navigation_settings_unauthenticated"
+        android:name="com.example.softwaredevelopment23_24.Login"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/navigation_pet"
         android:name="com.example.softwaredevelopment23_24.BlankFragment"

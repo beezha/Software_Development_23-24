@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "489600567548",
+    "project_id": "tsa-software-development-24",
+    "storage_bucket": "tsa-software-development-24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489600567548:android:ef5938a45b13da01f1ef79",
+        "android_client_info": {
+          "package_name": "com.example.softwaredevelopment23_24"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUKAMEibHcxzb5Rv0fIk7rDj2ZIHRiMgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
