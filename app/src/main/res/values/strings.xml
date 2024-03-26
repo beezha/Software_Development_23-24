@@ -47,4 +47,6 @@
     <string name="change">Change Avatar</string>
     <string name="disconnect">DISCONNECT</string>
     <string name="message">Message USER</string>
+    <string name="default_web_client_id">489600567548-j8hc64q7gj0gajin0dn9o6p9hfbai9ti.apps.googleusercontent.com</string>
+    <string name="login">LOGIN</string>
 </resources>
