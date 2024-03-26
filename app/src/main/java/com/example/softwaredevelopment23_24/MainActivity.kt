@@ -3,10 +3,7 @@ package com.example.softwaredevelopment23_24
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuView
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.softwaredevelopment23_24.databinding.ActivityMainBinding
 import com.google.firebase.FirebaseApp
