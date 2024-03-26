@@ -1,15 +1,24 @@
 package com.example.softwaredevelopment23_24
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.example.softwaredevelopment23_24.databinding.FragmentLoginBinding
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,11 +35,16 @@ class Login : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var userAuth : FirebaseAuth
     private lateinit var  googleSignInClient : GoogleSignInClient
+    private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            handleSignInResult(data)
+        } else {
+            Toast.makeText(requireActivity(), "Sign in failed", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,23 +57,52 @@ class Login : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        val binding = FragmentLoginBinding.inflate(inflater, container, false)
+        val view = binding.root
 
+        // getting rid of navigation bar so that login is required
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.visibility = View.GONE
 
+        // variables for google sign in
         userAuth = FirebaseAuth.getInstance()
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient( requireActivity() , gso)
 
-
+        // listening to the button for google sign in
+        binding.googleButton.setOnClickListener {
+            Toast.makeText(requireActivity(), "Logging In", Toast.LENGTH_SHORT).show()
+            // only important line of code ↓
+           signInLauncher.launch(googleSignInClient.signInIntent)
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return view
     }
 
+    // func for how to handle post sign in result
+   private fun handleSignInResult(data: Intent? ) {
+       val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+       try {
+           val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
+           if (account !=null) {
+               findNavController().navigate(R.id.navigation_home)
+           }
+       } catch (e: ApiException) {
+           Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show()
+       }
+   }
+
+    override fun onDestroyView() {
+        // show nav bar when fragment is closed
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.visibility = View.VISIBLE
+
+        super.onDestroyView()
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -16,14 +16,14 @@
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
-        android:id="@+id/navigation_settings_authenticated"
+        android:id="@+id/navigation_settings"
         android:name="com.example.softwaredevelopment23_24.navigation_settings"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/navigation_settings_unauthenticated"
+        android:id="@+id/navigation_login"
         android:name="com.example.softwaredevelopment23_24.Login"
-        android:label="@string/title_home"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/navigation_pet"
