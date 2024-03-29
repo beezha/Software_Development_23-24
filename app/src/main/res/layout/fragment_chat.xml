@@ -11,6 +11,8 @@
         android:id="@+id/disconnectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/disconnect"
         android:textColor="@color/white"
@@ -18,6 +20,18 @@
         app:layout_constraintBottom_toTopOf="@+id/chatBackground"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="65dp" />
+
+    <ImageView
+        android:id="@+id/dissconnectArrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/forward_arrow"
+        android:backgroundTint="@color/white"
+        android:rotation="180"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/chatBackground"
