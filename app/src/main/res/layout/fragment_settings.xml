@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/avatarBackground" />
 
             <EditText
-                android:id="@+id/firstnameeditText"
+                android:id="@+id/etName"
                 android:layout_width="336dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -117,7 +117,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstnameeditText" />
+                app:layout_constraintTop_toBottomOf="@+id/etName" />
 
             <EditText
                 android:id="@+id/lastnameeditText"

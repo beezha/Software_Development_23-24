@@ -26,6 +26,11 @@
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.example.softwaredevelopment23_24.Register"
+        android:label="@string/register"
+        tools:layout="@layout/fragment_register" />
+    <fragment
         android:id="@+id/navigation_pet"
         android:name="com.example.softwaredevelopment23_24.BlankFragment"
         android:label="@string/title_pet"

@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isAuthenticated) {
             navController.navigate(R.id.navigation_home)
-        }
-        else {
+        } else {
             navController.navigate(R.id.navigation_login)
         }
     }
