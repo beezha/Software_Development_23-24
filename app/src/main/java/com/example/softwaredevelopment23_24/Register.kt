@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.softwaredevelopment23_24.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +28,10 @@ class Register : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var userAuth:FirebaseAuth
+    private lateinit var userAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,11 @@ class Register : Fragment() {
         val view = binding.root
 
         userAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
+
+        binding.txtLogin.setOnClickListener {
+            findNavController().navigate(R.id.navigation_login)
+        }
 
         binding.btnRegister.setOnClickListener {
             val email = binding.etRegEmail.text.toString()
@@ -71,8 +81,9 @@ class Register : Fragment() {
                                     Toast.makeText(
                                         requireContext(), "Registration successful",
                                         Toast.LENGTH_SHORT
-                                    ).show()
-                                findNavController().navigate(R.id.navigation_login)
+                                    ).show() //HERE LATER ME
+                                    MainActivity().generateDatabase(user.uid, username, email, requireContext())
+                                    findNavController().navigate(R.id.navigation_login)
                                 } else {
                                     Toast.makeText(
                                         requireContext(), "Failed to add username. ${profileUpdateTask.exception?.message}",
@@ -82,7 +93,8 @@ class Register : Fragment() {
                             }
                     } else {
                         Toast.makeText(
-                            requireContext(), "Registration failed. ${task.exception?.message}",
+                            requireContext(),
+                            "Registration failed. ${task.exception?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

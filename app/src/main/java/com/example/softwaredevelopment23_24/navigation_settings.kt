@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.softwaredevelopment23_24.databinding.FragmentSettingsBinding
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +24,8 @@ class navigation_settings : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var userAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,9 +37,18 @@ class navigation_settings : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View {
+        val binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        userAuth = FirebaseAuth.getInstance()
+
+        val logoutButton = binding.logoutButton
+        logoutButton.setOnClickListener {
+            userAuth.signOut()
+            findNavController().navigate(R.id.navigation_login)
+        }
+
+        return binding.root
     }
 
     companion object {

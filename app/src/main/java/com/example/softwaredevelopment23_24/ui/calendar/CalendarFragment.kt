@@ -4,22 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
-import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 class CalendarFragment : Fragment() {
 
-    private var _binding: FragmentCalendarBinding? = null
+    private lateinit var binding: FragmentCalendarBinding
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+
 
 //    override fun onCreateView(
 //            inflater: LayoutInflater,
@@ -50,8 +48,9 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
+    ): View {
+        binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         val calendarGridView = view.findViewById<GridView>(R.id.calendarGridView)
         val days = getDaysOfMonth()

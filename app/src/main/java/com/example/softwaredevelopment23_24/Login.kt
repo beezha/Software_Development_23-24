@@ -19,6 +19,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -101,12 +107,42 @@ class Login : Fragment() {
        try {
            val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
            if (account !=null) {
+               val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+               signInWithCredential(credential, account)
                successfulLogin()
            }
        } catch (e: ApiException) {
            Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show()
        }
    }
+
+    //func for signing in Google users to Firebase (why must I do this)
+    private fun signInWithCredential(credential: AuthCredential, account: GoogleSignInAccount) {
+        userAuth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) {
+                if (it.isSuccessful) {
+                    val isNewUser = it.result?.additionalUserInfo?.isNewUser ?: false
+                    if (isNewUser) {
+                        val userID = userAuth.currentUser?.uid
+                        if (userID != null) {
+                            checkDatabase(userID, account)
+                        }
+                    }
+                    Toast.makeText(
+                        requireContext(),
+                        "Login Successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Login failed. ${it.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
 
     // func for email and password sign in logic
     private fun signInEmailPass(email: String, password: String) {
@@ -125,6 +161,28 @@ class Login : Fragment() {
                     ).show()
                 }
             }
+    }
+
+    // func for checking user exists in the database. darn you google sign in
+    private fun checkDatabase(userID: String, account: GoogleSignInAccount) {
+        val database = FirebaseDatabase.getInstance().reference
+        val userRef = database.child("users").child(userID)
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!snapshot.exists()) {
+                    MainActivity().generateDatabase(userID, account.displayName ?: "", account.email ?: "", requireContext())
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    requireContext(),
+                    "Database error: ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun successfulLogin() {
