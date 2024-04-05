@@ -14,15 +14,12 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlin.properties.Delegates
 
 // TODO: make UI updates cleaner when points are spent
-// TODO: add in more error checking to stats that may become negative (this should never happen)
 class Pet : Fragment() {
     private lateinit var binding: FragmentPetBinding
     private lateinit var user: FirebaseUser
     private var database =  FirebaseDatabase.getInstance()
     private lateinit var reference: DatabaseReference
 
-    // TODO: add in stat degradation features
-    // TODO: add in cleaner UI updates so it doesn't look so "stiff"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

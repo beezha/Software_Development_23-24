@@ -168,8 +168,11 @@ class Login : Fragment() {
 
     // func for successful login (really? no way!)
     private fun successfulLogin() {
+        val userID = userAuth.currentUser!!.uid
+        val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView.visibility = View.VISIBLE
         findNavController().navigate(R.id.navigation_home)
+        MainActivity().updateLoginTime(reference, requireContext())
     }
 }

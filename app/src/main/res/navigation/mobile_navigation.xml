@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.example.softwaredevelopment23_24.navigation_settings"
+        android:name="com.example.softwaredevelopment23_24.Settings"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/navigation_pet"
-        android:name="com.example.softwaredevelopment23_24.BlankFragment"
+        android:name="com.example.softwaredevelopment23_24.Pet"
         android:label="@string/title_pet"
         tools:layout="@layout/fragment_pet" />
     <fragment

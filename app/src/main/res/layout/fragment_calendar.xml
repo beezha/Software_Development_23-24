@@ -69,16 +69,16 @@
             app:layout_constraintTop_toTopOf="@+id/calendarBackground" />
 
         <!--        Calendar Adapter for days and day names, text color change to white, yellow circle around selected day -->
-<!--        <GridView-->
-<!--            android:id="@+id/daysText"-->
-<!--            android:layout_width="298dp"-->
-<!--            android:layout_height="232dp"-->
-<!--            android:elevation="100dp"-->
-<!--            android:numColumns="7"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/calendarBackground"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/calendarBackground"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/calendarBackground"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/yearText" />-->
+        <!--        <GridView-->
+        <!--            android:id="@+id/daysText"-->
+        <!--            android:layout_width="298dp"-->
+        <!--            android:layout_height="232dp"-->
+        <!--            android:elevation="100dp"-->
+        <!--            android:numColumns="7"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/calendarBackground"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/calendarBackground"-->
+        <!--            app:layout_constraintStart_toStartOf="@+id/calendarBackground"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/yearText" />-->
 
         <!--        Display previous tasks but with a lowered coin earning?-->
 

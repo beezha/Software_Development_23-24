@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+const val thirstDivisor: Int = 2
+const val enjoymentDivisor: Int = 3
+const val hungerDivisor: Int = 5
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.navigation_home)
             val userID = user.currentUser!!.uid
             reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+            updateLoginTime(reference, this)
         } else {
             navController.navigate(R.id.navigation_login)
         }
@@ -46,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     fun generateDatabase(userID: String, username: String, email:String, context: Context) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+        val currentTime = System.currentTimeMillis()
         val userData = hashMapOf(
             "username" to username,
             "email" to email,
@@ -60,7 +65,9 @@ class MainActivity : AppCompatActivity() {
             "petHunger" to 50,
             "petThirst" to 50,
             "petEnjoyment" to 50,
-            "coins" to 20
+            "coins" to 20,
+            "loginTime" to currentTime,
+            "timeDifference" to 0
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
@@ -70,17 +77,18 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
     }
     fun generateStats(
         reference: DatabaseReference, 
         context: Context,
-        callback: (petHunger: String, petThirst: String, petEnjoyment: String, userCoins: String) -> Unit) {
+        callback: (petHunger: Int, petThirst: Int, petEnjoyment: Int, userCoins: Int) -> Unit) {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val petHunger = snapshot.child("petHunger").value.toString()
-                val petThirst = snapshot.child("petThirst").value.toString()
-                val petEnjoyment = snapshot.child("petEnjoyment").value.toString()
-                val coins = snapshot.child("coins").value.toString()
+                val petThirst = (snapshot.child("petThirst").getValue(Int::class.java) ?: 0)
+                val petHunger = (snapshot.child("petHunger").getValue(Int::class.java) ?: 0)
+                val petEnjoyment = (snapshot.child("petEnjoyment").getValue(Int::class.java) ?: 0)
+                val coins = snapshot.child("coins").getValue(Int::class.java) ?: 0
                 callback(petHunger, petThirst, petEnjoyment, coins)
             }
 
@@ -93,5 +101,55 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return
+    }
+
+    fun updateLoginTime(reference: DatabaseReference, context: Context) {
+        val currentTime = System.currentTimeMillis()
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists() && snapshot.hasChild("loginTime")) {
+                    val loginTime = snapshot.child("loginTime").getValue(Long::class.java)
+                    val timeDifference = (currentTime - loginTime!!) / 60000
+                    val hungerDepreciation = timeDifference / hungerDivisor
+                    val thirstDepreciation = timeDifference / thirstDivisor
+                    val enjoymentDepreciation = timeDifference / enjoymentDivisor
+
+                    val petHunger = (snapshot.child("petHunger").value as Long - hungerDepreciation).toInt()
+                    val petThirst = (snapshot.child("petThirst").value as Long - thirstDepreciation).toInt()
+                    val petEnjoyment = (snapshot.child("petEnjoyment").value as Long - enjoymentDepreciation).toInt()
+
+                    val timeData = hashMapOf(
+                        "loginTime" to currentTime,
+                        "petHunger" to maxOf(0, petHunger),
+                        "petThirst" to maxOf(0, petThirst),
+                        "petEnjoyment" to maxOf(0, petEnjoyment)
+                    )
+
+                    reference.updateChildren(timeData as Map<String, Any>)
+                        .addOnCompleteListener{
+                           if (!it.isSuccessful) {
+                               Toast.makeText(
+                                   context,
+                                   "Failed to update login time",
+                                   Toast.LENGTH_SHORT
+                               ).show()
+                           }
+                        }
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Login time not found",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Error reading login time ${error.toException()}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 }
