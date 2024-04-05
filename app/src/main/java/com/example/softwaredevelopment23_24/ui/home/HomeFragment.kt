@@ -1,14 +1,12 @@
 package com.example.softwaredevelopment23_24.ui.home
 
-import android.app.ActionBar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.softwaredevelopment23_24.databinding.FragmentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -24,15 +22,13 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
 
     ): View {
-        val homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
+        val user = FirebaseAuth.getInstance().currentUser
+        val username = user?.displayName?.uppercase()
+        if (user != null) {
+            binding.usernameText.text = username
         }
         return root
     }
