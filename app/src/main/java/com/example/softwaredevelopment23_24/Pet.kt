@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlin.properties.Delegates
 
+// TODO: make UI updates cleaner when points are spent
+// TODO: add in more error checking to stats that may become negative (this should never happen)
 class Pet : Fragment() {
     private lateinit var binding: FragmentPetBinding
     private lateinit var user: FirebaseUser
@@ -48,10 +50,10 @@ class Pet : Fragment() {
     private fun loadPetStats() {
         (activity as MainActivity).generateStats(reference, requireContext()) {petHunger, petThirst, petEnjoyment, coins ->
             binding.apply {
-                hungerprogressBar.progress = petHunger.toInt()
-                thirstprogressBar.progress = petThirst.toInt()
-                funprogressBar.progress = petEnjoyment.toInt()
-                petcoinText.text = coins
+                hungerprogressBar.progress = petHunger
+                thirstprogressBar.progress = petThirst
+                funprogressBar.progress = petEnjoyment
+                petcoinText.text = coins.toString()
             }
         }
     }
@@ -63,28 +65,28 @@ class Pet : Fragment() {
         var newCoins by Delegates.notNull<Int>()
         (activity as MainActivity).generateStats(reference, requireContext()) { petHunger, petThirst, petEnjoyment, coins ->
             // check to make sure that coin total is above 5
-            if (coins.toInt() >= 5) {
+            if (coins >= 5) {
                 // switch case to change what logic is being done for each possible button press
                 when (button) {
                     binding.hungerButton -> {
-                        newStat = petHunger.toInt() + 15
-                        newCoins = coins.toInt() - 5
+                        newStat = petHunger + 15
+                        newCoins = coins - 5
                         newValues = hashMapOf(
                             "petHunger" to newStat,
                             "coins" to newCoins
                         )
                     }
                     binding.thirstButton -> {
-                        newStat = petThirst.toInt() + 15
-                        newCoins = coins.toInt() - 5
+                        newStat = petThirst + 15
+                        newCoins = coins - 5
                         newValues = hashMapOf(
                             "petThirst" to newStat,
                             "coins" to newCoins
                         )
                     }
                     else -> {
-                        newStat = petEnjoyment.toInt() + 15
-                        newCoins = coins.toInt() - 5
+                        newStat = petEnjoyment + 15
+                        newCoins = coins - 5
                         newValues = hashMapOf(
                             "petEnjoyment" to newStat,
                             "coins" to newCoins
