@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity() {
             "petThirst" to 50,
             "petEnjoyment" to 50,
             "coins" to 20,
-            "loginTime" to currentTime,
-            "timeDifference" to 0
+            "loginTime" to currentTime
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
