@@ -18,9 +18,8 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/chatBackground"
-        app:layout_constraintStart_toEndOf="@+id/dissconnectArrow"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_editor_absoluteX="65dp" />
 
     <ImageView
         android:id="@+id/dissconnectArrow"
@@ -38,36 +37,18 @@
         android:id="@+id/chatBackground"
         android:layout_width="match_parent"
         android:layout_height="662dp"
-        android:layout_marginTop="15dp"
         android:src="@drawable/chat_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dissconnectArrow" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/camera"
-        android:backgroundTint="@color/purple"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/chatBackground"
-        app:layout_constraintTop_toTopOf="@+id/chatBackground"
-        app:layout_constraintVertical_bias="0.993" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editTextText"
-        android:layout_width="285dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="310dp"
+        android:layout_height="69dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/chat_edit_text_background"
-        android:drawableRight="@drawable/send_image"
         android:drawableTint="@color/purple"
         android:ems="10"
         android:inputType="text"
@@ -77,10 +58,21 @@
         android:textColor="@color/light_warm_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/chatBackground"
-        app:layout_constraintVertical_bias="0.993" />
+        app:layout_constraintVertical_bias="0.826" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/send_image"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="@+id/editTextText"
+        app:layout_constraintVertical_bias="0.41"
+        tools:layout_editor_absoluteX="318dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

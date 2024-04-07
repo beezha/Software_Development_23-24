@@ -64,43 +64,48 @@
         android:id="@+id/greetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/greetings"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/yellow"
         android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/quoteText"
         app:layout_constraintEnd_toStartOf="@+id/usernameText"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.676"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/homeToolbar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="sans-serif-black"
         android:text="USER"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/yellow"
         android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/greetings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeToolbar" />
+        app:layout_constraintHorizontal_bias="0.286"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/greetings"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/quoteText"
         android:layout_width="203dp"
         android:layout_height="24dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-medium"
         android:text="Let's make today your greatest!"
         android:textColor="@color/cold_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+        app:layout_constraintTop_toBottomOf="@+id/homeToolbar"
+        app:layout_constraintVertical_bias="0.17" />
 
     <TextView
         android:id="@+id/taskText"
