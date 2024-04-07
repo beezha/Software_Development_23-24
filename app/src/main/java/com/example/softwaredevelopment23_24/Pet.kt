@@ -128,7 +128,7 @@ class Pet : Fragment() {
             }
         }
     }
-    fun statErrorMessage() {
+    private fun statErrorMessage() {
         Toast.makeText(
             requireContext(),
             "Stat cannot exceed 100",
