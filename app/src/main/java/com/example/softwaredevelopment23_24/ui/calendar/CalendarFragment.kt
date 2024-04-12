@@ -1,23 +1,15 @@
 package com.example.softwaredevelopment23_24.ui.calendar
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
-import com.example.softwaredevelopment23_24.R
-import android.widget.GridView
-import androidx.appcompat.app.AppCompatActivity
-import com.example.softwaredevelopment23_24.task_Confirm
-import java.util.*
 
 class CalendarFragment : Fragment() {
-
-    private lateinit var binding: FragmentCalendarBinding
+//
+//    private lateinit var binding: FragmentCalendarBinding
 
     //private var _binding: FragmentCalendarBinding? = null
 
@@ -49,6 +41,28 @@ class CalendarFragment : Fragment() {
 //        super.onDestroyView()
 //        _binding = null
 //    }
+
+    private var _binding: FragmentCalendarBinding? = null
+    private val binding get() = _binding!!
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+//        val view = binding.root
+//
+//        // Set up your collapsing toolbar here
+//        binding.calendarToolbar.title = "CALENDAR"
+//
+//        return view
+//    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     private val tasks = listOf(
         listOf("Drink 5 Cups of Water",0,15),
