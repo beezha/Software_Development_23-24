@@ -164,4 +164,33 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun getTaskPreferences(
+        reference: DatabaseReference,
+        context: Context,
+        callback: (taskPreferences: List<Any?>) -> Unit) {
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val task1 = snapshot.child("task1").value
+                val task2 = snapshot.child("task2").value
+                val task3 = snapshot.child("task3").value
+                val task4 = snapshot.child("task4").value
+                val task5 = snapshot.child("task5").value
+                val task6 = snapshot.child("task6").value
+                val task7 = snapshot.child("task7").value
+                val task8 = snapshot.child("task8").value
+
+                val taskPreferences = listOf(task1, task2, task3, task4,
+                    task5, task6, task7, task8)
+                callback(taskPreferences)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not find task preferences",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
 }
