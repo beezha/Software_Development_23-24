@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:fontFamily="sans-serif-black"
-            android:text="@string/app_name"
+            android:text="CO-WHISKER"
             android:textColor="@color/yellow"
             android:textSize="25sp" />
 

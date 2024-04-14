@@ -1,20 +1,26 @@
 package com.example.softwaredevelopment23_24.ui.calendar
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import androidx.fragment.app.Fragment
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
+import android.widget.TextView
 import com.example.softwaredevelopment23_24.MainActivity
 import com.example.softwaredevelopment23_24.task_Confirm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+import kotlin.math.abs
 
 // TODO: dynamically hide and show UI elements (tasks) for when there is only a certain amount completed
 // TODO: add in logic for completed tasks giving points and being completed in the database
@@ -72,6 +78,23 @@ class CalendarFragment : Fragment() {
         val userID = user.uid
         val view = binding.root
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+
+        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbar)
+        val toolbarText = view.findViewById<TextView>(R.id.toolbarText)
+        val startSize = resources.getDimensionPixelSize(R.dimen.start_size)
+        val endSize = resources.getDimensionPixelSize(R.dimen.end_size)
+        val textSizeAnimator = ValueAnimator.ofInt(startSize, endSize).apply {
+            addUpdateListener { valueAnimator ->
+                val animatedValue = valueAnimator.animatedValue as Int
+                toolbarText.setTextSize(TypedValue.COMPLEX_UNIT_PX, animatedValue.toFloat())
+            }
+        }
+
+        val appBarLayout = view.findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val percentage = abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
+            textSizeAnimator.currentPlayTime = (percentage * textSizeAnimator.duration).toLong()
+        })
 
         val calendarGridView = view.findViewById<GridView>(R.id.calendarGridView)
         val days = getDaysOfMonth()
