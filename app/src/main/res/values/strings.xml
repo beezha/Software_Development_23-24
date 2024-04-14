@@ -56,5 +56,4 @@
     <string name="confirm_task">CONFIRM TASK</string>
     <string name="are_you_sure_you_want_to_start_this_task">Are you sure you want to start this task?</string>
     <string name="start">Start</string>
-    <string name="appbar_scrolling_view_behavior">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
 </resources>
