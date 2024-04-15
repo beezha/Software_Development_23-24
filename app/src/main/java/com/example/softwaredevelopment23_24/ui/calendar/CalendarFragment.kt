@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.softwaredevelopment23_24.task_Confirm
 import java.util.*
 
+// TODO: make task completion for timed tasks
 class CalendarFragment : Fragment() {
 
     private lateinit var binding: FragmentCalendarBinding
