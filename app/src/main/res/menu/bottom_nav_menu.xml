@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/navigation_pet"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/pet_icon"
         android:title="@string/title_pet" />
 
     <item
