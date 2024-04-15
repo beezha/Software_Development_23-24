@@ -34,7 +34,8 @@
         android:id="@+id/navigation_pet"
         android:name="com.example.softwaredevelopment23_24.Pet"
         android:label="@string/title_pet"
-        tools:layout="@layout/fragment_pet" />
+        tools:layout="@layout/fragment_pet"
+        />
     <fragment
         android:id="@+id/navigation_beginning_chat"
         android:name="com.example.softwaredevelopment23_24.beginningChat"

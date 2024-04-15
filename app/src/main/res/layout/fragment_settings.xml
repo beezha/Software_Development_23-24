@@ -34,21 +34,198 @@
         android:layout_height="match_parent"
         tools:context=".navigation_settings">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/settingsBackground"
                 android:layout_width="match_parent"
                 android:layout_height="870dp"
-                android:layout_marginTop="105dp"
+                android:layout_marginTop="255dp"
                 android:background="@drawable/settings_background"
-                android:elevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/avatarBackground" />
+                android:orientation="vertical"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/firstnameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="117dp"
+                    android:paddingStart="46dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/first_name"
+                    android:textColor="@color/purple"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/firstnameeditText"
+                    android:layout_width="336dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/purple" />
+
+                <TextView
+                    android:id="@+id/lastnameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:paddingStart="46dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/last_name"
+                    android:textColor="@color/purple"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/lastnameeditText"
+                    android:layout_width="336dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/purple" />
+
+                <TextView
+                    android:id="@+id/emailText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:paddingStart="46dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/email"
+                    android:textColor="@color/purple"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/emaileditText"
+                    android:layout_width="336dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/purple" />
+
+                <TextView
+                    android:id="@+id/oldpasswordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:paddingStart="46dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/old_password"
+                    android:textColor="@color/purple"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/oldpasswordeditText"
+                    android:layout_width="336dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="Old Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/purple" />
+
+                <TextView
+                    android:id="@+id/newpasswordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:paddingStart="46dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/new_password"
+                    android:textColor="@color/purple"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/newpasswordeditText"
+                    android:layout_width="336dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="New Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/purple" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="37dp"
+                    android:layout_marginTop="28dp">
+
+                <ImageButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="99dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    app:srcCompat="@drawable/save_background" />
+
+                <TextView
+                    android:id="@+id/saveText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="100dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp">
+
+                <ImageButton
+                    android:id="@+id/logoutButton"
+                    android:layout_width="300dp"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    app:srcCompat="@drawable/logout_background" />
+
+                <TextView
+                    android:id="@+id/logoutText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="100dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/logout"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                </FrameLayout>
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/avatarBackground"
@@ -57,237 +234,19 @@
                 android:layout_marginTop="150dp"
                 android:background="@drawable/settings_avatar_background"
                 android:elevation="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_gravity="center_horizontal" />
 
             <!--    Redirects to avatar_chooser_box.xml-->
             <ImageView
                 android:id="@+id/avatarsettingsImage"
                 android:layout_width="210dp"
                 android:layout_height="210dp"
+                android:layout_marginTop="150dp"
+                android:layout_gravity="center_horizontal"
                 android:elevation="100dp"
-                android:src="@drawable/account_circle"
-                app:layout_constraintBottom_toBottomOf="@+id/avatarBackground"
-                app:layout_constraintEnd_toEndOf="@+id/avatarBackground"
-                app:layout_constraintStart_toStartOf="@+id/avatarBackground" />
+                android:src="@drawable/account_circle" />
 
-            <TextView
-                android:id="@+id/firstnameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="250dp"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/first_name"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.513"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avatarBackground" />
-
-            <EditText
-                android:id="@+id/etName"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:elevation="100dp"
-                android:ems="10"
-                android:hint="Name"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textColor="@color/purple"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstnameText" />
-
-            <TextView
-                android:id="@+id/lastnameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="250dp"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/last_name"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etName" />
-
-            <EditText
-                android:id="@+id/lastnameeditText"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:elevation="100dp"
-                android:ems="10"
-                android:hint="Name"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:textColor="@color/purple"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastnameText" />
-
-            <TextView
-                android:id="@+id/emailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="270dp"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/email"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.393"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastnameeditText" />
-
-            <EditText
-                android:id="@+id/emaileditText"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:elevation="100dp"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:paddingStart="10dp"
-                android:textColor="@color/purple"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailText" />
-
-            <TextView
-                android:id="@+id/oldpasswordText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="250dp"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/old_password"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.722"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emaileditText" />
-
-            <EditText
-                android:id="@+id/oldpasswordeditText"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:elevation="100dp"
-                android:ems="10"
-                android:hint="Old Password"
-                android:inputType="textPassword"
-                android:paddingStart="10dp"
-                android:textColor="@color/purple"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/oldpasswordText" />
-
-            <TextView
-                android:id="@+id/newpasswordText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="250dp"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/new_password"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.866"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/oldpasswordeditText" />
-
-            <EditText
-                android:id="@+id/newpasswordeditText"
-                android:layout_width="336dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:elevation="100dp"
-                android:ems="10"
-                android:hint="New Password"
-                android:inputType="textPassword"
-                android:paddingStart="10dp"
-                android:textColor="@color/purple"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newpasswordText" />
-
-            <ImageButton
-                android:id="@+id/saveButton"
-                android:layout_width="99dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="275dp"
-                android:layout_marginTop="28dp"
-                android:background="@null"
-                android:elevation="100dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newpasswordeditText"
-                app:srcCompat="@drawable/save_background" />
-
-            <TextView
-                android:id="@+id/saveText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/save"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/saveButton"
-                app:layout_constraintEnd_toEndOf="@+id/saveButton"
-                app:layout_constraintStart_toStartOf="@+id/saveButton"
-                app:layout_constraintTop_toTopOf="@+id/saveButton" />
-
-            <ImageButton
-                android:id="@+id/logoutButton"
-                android:layout_width="300dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="28dp"
-                android:background="@null"
-                android:elevation="100dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/saveButton"
-                app:srcCompat="@drawable/logout_background" />
-
-            <TextView
-                android:id="@+id/logoutText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="100dp"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/logout"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/logoutButton"
-                app:layout_constraintEnd_toEndOf="@+id/logoutButton"
-                app:layout_constraintStart_toStartOf="@+id/logoutButton"
-                app:layout_constraintTop_toTopOf="@+id/logoutButton" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
     </ScrollView>
 
