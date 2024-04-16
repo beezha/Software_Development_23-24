@@ -129,10 +129,10 @@ class CalendarFragment : Fragment() {
 
     private val tasks = listOf(
         listOf("Drink 5 Cups of Water",0,15),
-        listOf("Spend 30 Minutes Time Outside",1,15),
-        listOf("Exercise For 20 Minutes",1,15),
+        listOf("Spend 30 Minutes Time Outside",1,15,30),
+        listOf("Exercise For 20 Minutes",1,15,20),
         listOf("Maintain Good Hygiene",0,15),
-        listOf("Meditate For 10 Minutes",1,15),
+        listOf("Meditate For 10 Minutes",1,15,10),
         listOf("Task Spot Filler 1",1,15),
         listOf("Task Spot Filler 2",1,15),
         listOf("Task Spot Filler 3",1,15),
@@ -145,8 +145,9 @@ class CalendarFragment : Fragment() {
         avaTasks.removeAt(taskIndex)
     }
     private fun showTaskCon(taskIndex: Int) {
+        val task = tasks[taskIndex]
 
-        task_Confirm(this,taskIndex).show(childFragmentManager, "task_Confirm.kt")
+        task_Confirm(this,task).show(childFragmentManager, "task_Confirm.kt")
 
     }
 
