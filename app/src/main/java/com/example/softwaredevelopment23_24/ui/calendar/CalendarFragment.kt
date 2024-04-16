@@ -187,6 +187,5 @@ class CalendarFragment : Fragment() {
             taskcoinCount8.text = "+${tasks[avaTasks[7]][2]}"
         }
     }
-
 }
 

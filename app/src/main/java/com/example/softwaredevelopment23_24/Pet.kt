@@ -1,6 +1,7 @@
 package com.example.softwaredevelopment23_24
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +29,13 @@ class Pet : Fragment() {
         user = FirebaseAuth.getInstance().currentUser!!
         val userID = user.uid
         reference = database.reference.child("users").child(userID)
-        loadPetStats() // initial load of the stats + UI
+        loadUI() // initial load of the UI
 
+        // checking for a change to the pet name
+        binding.btnPetName.setOnClickListener{
+            val newName = binding.etPetName.text.toString()
+            updatePetName(newName)
+        }
         // checking each button for when they are clicked
         binding.hungerButton.setOnClickListener{
             spendPoints(it, reference)
@@ -41,6 +47,23 @@ class Pet : Fragment() {
             spendPoints(it, reference)
         }
         return binding.root
+    }
+
+    private fun loadUI() {
+        loadPetName()
+        loadPetStats()
+    }
+
+    private fun loadPetName() {
+        (activity as MainActivity).getPetName(reference) {petName ->
+            if (petName != null) {
+                binding.petText.text = petName
+                binding.etPetName.text = Editable.Factory.getInstance().newEditable(petName)
+            }
+            else {
+                binding.petText.text = R.string.pet_name.toString()
+            }
+        }
     }
 
     //func for updating the UI to be in sync with the database
@@ -57,7 +80,8 @@ class Pet : Fragment() {
 
     // func for spending points
     private fun spendPoints(button: View, reference: DatabaseReference) {
-        lateinit var newValues: HashMap<String, Any>
+        button.isEnabled = false // disabling the button eliminates potential errors when the button is being spammed.
+        var newValues = HashMap<String, Any>()
         var newStat by Delegates.notNull<Int>()
         var newCoins by Delegates.notNull<Int>()
         (activity as MainActivity).generateStats(reference, requireContext()) { petHunger, petThirst, petEnjoyment, coins ->
@@ -66,28 +90,40 @@ class Pet : Fragment() {
                 // switch case to change what logic is being done for each possible button press
                 when (button) {
                     binding.hungerButton -> {
-                        newStat = petHunger + 15
-                        newCoins = coins - 5
-                        newValues = hashMapOf(
-                            "petHunger" to newStat,
-                            "coins" to newCoins
-                        )
+                        if (petHunger >= 100) {
+                            statErrorMessage()
+                        } else {
+                            newStat = petHunger + 15
+                            newCoins = coins - 5
+                            newValues = hashMapOf(
+                                "petHunger" to minOf(newStat, 100),
+                                "coins" to newCoins
+                            )
+                        }
                     }
                     binding.thirstButton -> {
-                        newStat = petThirst + 15
-                        newCoins = coins - 5
-                        newValues = hashMapOf(
-                            "petThirst" to newStat,
-                            "coins" to newCoins
-                        )
+                        if (petThirst >= 100) {
+                            statErrorMessage()
+                        } else {
+                            newStat = petThirst + 15
+                            newCoins = coins - 5
+                            newValues = hashMapOf(
+                                "petThirst" to minOf(newStat, 100),
+                                "coins" to newCoins
+                            )
+                        }
                     }
                     else -> {
-                        newStat = petEnjoyment + 15
-                        newCoins = coins - 5
-                        newValues = hashMapOf(
-                            "petEnjoyment" to newStat,
-                            "coins" to newCoins
-                        )
+                        if (petEnjoyment >= 100) {
+                            statErrorMessage()
+                        } else{
+                            newStat = petEnjoyment + 15
+                            newCoins = coins - 5
+                            newValues = hashMapOf(
+                                "petEnjoyment" to minOf(newStat, 100),
+                                "coins" to newCoins
+                            )
+                        }
                     }
                 }
             reference.updateChildren(newValues) // updates the database with the new values
@@ -95,6 +131,7 @@ class Pet : Fragment() {
                     if (it.isSuccessful) {
                         // successful database update
                         loadPetStats() //loads UI to be in sync with database (or else it would happen to fast)
+                        button.isEnabled = true
                     } else {
                         // unsuccessful database update
                         Toast.makeText(
@@ -110,6 +147,34 @@ class Pet : Fragment() {
                     requireContext(),
                     "Insufficient coins",
                     Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+    private fun statErrorMessage() {
+        Toast.makeText(
+            requireContext(),
+            "Stat cannot exceed 100",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+    private fun updatePetName(newName: String) {
+        (activity as MainActivity).getPetName(reference) { petName ->
+            if (newName.isNotEmpty()) {
+                if (petName != newName) {
+                    val updatedName = hashMapOf(
+                        "petName" to newName
+                    )
+                    reference.updateChildren(updatedName as Map<String, Any>)
+                        .addOnSuccessListener { loadPetName() }
+                    }
+            }
+            else {
+                binding.etPetName.text = Editable.Factory.getInstance().newEditable(petName)
+                Toast.makeText(
+                    requireContext(),
+                    "Pet name cannot be blank",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }

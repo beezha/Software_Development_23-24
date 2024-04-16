@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             "petEnjoyment" to 50,
             "coins" to 20,
             "loginTime" to currentTime,
-            "timeDifference" to 0
+            "petName" to "Pet"
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
@@ -149,6 +149,18 @@ class MainActivity : AppCompatActivity() {
                     "Error reading login time ${error.toException()}",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        })
+    }
+    fun getPetName(reference: DatabaseReference, callback: (String?) -> Unit) {
+        reference.child("petName").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val petName = snapshot.getValue(String::class.java)
+                callback(petName)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null)
             }
         })
     }

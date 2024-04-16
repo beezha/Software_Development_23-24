@@ -83,6 +83,21 @@ class Login : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        /* creates a listener for when user is authenticated. eliminates need for successfulLogin func
+         to be called elsewhere */
+        val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val currentUser = firebaseAuth.currentUser
+            if (currentUser != null) {
+                successfulLogin()
+            }
+        }
+
+        userAuth.addAuthStateListener(authListener)
+    }
+
     // func for how to handle Google sign in result
    private fun handleSignInResult(data: Intent? ) {
        val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -91,7 +106,6 @@ class Login : Fragment() {
            if (account !=null) {
                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                signInWithCredential(credential, account)
-               successfulLogin()
            }
        } catch (e: ApiException) {
            Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show()
@@ -135,7 +149,6 @@ class Login : Fragment() {
                         requireContext(), "Login successful",
                         Toast.LENGTH_SHORT
                     ).show()
-                    successfulLogin()
                 } else {
                     Toast.makeText(
                         requireContext(), "Login failed. ${task.exception?.message}",
@@ -168,11 +181,21 @@ class Login : Fragment() {
 
     // func for successful login (really? no way!)
     private fun successfulLogin() {
-        val userID = userAuth.currentUser!!.uid
-        val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
-        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigationView.visibility = View.VISIBLE
-        findNavController().navigate(R.id.navigation_home)
-        MainActivity().updateLoginTime(reference, requireContext())
+        val currentUser = userAuth.currentUser
+        if (currentUser != null) {
+            val userID = currentUser.uid
+            val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+            val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
+            bottomNavigationView.visibility = View.VISIBLE
+            findNavController().navigate(R.id.navigation_home)
+            MainActivity().updateLoginTime(reference, requireContext())
+        }
+        else {
+            Toast.makeText(
+                requireContext(),
+                "User authentication failed. Pleas retry",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
