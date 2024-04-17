@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/petFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    tools:context=".Pet">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/petToolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/yellow"
+        android:elevation="0.1dp"
         android:minHeight="?attr/actionBarSize"
         android:paddingEnd="16dp"
         android:theme="?attr/actionBarTheme"
-        android:elevation="0.1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,7 +24,7 @@
             android:id="@+id/petavatarImage"
             android:layout_width="40dp"
             android:layout_height="37dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
@@ -57,12 +49,14 @@
             android:id="@+id/petcoincountImage"
             android:layout_width="40dp"
             android:layout_height="37dp"
-            android:layout_gravity="end"
+            android:layout_gravity="right"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/coin_icon"
-            app:tint="@color/gold"/>
+            app:layout_constraintBottom_toBottomOf="@+id/homeToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +64,10 @@
         android:id="@+id/curvedToolbar"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:src="@drawable/curved_toolbar" />
+        android:src="@drawable/curved_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/petText"
@@ -80,203 +77,241 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/title_pet"
         android:textColor="@color/white"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/curvedToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/petToolbar" />
 
-    </FrameLayout>
-
-    <FrameLayout
+    <ImageView
+        android:id="@+id/petbackgroundImage"
         android:layout_width="266dp"
         android:layout_height="246dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/pet_background"
-        android:layout_marginTop="170dp"
-        app:behavior_overlapTop="55dp">
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edit_text_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/petText" />
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/petwidgetImage"
-        android:layout_width="266dp"
-        android:layout_height="246dp"
-        android:layout_marginBottom="108dp"
-        android:background="@drawable/idle_animation_final" />
+        android:layout_width="146dp"
+        android:layout_height="138dp"
+        android:elevation="100dp"
+        android:src="@android:drawable/btn_star_big_on"
+        app:layout_constraintBottom_toBottomOf="@+id/petbackgroundImage"
+        app:layout_constraintEnd_toEndOf="@+id/petbackgroundImage"
+        app:layout_constraintStart_toStartOf="@+id/petbackgroundImage"
+        app:layout_constraintTop_toTopOf="@+id/petbackgroundImage" />
 
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/statsBackground"
+        android:layout_width="336dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="20dp"
+        android:elevation="5dp"
+        android:src="@drawable/calendar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/petbackgroundImage" />
 
-    </RelativeLayout>
-
-<FrameLayout
-    android:layout_width="336dp"
-    android:layout_height="250dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="134dp"
-    android:elevation="5dp"
-    android:background="@drawable/calendar_background"
-    android:layout_gravity="center">
-
-    <TextView
-        android:id="@+id/petnameText"
+    <EditText
+        android:id="@+id/etPetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
         android:elevation="100dp"
         android:fontFamily="sans-serif-black"
+        android:imeOptions="actionDone"
+        android:inputType="text|textCapWords"
         android:text="@string/pet_name"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:layout_gravity="center_horizontal" />
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintStart_toStartOf="@+id/statsBackground"
+        app:layout_constraintTop_toTopOf="@+id/statsBackground" />
 
     <TextView
         android:id="@+id/hungerText"
         android:layout_width="53sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="68dp"
-        android:layout_gravity="left"
+        android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/title_hunger"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/statsBackground"
+        app:layout_constraintTop_toBottomOf="@+id/etPetName" />
 
     <ProgressBar
         android:id="@+id/hungerprogressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="175dp"
         android:layout_height="11dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:layout_gravity="right"
         android:elevation="100dp"
-        android:progressDrawable="@drawable/hunger_progress_bar" />
+        android:progressDrawable="@drawable/hunger_progress_bar"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/hungerText"
+        app:layout_constraintTop_toBottomOf="@+id/etPetName" />
 
     <TextView
         android:id="@+id/thirstText"
         android:layout_width="53sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="103dp"
-        android:layout_gravity="left"
+        android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/title_thirst"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/statsBackground"
+        app:layout_constraintTop_toBottomOf="@+id/hungerprogressBar" />
 
     <ProgressBar
         android:id="@+id/thirstprogressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="175dp"
         android:layout_height="11dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:layout_gravity="right"
         android:elevation="100dp"
-        android:progressDrawable="@drawable/thirst_progress_bar" />
+        android:progressDrawable="@drawable/thirst_progress_bar"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/thirstText"
+        app:layout_constraintTop_toBottomOf="@+id/hungerprogressBar" />
 
     <TextView
         android:id="@+id/funText"
         android:layout_width="53sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="138dp"
-        android:layout_gravity="left"
+        android:layout_marginTop="13dp"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="@string/title_fun"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/statsBackground"
+        app:layout_constraintTop_toBottomOf="@+id/thirstprogressBar" />
 
     <ProgressBar
         android:id="@+id/funprogressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="175dp"
         android:layout_height="11dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
-        android:layout_gravity="right"
         android:elevation="100dp"
-        android:progressDrawable="@drawable/fun_progress_bar" />
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp">
+        android:progressDrawable="@drawable/fun_progress_bar"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/funText"
+        app:layout_constraintTop_toBottomOf="@+id/thirstprogressBar" />
 
     <ImageButton
         android:id="@+id/hungerButton"
         android:layout_width="90dp"
         android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_background"
-        android:elevation="100dp" />
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/statsBackground"
+        app:layout_constraintStart_toStartOf="@+id/statsBackground"
+        app:layout_constraintTop_toBottomOf="@+id/funText"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <ImageView
-            android:id="@+id/hungerImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:elevation="100dp"
-            android:background="@drawable/food_icon"
-            android:backgroundTint="@color/white"/>
-
-
-    </FrameLayout>
-
-    <FrameLayout
+    <ImageButton
+        android:id="@+id/btnPetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
+        android:background="@android:color/transparent"
+        android:elevation="100dp"
+        android:src="@drawable/baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/etPetName"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@+id/etPetName"
+        app:layout_constraintTop_toTopOf="@+id/etPetName" />
+
+    <ImageView
+        android:id="@+id/hungerImage"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/fun_image"
+        android:backgroundTint="@color/white"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hungerButton"
+        app:layout_constraintEnd_toEndOf="@+id/hungerButton"
+        app:layout_constraintStart_toStartOf="@+id/hungerButton"
+        app:layout_constraintTop_toTopOf="@+id/hungerButton" />
+
+    <ImageButton
+        android:id="@+id/thirstButton"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_background"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/statsBackground"
+        app:layout_constraintStart_toEndOf="@+id/hungerButton"
+        app:layout_constraintTop_toBottomOf="@+id/funText"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/funButton"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp">
-
-        <ImageButton
-            android:id="@+id/thirstButton"
-            android:layout_width="90dp"
-            android:layout_height="48dp"
-            android:background="@drawable/button_background"
-            android:elevation="100dp" />
-
-        <ImageView
-            android:id="@+id/thirstImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:background="@drawable/water_icon"
-            android:backgroundTint="@color/white"
-            android:elevation="100dp" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_background"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/statsBackground"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/thirstButton"
+        app:layout_constraintTop_toBottomOf="@+id/funText"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <ImageButton
-            android:id="@+id/funButton"
-            android:layout_width="90dp"
-            android:layout_height="48dp"
-            android:background="@drawable/button_background"
-            android:elevation="100dp" />
+    <ImageView
+        android:id="@+id/thirstImage"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@android:drawable/btn_star_big_on"
+        android:backgroundTint="@color/white"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/thirstButton"
+        app:layout_constraintEnd_toEndOf="@+id/thirstButton"
+        app:layout_constraintStart_toStartOf="@+id/thirstButton"
+        app:layout_constraintTop_toTopOf="@+id/thirstButton" />
 
-        <ImageView
-            android:id="@+id/funImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center"
-            android:background="@drawable/fun_image"
-            android:backgroundTint="@color/white"
-            android:elevation="100dp" />
+    <ImageView
+        android:id="@+id/funImage"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@android:drawable/btn_star_big_on"
+        android:backgroundTint="@color/white"
+        android:elevation="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/funButton"
+        app:layout_constraintEnd_toEndOf="@+id/funButton"
+        app:layout_constraintStart_toStartOf="@+id/funButton"
+        app:layout_constraintTop_toTopOf="@+id/funButton" />
 
-    </FrameLayout>
-
-</FrameLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

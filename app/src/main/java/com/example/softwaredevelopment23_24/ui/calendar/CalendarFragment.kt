@@ -2,72 +2,121 @@ package com.example.softwaredevelopment23_24.ui.calendar
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.appbar.AppBarLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
-import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import androidx.fragment.app.Fragment
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import com.example.softwaredevelopment23_24.MainActivity
+import com.example.softwaredevelopment23_24.TaskUpdate
 import com.example.softwaredevelopment23_24.task_Confirm
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.math.abs
 
+// TODO: add in task selection (maybe)
+// TODO: add in calendar streaks
+
 class CalendarFragment : Fragment() {
-//
-//    private lateinit var binding: FragmentCalendarBinding
 
-    //private var _binding: FragmentCalendarBinding? = null
+    private lateinit var binding: FragmentCalendarBinding
+    private lateinit var reference: DatabaseReference
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    //private val binding get() = _binding!!=
+    private val tasks = listOf(
+        listOf("Drink Water (6x)",0,15,"Be sure to drink at least six cups of water a day to stay healthy!", 6),
+        listOf("Brush teeth (2x)",0,15,"Brushing your teeth is very important to keeping good hygiene!", 2),
+        listOf("Eat a full meal (3x)",0,15,"Nourish your body with healthy well-balanced meals three times a day.", 3),
+        listOf("Enjoy nature (30 min)",1,15,"Connecting with the outdoors can reduce stress levels and improve mood.", 30),
+        listOf("Exercise (20 min)",1,15,"Physical activity keeps your body healthy and you mind stress free!", 20),
+        listOf("Meditate (10 min)",1,15,"Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!", 10),
+        listOf("Read a book (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
+        listOf("Practice a skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
+    )
 
-//    override fun onCreateView(
-//            inflater: LayoutInflater,
-//            container: ViewGroup?,
-//            savedInstanceState: Bundle?
-//    ): View {
-//        val calendarViewModel =
-//                ViewModelProvider(this).get(CalendarViewModel::class.java)
-//
-//        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
-//
-////        val textView: TextView = binding.textNotifications
-//        calendarViewModel.text.observe(viewLifecycleOwner) {
-////            textView.text = it
-//        }
-//        return root
-//
-//
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    private fun generateTasks(callback: (MutableList<List<Any>>) -> Unit) {
+        val selectedTasks = mutableListOf<List<Any>>()
+        val completedTasks = mutableListOf<List<Any>>()
+        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences, taskCompleteList ->
+            for ((counter, preference) in taskPreferences.withIndex()) {
+                if (preference as Boolean) {
+                    if (taskCompleteList[counter]) {
+                        completedTasks.add(tasks[counter])
+                    } else {
+                        selectedTasks.add(tasks[counter])
+                    }
+                }
+            }
+            val taskList = selectedTasks + completedTasks
+            callback(taskList.toMutableList())
+        }
+    }
 
-    private var _binding: FragmentCalendarBinding? = null
-    private val binding get() = _binding?: error("FragmentCalendarBinding not initialized")
+    fun completeTask(task: List<Any>) {
+        val coinsEarned = task[2] as Int
+       generateTasks { taskList ->
+           val taskIndex = tasks.indexOf(task)
+           (activity as MainActivity).getCoins(reference, requireContext()) {coins ->
+               val totalCoins = coins + coinsEarned
+               val newValues = hashMapOf(
+                   "coins" to totalCoins,
+                   "taskStatus${taskIndex+1}" to true
+               )
+               if (task[1] == 0) {
+                   newValues["task${taskIndex+1}Progress"] = 0
+               }
+               reference.updateChildren(newValues as Map<String, Any>)
+                   .addOnCompleteListener {
+                       taskList.remove(task)
+                       taskList.add(task)
+                       if (it.isSuccessful) {
+                           refreshTasks(taskList)
+                       }
+                       else {
+                           Toast.makeText(
+                               requireContext(),
+                               "Could not complete task. Please try again.",
+                               Toast.LENGTH_SHORT
+                           ).show()
+                       }
+                   }
+           }
+        }
 
+    }
+
+
+    private fun showTaskCon(taskIndex: Int) {
+        generateTasks { taskList ->
+            if (taskList[taskIndex][1] == 0) {
+                TaskUpdate(this, taskList[taskIndex], tasks).show(childFragmentManager, "TaskUpdate.kt")
+            }
+            else {
+                task_Confirm(this,taskList[taskIndex]).show(childFragmentManager, "task_Confirm.kt")
+            }
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-
+        binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userID = user.uid
         val view = binding.root
+        reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
         val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbar)
         val toolbarText = view.findViewById<TextView>(R.id.toolbarText)
@@ -92,61 +141,35 @@ class CalendarFragment : Fragment() {
         val adapter = CalendarAdapter(requireContext(), days)
         calendarGridView.adapter = adapter
 
-        binding.taskText1.setOnClickListener {
+        binding.coinButton1.setOnClickListener {
             showTaskCon(0)
         }
-        binding.taskText2.setOnClickListener {
+        binding.coinButton2.setOnClickListener {
             showTaskCon(1)
         }
-        binding.taskText3.setOnClickListener {
+        binding.coinButton3.setOnClickListener {
             showTaskCon(2)
         }
-        binding.taskText4.setOnClickListener {
+        binding.coinButton4.setOnClickListener {
             showTaskCon(3)
         }
-        binding.taskText5.setOnClickListener {
+        binding.coinButton5.setOnClickListener {
             showTaskCon(4)
         }
-        binding.taskText6.setOnClickListener {
+        binding.coinButton6.setOnClickListener {
             showTaskCon(5)
         }
-        binding.taskText7.setOnClickListener {
+        binding.coinButton7.setOnClickListener {
             showTaskCon(6)
         }
-        binding.taskText8.setOnClickListener {
+        binding.coinButton8.setOnClickListener {
             showTaskCon(7)
         }
 
-        refreshTasks()
+        generateTasks { selectedTasks ->
+            refreshTasks(selectedTasks)
+        }
         return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private val tasks = listOf(
-        listOf("Drink 5 Cups of Water",0,15),
-        listOf("Spend 30 Minutes Time Outside",1,15),
-        listOf("Exercise For 20 Minutes",1,15),
-        listOf("Maintain Good Hygiene",0,15),
-        listOf("Meditate For 10 Minutes",1,15),
-        listOf("Task Spot Filler 1",1,15),
-        listOf("Task Spot Filler 2",1,15),
-        listOf("Task Spot Filler 3",1,15),
-        listOf("Completed Task",1,15)
-    )
-    private var avaTasks = mutableListOf(0,1,2,3,4,5,6,7,8,8,8,8,8,8,8,8)
-
-
-    fun removeTask(taskIndex: Int) {
-        avaTasks.removeAt(taskIndex)
-    }
-    private fun showTaskCon(taskIndex: Int) {
-
-        task_Confirm(this,taskIndex).show(childFragmentManager, "task_Confirm.kt")
-
     }
 
     private fun getDaysOfMonth(): List<Date> {
@@ -165,26 +188,55 @@ class CalendarFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun refreshTasks() {
+    fun refreshTasks(selectedTasks: MutableList<List<Any>>) {
         binding.apply {
-            taskText1.text = tasks[avaTasks[0]][0].toString()
-            taskcoinCount1.text = "+${tasks[avaTasks[0]][2]}"
-            taskText2.text = tasks[avaTasks[1]][0].toString()
-            taskcoinCount2.text = "+${tasks[avaTasks[1]][2]}"
-            taskText3.text = tasks[avaTasks[2]][0].toString()
-            taskcoinCount3.text = "+${tasks[avaTasks[2]][2]}"
-            taskText4.text = tasks[avaTasks[3]][0].toString()
-            taskcoinCount4.text = "+${tasks[avaTasks[3]][2]}"
-            taskText5.text = tasks[avaTasks[4]][0].toString()
-            taskcoinCount5.text = "+${tasks[avaTasks[4]][2]}"
-            taskText6.text = tasks[avaTasks[5]][0].toString()
-            taskcoinCount6.text = "+${tasks[avaTasks[5]][2]}"
-            taskText7.text = tasks[avaTasks[6]][0].toString()
-            taskcoinCount7.text = "+${tasks[avaTasks[6]][2]}"
-            taskText8.text = tasks[avaTasks[7]][0].toString()
-            taskcoinCount8.text = "+${tasks[avaTasks[7]][2]}"
+            taskText1.text = selectedTasks[0][0].toString()
+            taskcoinCount1.text = "+${selectedTasks[0][2]}"
+            taskDescription1.text = selectedTasks[0][3].toString()
+
+            taskText2.text = selectedTasks[1][0].toString()
+            taskcoinCount2.text = "+${selectedTasks[1][2]}"
+            taskDescription2.text = selectedTasks[1][3].toString()
+
+            taskText3.text = selectedTasks[2][0].toString()
+            taskcoinCount3.text = "+${selectedTasks[2][2]}"
+            taskDescription3.text = selectedTasks[2][3].toString()
+
+            taskText4.text = selectedTasks[3][0].toString()
+            taskcoinCount4.text = "+${selectedTasks[3][2]}"
+            taskDescription4.text = selectedTasks[3][3].toString()
+
+            taskText5.text = selectedTasks[4][0].toString()
+            taskcoinCount5.text = "+${selectedTasks[4][2]}"
+            taskDescription5.text = selectedTasks[4][3].toString()
+
+            taskText6.text = selectedTasks[5][0].toString()
+            taskcoinCount6.text = "+${selectedTasks[5][2]}"
+            taskDescription6.text = selectedTasks[5][3].toString()
+
+            taskText7.text = selectedTasks[6][0].toString()
+            taskcoinCount7.text = "+${selectedTasks[6][2]}"
+            taskDescription7.text = selectedTasks[6][3].toString()
+
+            taskText8.text = selectedTasks[7][0].toString()
+            taskcoinCount8.text = "+${selectedTasks[7][2]}"
+            taskDescription8.text = selectedTasks[7][3].toString()
+            }
+        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {_, taskComplete ->
+            val buttons = listOf(
+                binding.coinButton8,
+                binding.coinButton7,
+                binding.coinButton6,
+                binding.coinButton5,
+                binding.coinButton4,
+                binding.coinButton3,
+                binding.coinButton2,
+                binding.coinButton1
+            )
+            val numberOfCompletedTasks = taskComplete.count { it }
+            buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false}
+            buttons.take(numberOfCompletedTasks).forEach { it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY) }
         }
     }
-
 }
 
