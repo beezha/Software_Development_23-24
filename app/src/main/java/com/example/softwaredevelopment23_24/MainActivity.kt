@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
+import java.util.Calendar
 
 const val thirstDivisor: Int = 2
 const val enjoymentDivisor: Int = 3
@@ -45,11 +47,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             navController.navigate(R.id.navigation_login)
         }
-
     }
 
     fun generateDatabase(userID: String, username: String, email:String, context: Context) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         val currentTime = System.currentTimeMillis()
         val userData = hashMapOf(
             "username" to username,
@@ -66,7 +68,20 @@ class MainActivity : AppCompatActivity() {
             "petThirst" to 50,
             "petEnjoyment" to 50,
             "coins" to 20,
-            "loginTime" to currentTime
+            "loginTime" to currentTime,
+            "loginDay" to currentDay,
+            "petName" to "Pet",
+            "taskStatus1" to false,
+            "taskStatus2" to false,
+            "taskStatus3" to false,
+            "taskStatus4" to false,
+            "taskStatus5" to false,
+            "taskStatus6" to false,
+            "taskStatus7" to false,
+            "taskStatus8" to false,
+            "task1Progress" to 0,
+            "task2Progress" to 0,
+            "task3Progress" to 0
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
@@ -146,6 +161,162 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(
                     context,
                     "Error reading login time ${error.toException()}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+    fun getPetName(reference: DatabaseReference, callback: (String?) -> Unit) {
+        reference.child("petName").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val petName = snapshot.getValue(String::class.java)
+                callback(petName)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null)
+            }
+        })
+    }
+
+    fun getTaskPreferences(
+        reference: DatabaseReference,
+        context: Context,
+        callback: (taskPreferences: List<Any?>, taskCompleteList: List<Boolean>) -> Unit) {
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val task1 = snapshot.child("task1").value
+                val task2 = snapshot.child("task2").value
+                val task3 = snapshot.child("task3").value
+                val task4 = snapshot.child("task4").value
+                val task5 = snapshot.child("task5").value
+                val task6 = snapshot.child("task6").value
+                val task7 = snapshot.child("task7").value
+                val task8 = snapshot.child("task8").value
+
+                val taskStatus1 = snapshot.child("taskStatus1").getValue(Boolean::class.java) ?: false
+                val taskStatus2 = snapshot.child("taskStatus2").getValue(Boolean::class.java) ?: false
+                val taskStatus3 = snapshot.child("taskStatus3").getValue(Boolean::class.java) ?: false
+                val taskStatus4 = snapshot.child("taskStatus4").getValue(Boolean::class.java) ?: false
+                val taskStatus5 = snapshot.child("taskStatus5").getValue(Boolean::class.java) ?: false
+                val taskStatus6 = snapshot.child("taskStatus6").getValue(Boolean::class.java) ?: false
+                val taskStatus7 = snapshot.child("taskStatus7").getValue(Boolean::class.java) ?: false
+                val taskStatus8 = snapshot.child("taskStatus8").getValue(Boolean::class.java) ?: false
+
+                val taskPreferences = listOf(task1, task2, task3, task4,
+                    task5, task6, task7, task8)
+                val taskCompleteList = listOf(taskStatus1, taskStatus2,
+                    taskStatus3, taskStatus4, taskStatus5, taskStatus6,
+                    taskStatus7, taskStatus8)
+
+                callback(taskPreferences, taskCompleteList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not find task preferences",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    fun getCoins(
+        reference: DatabaseReference,
+        context: Context,
+        callback: (coins: Int) -> Unit) {
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val coins = snapshot.child("coins").getValue<Int>()
+                if (coins != null) {
+                    callback(coins)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not get user coin amount",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    fun getTaskProgress(
+        reference: DatabaseReference,
+        context: Context,
+        taskIndex: Int,
+        callback: (taskProgress: Int) -> Unit) {
+
+        var taskProgress: Int
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                taskProgress = when (taskIndex) {
+                    1 -> {
+                        snapshot.child("task1Progress").getValue<Int>()!!
+                    }
+
+                    2 -> {
+                        snapshot.child("task2Progress").getValue<Int>()!!
+                    }
+
+                    3 -> {
+                        snapshot.child("task3Progress").getValue<Int>()!!
+                    }
+
+                    else -> {
+                        0
+                    }
+                }
+                callback(taskProgress)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not find task progress. Please try again. ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    fun updateLoginDay(reference: DatabaseReference, context: Context, onComplete: () -> Unit) {
+        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toLong()
+        val currentTime = System.currentTimeMillis()
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
+                val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
+                if (currentDay != lastLoginDay) {
+                    if (currentTime - lastLoginTime!! >= 86400000) {
+                        val newValues = hashMapOf(
+                            "taskStatus1" to false,
+                            "taskStatus2" to false,
+                            "taskStatus3" to false,
+                            "taskStatus4" to false,
+                            "taskStatus5" to false,
+                            "taskStatus6" to false,
+                            "taskStatus7" to false,
+                            "taskStatus8" to false,
+                            "task1Progress" to 0,
+                            "task2Progress" to 0,
+                            "task3Progress" to 0,
+                            "loginDay" to currentDay
+                        )
+                        reference.updateChildren(newValues as Map<String, Any>)
+                            .addOnCompleteListener { onComplete.invoke() }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not retrieve current day",
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -188,7 +188,10 @@ class Login : Fragment() {
             val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
             bottomNavigationView.visibility = View.VISIBLE
             findNavController().navigate(R.id.navigation_home)
-            MainActivity().updateLoginTime(reference, requireContext())
+            MainActivity().updateLoginDay(reference, requireContext()) {
+                MainActivity().updateLoginTime(reference, requireContext())
+            }
+
         }
         else {
             Toast.makeText(

@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Software Development 23-24</string>
+    <string name="app_name">Co-Whisker</string>
     <string name="title_home">HOME</string>
     <string name="title_chat">CHAT</string>
     <string name="title_calendar">CALENDAR</string>
     <string name="title_pet">PET</string>
     <string name="title_settings">SETTINGS</string>
     <string name="greetings">Hi</string>
-    <string name="pet_name">Pet Name</string>
+    <string name="pet_name">Pet</string>
     <string name="title_hunger">Hunger</string>
     <string name="title_thirst">Thirst</string>
     <string name="title_fun">Fun</string>
@@ -56,4 +56,7 @@
     <string name="confirm_task">CONFIRM TASK</string>
     <string name="are_you_sure_you_want_to_start_this_task">Are you sure you want to start this task?</string>
     <string name="start">Start</string>
+    <string name="time_here">Time Here</string>
+    <string name="cancelTimer">Cancel</string>
+    <string name="task_update">UPDATE TASK</string>
 </resources>

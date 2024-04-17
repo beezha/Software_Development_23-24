@@ -5,7 +5,7 @@
     android:id="@+id/petFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BlankFragment">
+    tools:context=".Pet">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/petToolbar"
@@ -116,13 +116,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/petbackgroundImage" />
 
-    <TextView
-        android:id="@+id/petnameText"
+    <EditText
+        android:id="@+id/etPetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
         android:elevation="100dp"
         android:fontFamily="sans-serif-black"
+        android:imeOptions="actionDone"
+        android:inputType="text|textCapWords"
         android:text="@string/pet_name"
         android:textColor="@color/white"
         android:textSize="30sp"
@@ -143,7 +146,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
-        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+        app:layout_constraintTop_toBottomOf="@+id/etPetName" />
 
     <ProgressBar
         android:id="@+id/hungerprogressBar"
@@ -157,7 +160,7 @@
         app:layout_constraintEnd_toEndOf="@+id/statsBackground"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/hungerText"
-        app:layout_constraintTop_toBottomOf="@+id/petnameText" />
+        app:layout_constraintTop_toBottomOf="@+id/etPetName" />
 
     <TextView
         android:id="@+id/thirstText"
@@ -230,6 +233,19 @@
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
         app:layout_constraintTop_toBottomOf="@+id/funText"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/btnPetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="100dp"
+        android:src="@drawable/baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/etPetName"
+        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toEndOf="@+id/etPetName"
+        app:layout_constraintTop_toTopOf="@+id/etPetName" />
 
     <ImageView
         android:id="@+id/hungerImage"
