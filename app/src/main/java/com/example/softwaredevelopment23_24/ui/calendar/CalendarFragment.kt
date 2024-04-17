@@ -28,6 +28,8 @@ import kotlin.math.abs
 // TODO: make buttons gray
 
 class CalendarFragment : Fragment() {
+//
+//    private lateinit var binding: FragmentCalendarBinding
 
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var reference: DatabaseReference
@@ -92,7 +94,30 @@ class CalendarFragment : Fragment() {
            }
         }
 
-    }
+//    override fun onCreateView(
+//            inflater: LayoutInflater,
+//            container: ViewGroup?,
+//            savedInstanceState: Bundle?
+//    ): View {
+//        val calendarViewModel =
+//                ViewModelProvider(this).get(CalendarViewModel::class.java)
+//
+//        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+//        val root: View = binding.root
+//
+////        val textView: TextView = binding.textNotifications
+//        calendarViewModel.text.observe(viewLifecycleOwner) {
+////            textView.text = it
+//        }
+//        return root
+//
+//
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 
 
     private fun showTaskCon(taskIndex: Int) {
