@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/timerBackground"
+        android:layout_width="match_parent"
+        android:layout_height="662dp"
+        android:src="@color/light_cold_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="136dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginBottom="435dp"
+        android:text="@string/time_here"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toBottomOf="@+id/timerBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timerBackground" />
+
+    <Button
+        android:id="@+id/cancelButtonTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="469dp"
+        android:layout_marginBottom="146dp"
+        android:text="@string/cancelTimer"
+        app:layout_constraintBottom_toBottomOf="@+id/timerBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timerBackground" />
+</androidx.constraintlayout.widget.ConstraintLayout>

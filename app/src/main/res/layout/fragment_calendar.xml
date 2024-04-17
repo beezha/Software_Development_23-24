@@ -268,28 +268,7 @@ android:layout_height="match_parent"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:padding="15dp"
-                android:layout_gravity="left|center_vertical"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="336dp"
-                android:layout_height="60dp"
-                android:background="@color/purple"
-                android:elevation="5dp"
-                android:layout_gravity="center_horizontal">
-
-
-                <TextView
-                    android:id="@+id/tasksimpleText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="100dp"
-                    android:fontFamily="sans-serif-black"
-                    android:text="@string/short_tasks"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:layout_gravity="center"/>
+                android:layout_gravity="center|center_vertical"/>
 
             </FrameLayout>
 
