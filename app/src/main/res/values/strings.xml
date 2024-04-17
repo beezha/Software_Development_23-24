@@ -56,4 +56,5 @@
     <string name="confirm_task">CONFIRM TASK</string>
     <string name="are_you_sure_you_want_to_start_this_task">Are you sure you want to start this task?</string>
     <string name="start">Start</string>
+    <string name="task_update">UPDATE TASK</string>
 </resources>

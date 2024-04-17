@@ -14,7 +14,9 @@ import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.softwaredevelopment23_24.MainActivity
+import com.example.softwaredevelopment23_24.TaskUpdate
 import com.example.softwaredevelopment23_24.task_Confirm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -22,9 +24,8 @@ import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.math.abs
 
-// TODO: dynamically hide and show UI elements (tasks) for when there is only a certain amount completed
-// TODO: add in logic for completed tasks giving points and being completed in the database
-// TODO: add in task update feature (you drank one cup of water or something like that)
+// TODO: reset tasks after a new day (see MainActivity)
+// TODO: make buttons gray
 
 class CalendarFragment : Fragment() {
 
@@ -32,40 +33,77 @@ class CalendarFragment : Fragment() {
     private lateinit var reference: DatabaseReference
 
     private val tasks = listOf(
-        listOf("Drink 6 Cups of Water",0,15, 0),
-        listOf("Enjoy nature (30 min)",1,15, 0),
-        listOf("Exercise (20 min)",1,15, 0),
-        listOf("Brush your teeth (2x)",0,15, 0),
-        listOf("Meditate (10 min)",1,15, 0),
-        listOf("Read a book (10 min)",1,15, 0),
-        listOf("Practice a skill (15 min)",1,15, 0),
-        listOf("Eat a full meal (3x)",0,15, 0),
-        listOf("Completed Task",1,15, 0)
+        listOf("Drink Water (6x)",0,15, 6),
+        listOf("Brush teeth (2x)",0,15, 2),
+        listOf("Eat a full meal (3x)",0,15, 3),
+        listOf("Enjoy nature (30 min)",1,15, 30),
+        listOf("Exercise (20 min)",1,15, 20),
+        listOf("Meditate (10 min)",1,15, 10),
+        listOf("Read a book (10 min)",1,15, 10),
+        listOf("Practice a skill (15 min)",1,15, 15),
     )
-    private var avaTasks = mutableListOf(0,1,2,3,4,5,6,7,8,8,8,8,8,8,8,8)
 
-    private fun generateTasks(callback: (List<List<Any>>) -> Unit){
+    private fun generateTasks(callback: (MutableList<List<Any>>) -> Unit) {
         val selectedTasks = mutableListOf<List<Any>>()
-        val unSelectedTasks = mutableListOf<List<Any>>()
-        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences ->
+        val completedTasks = mutableListOf<List<Any>>()
+        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences, taskCompleteList ->
             for ((counter, preference) in taskPreferences.withIndex()) {
                 if (preference as Boolean) {
-                    selectedTasks.add(tasks[counter])
-                }
-                else {
-                    unSelectedTasks.add(tasks[counter])
+                    if (taskCompleteList[counter]) {
+                        completedTasks.add(tasks[counter])
+                    } else {
+                        selectedTasks.add(tasks[counter])
+                    }
                 }
             }
-            val combinedList = selectedTasks + unSelectedTasks
-            callback(combinedList)
+            val taskList = selectedTasks + completedTasks
+            callback(taskList.toMutableList())
         }
     }
 
-    fun removeTask(taskIndex: Int) {
-        avaTasks.removeAt(taskIndex)
+    fun completeTask(task: List<Any>) {
+        val coinsEarned = task[2] as Int
+       generateTasks { taskList ->
+           val taskIndex = tasks.indexOf(task)
+           (activity as MainActivity).getCoins(reference, requireContext()) {coins ->
+               val totalCoins = coins + coinsEarned
+               val newValues = hashMapOf(
+                   "coins" to totalCoins,
+                   "taskStatus${taskIndex+1}" to true
+               )
+               if (task[1] == 0) {
+                   newValues["task${taskIndex+1}Progress"] = 0
+               }
+               reference.updateChildren(newValues as Map<String, Any>)
+                   .addOnCompleteListener {
+                       taskList.remove(task)
+                       taskList.add(task)
+                       if (it.isSuccessful) {
+                           refreshTasks(taskList)
+                       }
+                       else {
+                           Toast.makeText(
+                               requireContext(),
+                               "Could not complete task. Please try again.",
+                               Toast.LENGTH_SHORT
+                           ).show()
+                       }
+                   }
+           }
+        }
+
     }
+
+
     private fun showTaskCon(taskIndex: Int) {
-        task_Confirm(this,taskIndex).show(childFragmentManager, "task_Confirm.kt")
+        generateTasks { taskList ->
+            if (taskList[taskIndex][1] == 0) {
+                TaskUpdate(this, taskList[taskIndex], tasks).show(childFragmentManager, "TaskUpdate.kt")
+            }
+            else {
+                task_Confirm(this,taskIndex).show(childFragmentManager, "task_Confirm.kt")
+            }
+        }
     }
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -102,32 +140,34 @@ class CalendarFragment : Fragment() {
         val adapter = CalendarAdapter(requireContext(), days)
         calendarGridView.adapter = adapter
 
-        binding.taskText1.setOnClickListener {
+        binding.coinButton1.setOnClickListener {
             showTaskCon(0)
         }
-        binding.taskText2.setOnClickListener {
+        binding.coinButton2.setOnClickListener {
             showTaskCon(1)
         }
-        binding.taskText3.setOnClickListener {
+        binding.coinButton3.setOnClickListener {
             showTaskCon(2)
         }
-        binding.taskText4.setOnClickListener {
+        binding.coinButton4.setOnClickListener {
             showTaskCon(3)
         }
-        binding.taskText5.setOnClickListener {
+        binding.coinButton5.setOnClickListener {
             showTaskCon(4)
         }
-        binding.taskText6.setOnClickListener {
+        binding.coinButton6.setOnClickListener {
             showTaskCon(5)
         }
-        binding.taskText7.setOnClickListener {
+        binding.coinButton7.setOnClickListener {
             showTaskCon(6)
         }
-        binding.taskText8.setOnClickListener {
+        binding.coinButton8.setOnClickListener {
             showTaskCon(7)
         }
 
-        refreshTasks()
+        generateTasks { selectedTasks ->
+            refreshTasks(selectedTasks)
+        }
         return view
     }
 
@@ -147,33 +187,45 @@ class CalendarFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun refreshTasks() {
-        generateTasks { sortedList ->
-            binding.apply {
-                taskText1.text = sortedList[0][0].toString()
-                taskcoinCount1.text = "+${sortedList[0][2]}"
+    fun refreshTasks(selectedTasks: MutableList<List<Any>>) {
+        binding.apply {
+            taskText1.text = selectedTasks[0][0].toString()
+            taskcoinCount1.text = "+${selectedTasks[0][2]}"
 
-                taskText2.text = sortedList[1][0].toString()
-                taskcoinCount2.text = "+${sortedList[1][2]}"
+            taskText2.text = selectedTasks[1][0].toString()
+            taskcoinCount2.text = "+${selectedTasks[1][2]}"
 
-                taskText3.text = sortedList[2][0].toString()
-                taskcoinCount3.text = "+${sortedList[2][2]}"
+            taskText3.text = selectedTasks[2][0].toString()
+            taskcoinCount3.text = "+${selectedTasks[2][2]}"
 
-                taskText4.text = sortedList[3][0].toString()
-                taskcoinCount4.text = "+${sortedList[3][2]}"
+            taskText4.text = selectedTasks[3][0].toString()
+            taskcoinCount4.text = "+${selectedTasks[3][2]}"
 
-                taskText5.text = sortedList[4][0].toString()
-                taskcoinCount5.text = "+${sortedList[4][2]}"
+            taskText5.text = selectedTasks[4][0].toString()
+            taskcoinCount5.text = "+${selectedTasks[4][2]}"
 
-                taskText6.text = sortedList[5][0].toString()
-                taskcoinCount6.text = "+${sortedList[5][2]}"
+            taskText6.text = selectedTasks[5][0].toString()
+            taskcoinCount6.text = "+${selectedTasks[5][2]}"
 
-                taskText7.text = sortedList[6][0].toString()
-                taskcoinCount7.text = "+${sortedList[6][2]}"
+            taskText7.text = selectedTasks[6][0].toString()
+            taskcoinCount7.text = "+${selectedTasks[6][2]}"
 
-                taskText8.text = sortedList[7][0].toString()
-                taskcoinCount8.text = "+${sortedList[7][2]}"
+            taskText8.text = selectedTasks[7][0].toString()
+            taskcoinCount8.text = "+${selectedTasks[7][2]}"
             }
+        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {_, taskComplete ->
+            val buttons = listOf(
+                binding.coinButton8,
+                binding.coinButton7,
+                binding.coinButton6,
+                binding.coinButton5,
+                binding.coinButton4,
+                binding.coinButton3,
+                binding.coinButton2,
+                binding.coinButton1
+            )
+            val numberOfCompletedTasks = taskComplete.count { it }
+            buttons.take(numberOfCompletedTasks).forEach {it.isEnabled = false}
         }
     }
 }

@@ -22,8 +22,6 @@ class task_Confirm(private val calendarFragment: CalendarFragment, private val t
 
         view.findViewById<Button>(R.id.TaskButton).setOnClickListener {
             dismiss()
-            calendarFragment.removeTask(taskIndex)
-            calendarFragment.refreshTasks() // Call refreshTasks directly on the existing CalendarFragment instance
         }
         view.findViewById<Button>(R.id.cancelButton).setOnClickListener {
             dismiss()
