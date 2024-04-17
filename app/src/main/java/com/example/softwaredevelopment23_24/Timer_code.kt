@@ -11,23 +11,22 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.example.softwaredevelopment23_24.ui.calendar.CalendarFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlin.time.times
 
 class Timer_code(private val calendarFragment: CalendarFragment, private val task: List<Any>) : DialogFragment() {
-    lateinit var countDownTimer: CountDownTimer
+    private lateinit var countDownTimer: CountDownTimer
     @SuppressLint("MissingInflatedId")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.timer_popup, null)
 
-        val minius = task[3] as Int
+        val minutes = task[3] as Int
 
         val timer = view.findViewById<TextView>(R.id.timerView)
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigationView.visibility = View.GONE
 
-        val initialTimeMillis: Long = minius * 60L * 1000L // 15 minutes in milliseconds
+        val initialTimeMillis: Long = minutes * 60L * 1000L // 15 minutes in milliseconds
 
         countDownTimer = object : CountDownTimer(initialTimeMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -38,10 +37,12 @@ class Timer_code(private val calendarFragment: CalendarFragment, private val tas
                 timer.text = timeLeftFormatted
             }
 
+
             @SuppressLint("SetTextI18n")
             override fun onFinish() {
                 timer.text = "00:00"
-                //continue here funture me
+                calendarFragment.completeTask(task)
+                view.findViewById<Button>(R.id.cancelButton).text = "FINISH"
             }
         }
 

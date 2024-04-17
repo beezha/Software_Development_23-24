@@ -304,7 +304,8 @@ class MainActivity : AppCompatActivity() {
                             "taskStatus8" to false,
                             "task1Progress" to 0,
                             "task2Progress" to 0,
-                            "task3Progress" to 0
+                            "task3Progress" to 0,
+                            "loginDay" to currentDay
                         )
                         reference.updateChildren(newValues as Map<String, Any>)
                             .addOnCompleteListener { onComplete.invoke() }

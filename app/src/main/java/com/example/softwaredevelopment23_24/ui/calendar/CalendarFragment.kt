@@ -2,6 +2,8 @@ package com.example.softwaredevelopment23_24.ui.calendar
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -24,25 +26,23 @@ import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.math.abs
 
-// TODO: reset tasks after a new day (see MainActivity)
-// TODO: make buttons gray
+// TODO: add in task selection (maybe)
+// TODO: add in calendar streaks
 
 class CalendarFragment : Fragment() {
-//
-//    private lateinit var binding: FragmentCalendarBinding
 
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var reference: DatabaseReference
 
     private val tasks = listOf(
-        listOf("Drink Water (6x)",0,15, 6),
-        listOf("Brush teeth (2x)",0,15, 2),
-        listOf("Eat a full meal (3x)",0,15, 3),
-        listOf("Enjoy nature (30 min)",1,15, 30),
-        listOf("Exercise (20 min)",1,15, 20),
-        listOf("Meditate (10 min)",1,15, 10),
-        listOf("Read a book (10 min)",1,15, 10),
-        listOf("Practice a skill (15 min)",1,15, 15),
+        listOf("Drink Water (6x)",0,15,"Be sure to drink at least six cups of water a day to stay healthy!", 6),
+        listOf("Brush teeth (2x)",0,15,"Brushing your teeth is very important to keeping good hygiene!", 2),
+        listOf("Eat a full meal (3x)",0,15,"Nourish your body with healthy well-balanced meals three times a day.", 3),
+        listOf("Enjoy nature (30 min)",1,15,"Connecting with the outdoors can reduce stress levels and improve mood.", 30),
+        listOf("Exercise (20 min)",1,15,"Physical activity keeps your body healthy and you mind stress free!", 20),
+        listOf("Meditate (10 min)",1,15,"Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!", 10),
+        listOf("Read a book (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
+        listOf("Practice a skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
     )
 
     private fun generateTasks(callback: (MutableList<List<Any>>) -> Unit) {
@@ -94,30 +94,7 @@ class CalendarFragment : Fragment() {
            }
         }
 
-//    override fun onCreateView(
-//            inflater: LayoutInflater,
-//            container: ViewGroup?,
-//            savedInstanceState: Bundle?
-//    ): View {
-//        val calendarViewModel =
-//                ViewModelProvider(this).get(CalendarViewModel::class.java)
-//
-//        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
-//
-////        val textView: TextView = binding.textNotifications
-//        calendarViewModel.text.observe(viewLifecycleOwner) {
-////            textView.text = it
-//        }
-//        return root
-//
-//
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    }
 
 
     private fun showTaskCon(taskIndex: Int) {
@@ -126,11 +103,10 @@ class CalendarFragment : Fragment() {
                 TaskUpdate(this, taskList[taskIndex], tasks).show(childFragmentManager, "TaskUpdate.kt")
             }
             else {
-                task_Confirm(this,taskIndex).show(childFragmentManager, "task_Confirm.kt")
+                task_Confirm(this,taskList[taskIndex]).show(childFragmentManager, "task_Confirm.kt")
             }
         }
     }
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -216,27 +192,35 @@ class CalendarFragment : Fragment() {
         binding.apply {
             taskText1.text = selectedTasks[0][0].toString()
             taskcoinCount1.text = "+${selectedTasks[0][2]}"
+            taskDescription1.text = selectedTasks[0][3].toString()
 
             taskText2.text = selectedTasks[1][0].toString()
             taskcoinCount2.text = "+${selectedTasks[1][2]}"
+            taskDescription2.text = selectedTasks[1][3].toString()
 
             taskText3.text = selectedTasks[2][0].toString()
             taskcoinCount3.text = "+${selectedTasks[2][2]}"
+            taskDescription3.text = selectedTasks[2][3].toString()
 
             taskText4.text = selectedTasks[3][0].toString()
             taskcoinCount4.text = "+${selectedTasks[3][2]}"
+            taskDescription4.text = selectedTasks[3][3].toString()
 
             taskText5.text = selectedTasks[4][0].toString()
             taskcoinCount5.text = "+${selectedTasks[4][2]}"
+            taskDescription5.text = selectedTasks[4][3].toString()
 
             taskText6.text = selectedTasks[5][0].toString()
             taskcoinCount6.text = "+${selectedTasks[5][2]}"
+            taskDescription6.text = selectedTasks[5][3].toString()
 
             taskText7.text = selectedTasks[6][0].toString()
             taskcoinCount7.text = "+${selectedTasks[6][2]}"
+            taskDescription7.text = selectedTasks[6][3].toString()
 
             taskText8.text = selectedTasks[7][0].toString()
             taskcoinCount8.text = "+${selectedTasks[7][2]}"
+            taskDescription8.text = selectedTasks[7][3].toString()
             }
         (activity as MainActivity).getTaskPreferences(reference, requireContext()) {_, taskComplete ->
             val buttons = listOf(
@@ -250,7 +234,8 @@ class CalendarFragment : Fragment() {
                 binding.coinButton1
             )
             val numberOfCompletedTasks = taskComplete.count { it }
-            buttons.take(numberOfCompletedTasks).forEach {it.isEnabled = false}
+            buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false}
+            buttons.take(numberOfCompletedTasks).forEach { it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY) }
         }
     }
 }
