@@ -23,6 +23,7 @@ import com.example.softwaredevelopment23_24.task_Confirm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
@@ -140,6 +141,10 @@ class CalendarFragment : Fragment() {
 
         val adapter = CalendarAdapter(requireContext(), days)
         calendarGridView.adapter = adapter
+        val currentMonth = getMonth()
+        val currentYear = getYear()
+        binding.monthText.text = currentMonth
+        binding.yearText.text = currentYear
 
         binding.coinButton1.setOnClickListener {
             showTaskCon(0)
@@ -237,6 +242,18 @@ class CalendarFragment : Fragment() {
             buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false}
             buttons.take(numberOfCompletedTasks).forEach { it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY) }
         }
+    }
+
+    private fun getMonth(): String {
+        val calendar = Calendar.getInstance()
+        val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+        return monthFormat.format(calendar.time)
+    }
+
+    private fun getYear(): String {
+        val calendar = Calendar.getInstance()
+        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+        return yearFormat.format(calendar.time)
     }
 }
 
