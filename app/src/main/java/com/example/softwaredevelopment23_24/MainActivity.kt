@@ -2,6 +2,7 @@ package com.example.softwaredevelopment23_24
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
             updateLoginDay(reference, this) {
                 updateLoginTime(reference, this)
+                resetStreak(reference, this)
                 navController.navigate(R.id.navigation_home)
             }
             navController.navigate(R.id.navigation_home)
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     fun generateDatabase(userID: String, username: String, email:String, context: Context) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
         val currentTime = System.currentTimeMillis()
         val userData = hashMapOf(
             "username" to username,
@@ -84,7 +87,39 @@ class MainActivity : AppCompatActivity() {
             "taskStatus8" to false,
             "task1Progress" to 0,
             "task2Progress" to 0,
-            "task3Progress" to 0
+            "task3Progress" to 0,
+            "dayStreak1" to false,
+            "dayStreak2" to false,
+            "dayStreak3" to false,
+            "dayStreak4" to false,
+            "dayStreak5" to false,
+            "dayStreak6" to false,
+            "dayStreak7" to false,
+            "dayStreak8" to false,
+            "dayStreak9" to false,
+            "dayStreak10" to false,
+            "dayStreak11" to false,
+            "dayStreak12" to false,
+            "dayStreak13" to false,
+            "dayStreak14" to false,
+            "dayStreak15" to false,
+            "dayStreak16" to false,
+            "dayStreak17" to false,
+            "dayStreak18" to false,
+            "dayStreak19" to false,
+            "dayStreak20" to false,
+            "dayStreak21" to false,
+            "dayStreak22" to false,
+            "dayStreak23" to false,
+            "dayStreak24" to false,
+            "dayStreak25" to false,
+            "dayStreak26" to false,
+            "dayStreak27" to false,
+            "dayStreak28" to false,
+            "dayStreak29" to false,
+            "dayStreak30" to false,
+            "dayStreak31" to false,
+            "loginMonth" to currentMonth
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
@@ -334,6 +369,76 @@ class MainActivity : AppCompatActivity() {
             false
         } else {
             true
+        }
+    }
+
+    fun getStreak(reference: DatabaseReference, context: Context, callback: (MutableList<Boolean>) -> Unit) {
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val streak: MutableList<Boolean> = mutableListOf()
+                for (i in 1..31) {
+                    val dayStatus = snapshot.child("dayStreak$i").getValue(Boolean::class.java) ?: false
+                    streak.add(dayStatus)
+                }
+                callback(streak)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("error", "Could not get database values for day streak")
+                Toast.makeText(
+                    context,
+                    "Could not get streak data",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+    }
+
+    fun resetStreak(reference: DatabaseReference, context: Context) {
+        val currentMonth = (Calendar.getInstance().get(Calendar.MONTH) + 1).toLong()
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val lastLoginMonth = snapshot.child("loginMonth").getValue<Long>()
+                val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
+                if (lastLoginMonth == null || !isSameMonth(lastLoginTime, lastLoginMonth, currentMonth)) {
+                    val newValues = hashMapOf<String, Any>()
+                    for (i in 1..31) {
+                        newValues["dayStreak$i"] = false
+                    }
+                    newValues["loginMonth"] = currentMonth
+                    reference.updateChildren(newValues)
+                        .addOnCompleteListener {
+                            if (!it.isSuccessful) {
+                                Toast.makeText(
+                                    context,
+                                    "Could not update values",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not retrieve last login month.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+    }
+
+    private fun isSameMonth(lastLoginTime: Long?, lastLoginMonth: Long?, currentMonth: Long): Boolean {
+        return if (lastLoginMonth != null && lastLoginTime != null) {
+            val lastLoginCalendar = Calendar.getInstance()
+            lastLoginCalendar.timeInMillis = lastLoginTime
+            val lastLoginMonthInCalendar = lastLoginCalendar.get(Calendar.MONTH) + 1
+            lastLoginMonthInCalendar == currentMonth.toInt()
+        } else {
+            false
         }
     }
 }

@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.softwaredevelopment23_24.MainActivity
-import com.example.softwaredevelopment23_24.R
 import com.example.softwaredevelopment23_24.databinding.FragmentHomeBinding
-import com.example.softwaredevelopment23_24.ui.calendar.CalendarFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -55,10 +52,6 @@ class HomeFragment : Fragment() {
             val completedTasks = taskCompleted.count { it }
             binding.progressText.text = "${completedTasks}/8"
             binding.taskprogressBar.progress = completedTasks
-        }
-
-        binding.extendedText.setOnClickListener {
-            findNavController().navigate(R.id.navigation_calendar)
         }
 
         return root

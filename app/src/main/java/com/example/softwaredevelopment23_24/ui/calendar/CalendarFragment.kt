@@ -27,8 +27,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-// TODO: add in task selection (maybe)
-// TODO: add in calendar streaks
 
 class CalendarFragment : Fragment() {
 
@@ -66,13 +64,15 @@ class CalendarFragment : Fragment() {
 
     fun completeTask(task: List<Any>) {
         val coinsEarned = task[2] as Int
+        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
        generateTasks { taskList ->
            val taskIndex = tasks.indexOf(task)
            (activity as MainActivity).getCoins(reference, requireContext()) {coins ->
                val totalCoins = coins + coinsEarned
                val newValues = hashMapOf(
                    "coins" to totalCoins,
-                   "taskStatus${taskIndex+1}" to true
+                   "taskStatus${taskIndex+1}" to true,
+                   "dayStreak$currentDay" to true
                )
                if (task[1] == 0) {
                    newValues["task${taskIndex+1}Progress"] = 0
@@ -139,8 +139,10 @@ class CalendarFragment : Fragment() {
         val calendarGridView = view.findViewById<GridView>(R.id.calendarGridView)
         val days = getDaysOfMonth()
 
-        val adapter = CalendarAdapter(requireContext(), days)
-        calendarGridView.adapter = adapter
+        getStreakDays { selectedDays ->
+            val adapter = CalendarAdapter(requireContext(), days, selectedDays)
+            calendarGridView.adapter = adapter
+        }
         val currentMonth = getMonth()
         val currentYear = getYear()
         binding.monthText.text = currentMonth
@@ -254,6 +256,32 @@ class CalendarFragment : Fragment() {
         val calendar = Calendar.getInstance()
         val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
         return yearFormat.format(calendar.time)
+    }
+
+    private fun getStreakNum(callback: (Int) -> Unit) {
+        (activity as MainActivity).getStreak(reference, requireContext()) {streakData ->
+            var counter = 0
+            for (i in streakData.indices.reversed()) {
+                if (streakData[i]) {
+                    counter++
+                } else {
+                    break
+                }
+            }
+            callback(counter)
+        }
+    }
+
+    private fun getStreakDays(callback: (MutableList<Int>) -> Unit) {
+        (activity as MainActivity).getStreak(reference, requireContext()) {streakData ->
+            val days: MutableList<Int> = mutableListOf()
+            for (i in streakData.indices) {
+                if (streakData[i]) {
+                    days.add(i + 1)
+                }
+            }
+            callback(days)
+        }
     }
 }
 

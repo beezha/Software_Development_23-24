@@ -190,6 +190,7 @@ class Login : Fragment() {
             findNavController().navigate(R.id.navigation_home)
             MainActivity().updateLoginDay(reference, requireContext()) {
                 MainActivity().updateLoginTime(reference, requireContext())
+                MainActivity().resetStreak(reference, requireContext())
             }
 
         }
