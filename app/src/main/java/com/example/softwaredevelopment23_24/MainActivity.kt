@@ -40,10 +40,13 @@ class MainActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance()
 
         if (user.currentUser != null) {
-            navController.navigate(R.id.navigation_home)
             val userID = user.currentUser!!.uid
             reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
-            updateLoginTime(reference, this)
+            updateLoginDay(reference, this) {
+                updateLoginTime(reference, this)
+                navController.navigate(R.id.navigation_home)
+            }
+            navController.navigate(R.id.navigation_home)
         } else {
             navController.navigate(R.id.navigation_login)
         }
@@ -93,8 +96,9 @@ class MainActivity : AppCompatActivity() {
             }
 
     }
+
     fun generateStats(
-        reference: DatabaseReference, 
+        reference: DatabaseReference,
         context: Context,
         callback: (petHunger: Int, petThirst: Int, petEnjoyment: Int, userCoins: Int) -> Unit) {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -136,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                         "loginTime" to currentTime,
                         "petHunger" to maxOf(0, petHunger),
                         "petThirst" to maxOf(0, petThirst),
-                        "petEnjoyment" to maxOf(0, petEnjoyment)
+                        "petEnjoyment" to maxOf(0, petEnjoyment),
                     )
 
                     reference.updateChildren(timeData as Map<String, Any>)
@@ -285,34 +289,32 @@ class MainActivity : AppCompatActivity() {
 
     fun updateLoginDay(reference: DatabaseReference, context: Context, onComplete: () -> Unit) {
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toLong()
-        val currentTime = System.currentTimeMillis()
-
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
                 val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
-                if (currentDay != lastLoginDay) {
-                    if (currentTime - lastLoginTime!! >= 86400000) {
-                        val newValues = hashMapOf(
-                            "taskStatus1" to false,
-                            "taskStatus2" to false,
-                            "taskStatus3" to false,
-                            "taskStatus4" to false,
-                            "taskStatus5" to false,
-                            "taskStatus6" to false,
-                            "taskStatus7" to false,
-                            "taskStatus8" to false,
-                            "task1Progress" to 0,
-                            "task2Progress" to 0,
-                            "task3Progress" to 0,
-                            "loginDay" to currentDay
-                        )
-                        reference.updateChildren(newValues as Map<String, Any>)
-                            .addOnCompleteListener { onComplete.invoke() }
-                    }
+
+                if (lastLoginDay == null || !isSameDay(lastLoginTime!!, lastLoginDay, currentDay)) {
+                    val newValues = hashMapOf(
+                        "taskStatus1" to false,
+                        "taskStatus2" to false,
+                        "taskStatus3" to false,
+                        "taskStatus4" to false,
+                        "taskStatus5" to false,
+                        "taskStatus6" to false,
+                        "taskStatus7" to false,
+                        "taskStatus8" to false,
+                        "task1Progress" to 0,
+                        "task2Progress" to 0,
+                        "task3Progress" to 0,
+                        "loginDay" to currentDay
+                    )
+                    reference.updateChildren(newValues as Map<String, Any>)
+                        .addOnCompleteListener { onComplete.invoke() }
+                } else {
+                    onComplete.invoke()
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     context,
@@ -321,5 +323,17 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         })
+    }
+
+    private fun isSameDay(lastLoginTime: Long, lastLoginDay: Long, currentDay: Long): Boolean {
+        val currentTime = System.currentTimeMillis()
+
+        return if (currentDay != lastLoginDay) {
+            false
+        } else if (currentTime - lastLoginTime >= 86400000L) {
+            false
+        } else {
+            true
+        }
     }
 }

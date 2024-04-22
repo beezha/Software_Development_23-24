@@ -57,4 +57,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
