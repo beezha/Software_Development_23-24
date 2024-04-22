@@ -113,7 +113,7 @@ class Chat : Fragment() {
             getResponse(userMessage, aiPrompt)
             binding.etMessage.isEnabled = false
             binding.etMessage.text.clear()
-            txtMessage.text = "Generating response..."
+            txtMessage.setText(R.string.gen_response)
         }
     }
 

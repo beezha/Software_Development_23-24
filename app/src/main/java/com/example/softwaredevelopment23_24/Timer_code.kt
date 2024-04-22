@@ -20,7 +20,7 @@ class Timer_code(private val calendarFragment: CalendarFragment, private val tas
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.timer_popup, null)
 
-        val minutes = task[3] as Int
+        val minutes = task.last() as Int
 
         val timer = view.findViewById<TextView>(R.id.timerView)
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
@@ -53,6 +53,8 @@ class Timer_code(private val calendarFragment: CalendarFragment, private val tas
         view.findViewById<Button>(R.id.cancelButtonTimer).setOnClickListener {
             bottomNavigationView.visibility = View.VISIBLE
             dismiss()
+            countDownTimer.cancel()
+
         }
 
 
