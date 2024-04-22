@@ -59,4 +59,5 @@
     <string name="time_here">Time Here</string>
     <string name="cancelTimer">Cancel</string>
     <string name="task_update">UPDATE TASK</string>
+    <string name="task_quote">Complete your daily tasks!</string>
 </resources>
