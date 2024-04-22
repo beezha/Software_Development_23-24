@@ -11,10 +11,10 @@ import com.example.softwaredevelopment23_24.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
     private lateinit var reference: DatabaseReference
-
     private lateinit var binding: FragmentHomeBinding
 
     @SuppressLint("SetTextI18n")
@@ -54,6 +54,28 @@ class HomeFragment : Fragment() {
             binding.taskprogressBar.progress = completedTasks
         }
 
+        getStreakNum {
+            binding.txtStreak.text = it.toString()
+        }
+
+        (activity as MainActivity).getCoins(reference, requireContext()) {
+            binding.petcoinText.text = it.toString()
+        }
+
         return root
+    }
+    private fun getStreakNum(callback: (Int) -> Unit) {
+        (activity as MainActivity).getStreak(reference, requireContext()) {streakData ->
+            var counter = 0
+            val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1
+            for (i in currentDay downTo 0) {
+                if (streakData[i]) {
+                    counter++
+                } else {
+                    break
+                }
+            }
+            callback(counter)
+        }
     }
 }

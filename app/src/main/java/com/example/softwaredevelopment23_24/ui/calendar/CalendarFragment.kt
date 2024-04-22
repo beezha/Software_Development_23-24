@@ -244,6 +244,9 @@ class CalendarFragment : Fragment() {
             buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false}
             buttons.take(numberOfCompletedTasks).forEach { it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY) }
         }
+        (activity as MainActivity).getCoins(reference, requireContext()) {
+            binding.petcoinText.text = it.toString()
+        }
     }
 
     private fun getMonth(): String {
@@ -256,20 +259,6 @@ class CalendarFragment : Fragment() {
         val calendar = Calendar.getInstance()
         val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
         return yearFormat.format(calendar.time)
-    }
-
-    private fun getStreakNum(callback: (Int) -> Unit) {
-        (activity as MainActivity).getStreak(reference, requireContext()) {streakData ->
-            var counter = 0
-            for (i in streakData.indices.reversed()) {
-                if (streakData[i]) {
-                    counter++
-                } else {
-                    break
-                }
-            }
-            callback(counter)
-        }
     }
 
     private fun getStreakDays(callback: (MutableList<Int>) -> Unit) {
