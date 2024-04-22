@@ -217,17 +217,17 @@ class CalendarFragment : Fragment() {
             taskcoinCount5.text = "+${selectedTasks[4][2]}"
             taskDescription5.text = selectedTasks[4][3].toString()
 
-            taskText6.text = selectedTasks[5][0].toString()
-            taskcoinCount6.text = "+${selectedTasks[5][2]}"
-            taskDescription6.text = selectedTasks[5][3].toString()
+//            taskText6.text = selectedTasks[5][0].toString()
+//            taskcoinCount6.text = "+${selectedTasks[5][2]}"
+//            taskDescription6.text = selectedTasks[5][3].toString()
 
-            taskText7.text = selectedTasks[6][0].toString()
-            taskcoinCount7.text = "+${selectedTasks[6][2]}"
-            taskDescription7.text = selectedTasks[6][3].toString()
-
-            taskText8.text = selectedTasks[7][0].toString()
-            taskcoinCount8.text = "+${selectedTasks[7][2]}"
-            taskDescription8.text = selectedTasks[7][3].toString()
+//            taskText7.text = selectedTasks[6][0].toString()
+//            taskcoinCount7.text = "+${selectedTasks[6][2]}"
+//            taskDescription7.text = selectedTasks[6][3].toString()
+//
+//            taskText8.text = selectedTasks[7][0].toString()
+//            taskcoinCount8.text = "+${selectedTasks[7][2]}"
+//            taskDescription8.text = selectedTasks[7][3].toString()
             }
         (activity as MainActivity).getTaskPreferences(reference, requireContext()) {_, taskComplete ->
             val buttons = listOf(

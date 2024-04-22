@@ -60,4 +60,5 @@
     <string name="cancelTimer">Cancel</string>
     <string name="task_update">UPDATE TASK</string>
     <string name="gen_response">Generating response…</string>
+    <string name="task_quote">Complete your daily tasks!</string>
 </resources>

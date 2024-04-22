@@ -41,48 +41,37 @@
         android:layout_marginBottom="71dp"
         android:layout_gravity="bottom|center_horizontal">
 
-    <EditText
-        android:id="@+id/etMessage"
-        android:layout_width="310dp"
-        android:layout_height="69dp"
-        android:background="@drawable/chat_edit_text_background"
-        android:drawableTint="@color/purple"
-        android:ems="10"
-        android:hint="@string/message"
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textColor="@color/light_warm_gray"
-        android:elevation="100dp"/>
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="310dp"
+            android:layout_height="69dp"
+            android:background="@drawable/chat_edit_text_background"
+            android:drawableTint="@color/purple"
+            android:ems="10"
+            android:hint="@string/message"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/light_warm_gray"
+            android:elevation="100dp"/>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="13dp"
-        android:background="@drawable/send_image"
-        app:layout_constraintBottom_toBottomOf="@+id/etMessage"
-        app:layout_constraintEnd_toEndOf="@+id/etMessage"
-        app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toStartOf="@+id/etMessage"
-        app:layout_constraintTop_toTopOf="@+id/etMessage"
-        app:layout_constraintVertical_bias="0.41" />
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="16dp"
+            android:background="@drawable/send_image" />
 
-    <TextView
-        android:id="@+id/txtResponse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/etMessage"
-        app:layout_constraintEnd_toEndOf="@+id/chatBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chatBackground" />
-        android:id="@+id/sendButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="right|center_vertical"
-        android:layout_margin="16dp"
-        android:background="@drawable/send_image" />
+
+        <TextView
+            android:id="@+id/txtResponse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/etMessage"
+            app:layout_constraintEnd_toEndOf="@+id/chatBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/chatBackground" />
 
     </FrameLayout>
 
