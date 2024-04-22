@@ -25,7 +25,7 @@ import java.io.IOException
 
 class Chat : Fragment() {
     private val client = OkHttpClient()
-    private val apiKey = "sk-proj-Gqk8FT0kdKCMYcSSj87eT3BlbkFJ9m4OXWwciLGQJu13H2N8"
+    private val apiKey = "api key here"
     private val url = "https://api.openai.com/v1/chat/completions"
     private lateinit var txtMessage: TextView
     private lateinit var binding: FragmentChatBinding
