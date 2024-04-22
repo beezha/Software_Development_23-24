@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "489600567548",
+    "firebase_url": "https://tsa-software-development-24-default-rtdb.firebaseio.com",
     "project_id": "tsa-software-development-24",
     "storage_bucket": "tsa-software-development-24.appspot.com"
   },
@@ -14,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "489600567548-3ldbjg7ji266vicgtb11opr1ersmd3rk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.softwaredevelopment23_24",
+            "certificate_hash": "73d703aaf6da2ac1c8c4cf8f2eb59df815156392"
+          }
+        },
+        {
           "client_id": "489600567548-7t1emp3hqi2lgopc62qf7ijks79f9gmu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.softwaredevelopment23_24",
             "certificate_hash": "48504903f8c92381d23bd506fa4d6496e18dce03"
+          }
+        },
+        {
+          "client_id": "489600567548-k8ujkn2n437ej8am8gfhc3sl2f6cp0vt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.softwaredevelopment23_24",
+            "certificate_hash": "08f6c465093acae8777ed201ad23c9ae3edf4d17"
           }
         },
         {

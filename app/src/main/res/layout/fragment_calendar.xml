@@ -978,6 +978,7 @@ android:layout_height="match_parent"
                     </FrameLayout>
 
                 </LinearLayout>
+
         </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
