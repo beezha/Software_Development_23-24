@@ -8,7 +8,7 @@ import com.example.softwaredevelopment23_24.R
 import java.util.*
 import android.view.LayoutInflater
 
-class CalendarAdapter(private val mContext: Context, private val days: List<Date>) : BaseAdapter() {
+class CalendarAdapter(private val mContext: Context, private val days: List<Date>, private val selectedDays: List<Int>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return days.size
@@ -33,6 +33,12 @@ class CalendarAdapter(private val mContext: Context, private val days: List<Date
 
         val textView = convertView!!.findViewById<TextView>(R.id.calendarDayTextView)
         textView.text = dayOfMonth
+
+        if (selectedDays.contains(position + 1)) {
+            textView.setTextColor(mContext.resources.getColor(R.color.yellow))
+        } else {
+            textView.setTextColor(mContext.resources.getColor(android.R.color.white))
+        }
 
         return convertView
     }
