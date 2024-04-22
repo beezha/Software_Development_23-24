@@ -187,10 +187,11 @@ class Login : Fragment() {
             val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
             val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.nav_view)
             bottomNavigationView.visibility = View.VISIBLE
-            findNavController().navigate(R.id.navigation_home)
+
             MainActivity().updateLoginDay(reference, requireContext()) {
                 MainActivity().updateLoginTime(reference, requireContext())
                 MainActivity().resetStreak(reference, requireContext())
+                findNavController().navigate(R.id.navigation_home)
             }
 
         }

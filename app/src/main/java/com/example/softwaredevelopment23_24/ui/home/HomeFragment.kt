@@ -26,10 +26,10 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val user = FirebaseAuth.getInstance().currentUser!!
-        val username = user.displayName?.uppercase()
+        val user = FirebaseAuth.getInstance()
+        val username = user.currentUser!!.displayName?.uppercase()
         binding.usernameText.text = username
-        val userID = user.uid
+        val userID = user.currentUser!!.uid
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
         (activity as MainActivity).generateStats(

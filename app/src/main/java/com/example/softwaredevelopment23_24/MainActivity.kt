@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     fun generateDatabase(userID: String, username: String, email:String, context: Context) {
         val database: DatabaseReference = FirebaseDatabase.getInstance().reference
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         val currentTime = System.currentTimeMillis()
         val userData = hashMapOf(
             "username" to username,
@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity() {
             "task3" to true,
             "task4" to true,
             "task5" to true,
-            "task6" to false,
-            "task7" to false,
-            "task8" to false,
+            "task6" to true,
+            "task7" to true,
+            "task8" to true,
             "petHunger" to 50,
             "petThirst" to 50,
             "petEnjoyment" to 50,
