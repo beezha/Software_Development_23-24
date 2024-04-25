@@ -75,18 +75,16 @@
             android:textColor="@color/yellow"
             android:textSize="34sp" />
 
-
-    <TextView
-        android:id="@+id/usernameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="USER"
-        android:layout_marginLeft="40dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/yellow"
-        android:textSize="34sp" />
-
+        <TextView
+            android:id="@+id/usernameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:fontFamily="sans-serif-black"
+            android:text="USER"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/yellow"
+            android:textSize="34sp" />
 
     </FrameLayout>
 
@@ -105,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/daily_tasks"
         android:textColor="@color/purple"
@@ -143,17 +141,16 @@
 
     <FrameLayout
         android:id="@+id/petWidget"
-        android:layout_width="356dp"
+        android:layout_width="336dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp">
 
         <FrameLayout
             android:layout_width="168dp"
             android:layout_height="140dp"
             android:layout_gravity="left"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/pet_widget_white"
             android:elevation="5dp">
 
@@ -168,8 +165,8 @@
         <FrameLayout
             android:layout_width="168dp"
             android:layout_height="140dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="50dp"
             android:background="@drawable/pet_widget_yellow"
             android:elevation="5dp">
 
@@ -259,11 +256,10 @@
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="356dp"
+        android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="36dp">
-
 
         <!--    Redirects to Calendar fragment-->
         <FrameLayout
@@ -284,74 +280,6 @@
                 android:textColor="@color/red"
                 android:textSize="60sp" />
         </FrameLayout>
-      
-    <!--    Redirects to Calendar fragment-->
-    <FrameLayout
-        android:id="@+id/calendarWidget"
-        android:layout_width="168dp"
-        android:layout_height="182dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="18dp"
-        android:layout_gravity="left"
-        android:background="@drawable/calendar_widget"
-        android:elevation="5dp" />
-
-    <!--    Redirects to start of "TODAY'S TASK" in Calendar fragment-->
-
-    <FrameLayout
-        android:layout_width="175dp"
-        android:layout_height="163dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="38dp">
-
-    <FrameLayout
-        android:id="@+id/taskWidget"
-        android:layout_width="155dp"
-        android:layout_height="108dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/task_background"
-        android:layout_gravity="bottom"
-        android:elevation="5dp">
-
-        <TextView
-            android:id="@+id/task_quote"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/task_quote"
-            android:textColor="@color/purple"
-            android:textSize="25sp" />
-
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/tasktitleWidget"
-        android:layout_width="155dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/task_title_background"
-        android:layout_gravity="top"
-        android:elevation="5dp">
-
-        <TextView
-            android:id="@+id/taskTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/tasks"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
-    </FrameLayout>
 
         <!--    Redirects to start of "TODAY'S TASK" in Calendar fragment-->
 
@@ -389,11 +317,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
+                    android:ellipsize="end"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
+                    android:singleLine="true"
                     android:text="@string/task_name1"
                     android:textColor="@color/purple"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/taskWidget"
                     app:layout_constraintStart_toEndOf="@+id/hometask1"
                     app:layout_constraintTop_toTopOf="@+id/taskWidget" />
@@ -430,7 +360,9 @@
                     android:gravity="center"
                     android:text="@string/task_name2"
                     android:textColor="@color/purple"
-                    android:textSize="15sp" />
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/Line2"
