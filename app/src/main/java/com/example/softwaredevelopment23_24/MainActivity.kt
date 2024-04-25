@@ -329,7 +329,7 @@ class MainActivity : AppCompatActivity() {
                 val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
                 val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
 
-                if (lastLoginDay == null || !isSameDay(lastLoginTime!!, lastLoginDay, currentDay)) {
+                if ( lastLoginTime == null || lastLoginDay == null || !isSameDay(lastLoginTime, lastLoginDay, currentDay)) {
                     val newValues = hashMapOf(
                         "taskStatus1" to false,
                         "taskStatus2" to false,
