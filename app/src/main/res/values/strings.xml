@@ -60,6 +60,7 @@
     <string name="cancelTimer">Cancel</string>
     <string name="task_update">UPDATE TASK</string>
     <string name="gen_response">Generating response…</string>
+    <string name="task_quote">Complete your daily tasks!</string>
     <string name="username">Username</string>
     <string name="conf_new_password">Confirm New Password</string>
     <string name="ex_email">1234@example.com</string>
