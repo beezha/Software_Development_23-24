@@ -34,22 +34,73 @@ class CalendarFragment : Fragment() {
     private lateinit var reference: DatabaseReference
 
     private val tasks = listOf(
-        listOf("Drink Water (6x)",0,15,"Be sure to drink at least six cups of water a day to stay healthy!", 6),
-        listOf("Brush teeth (2x)",0,15,"Brushing your teeth is very important to keeping good hygiene!", 2),
-        listOf("Eat a full meal (3x)",0,15,"Nourish your body with healthy well-balanced meals three times a day.", 3),
-        listOf("Enjoy nature (30 min)",1,15,"Connecting with the outdoors can reduce stress levels and improve mood.", 30),
-        listOf("Exercise (20 min)",1,15,"Physical activity keeps your body healthy and you mind stress free!", 20),
-        listOf("Meditate (10 min)",1,15,"Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!", 10),
-        listOf("Read a book (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
-        listOf("Practice a skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
+        listOf(
+            "Drink Water (6x)",
+            0,
+            15,
+            "Be sure to drink at least six cups of water a day to stay healthy!",
+            6
+        ),
+        listOf(
+            "Brush teeth (2x)",
+            0,
+            15,
+            "Brushing your teeth is very important to keeping good hygiene!",
+            2
+        ),
+        listOf(
+            "Eat a full meal (3x)",
+            0,
+            15,
+            "Nourish your body with healthy well-balanced meals three times a day.",
+            3
+        ),
+        listOf(
+            "Enjoy nature (30 min)",
+            1,
+            15,
+            "Connecting with the outdoors can reduce stress levels and improve mood.",
+            30
+        ),
+        listOf(
+            "Exercise (20 min)",
+            1,
+            15,
+            "Physical activity keeps your body healthy and you mind stress free!",
+            20
+        ),
+        listOf(
+            "Meditate (10 min)",
+            1,
+            15,
+            "Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!",
+            10
+        ),
+        listOf(
+            "Read a book (10 min)",
+            1,
+            15,
+            "Reading stimulates the mind and lets you escape from day to day worries!",
+            10
+        ),
+        listOf(
+            "Practice a skill (15 min)",
+            1,
+            15,
+            "Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!",
+            15
+        ),
     )
 
     private fun generateTasks(callback: (MutableList<List<Any>>) -> Unit) {
         val selectedTasks = mutableListOf<List<Any>>()
         val completedTasks = mutableListOf<List<Any>>()
-        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences, taskCompleteList ->
+        (activity as MainActivity).getTaskPreferences(
+            reference,
+            requireContext()
+        ) { taskPreferences, taskCompleteList ->
             for ((counter, preference) in taskPreferences.withIndex()) {
-                if (preference as Boolean) {
+                if (preference != null && preference as? Boolean == true) {
                     if (taskCompleteList[counter]) {
                         completedTasks.add(tasks[counter])
                     } else {
@@ -65,34 +116,33 @@ class CalendarFragment : Fragment() {
     fun completeTask(task: List<Any>) {
         val coinsEarned = task[2] as Int
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-       generateTasks { taskList ->
-           val taskIndex = tasks.indexOf(task)
-           (activity as MainActivity).getCoins(reference, requireContext()) {coins ->
-               val totalCoins = coins + coinsEarned
-               val newValues = hashMapOf(
-                   "coins" to totalCoins,
-                   "taskStatus${taskIndex+1}" to true,
-                   "dayStreak$currentDay" to true
-               )
-               if (task[1] == 0) {
-                   newValues["task${taskIndex+1}Progress"] = 0
-               }
-               reference.updateChildren(newValues as Map<String, Any>)
-                   .addOnCompleteListener {
-                       taskList.remove(task)
-                       taskList.add(task)
-                       if (it.isSuccessful) {
-                           refreshTasks(taskList)
-                       }
-                       else {
-                           Toast.makeText(
-                               requireContext(),
-                               "Could not complete task. Please try again.",
-                               Toast.LENGTH_SHORT
-                           ).show()
-                       }
-                   }
-           }
+        generateTasks { taskList ->
+            val taskIndex = tasks.indexOf(task)
+            (activity as MainActivity).getCoins(reference, requireContext()) { coins ->
+                val totalCoins = coins + coinsEarned
+                val newValues = hashMapOf(
+                    "coins" to totalCoins,
+                    "taskStatus${taskIndex + 1}" to true,
+                    "dayStreak$currentDay" to true
+                )
+                if (task[1] == 0) {
+                    newValues["task${taskIndex + 1}Progress"] = 0
+                }
+                reference.updateChildren(newValues as Map<String, Any>)
+                    .addOnCompleteListener {
+                        taskList.remove(task)
+                        taskList.add(task)
+                        if (it.isSuccessful) {
+                            refreshTasks(taskList)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Could not complete task. Please try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
         }
 
     }
@@ -101,13 +151,19 @@ class CalendarFragment : Fragment() {
     private fun showTaskCon(taskIndex: Int) {
         generateTasks { taskList ->
             if (taskList[taskIndex][1] == 0) {
-                TaskUpdate(this, taskList[taskIndex], tasks).show(childFragmentManager, "TaskUpdate.kt")
-            }
-            else {
-                task_Confirm(this,taskList[taskIndex]).show(childFragmentManager, "task_Confirm.kt")
+                TaskUpdate(this, taskList[taskIndex], tasks).show(
+                    childFragmentManager,
+                    "TaskUpdate.kt"
+                )
+            } else {
+                task_Confirm(this, taskList[taskIndex]).show(
+                    childFragmentManager,
+                    "task_Confirm.kt"
+                )
             }
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -197,26 +253,102 @@ class CalendarFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun refreshTasks(selectedTasks: MutableList<List<Any>>) {
         binding.apply {
-            taskText1.text = selectedTasks[0][0].toString()
-            taskcoinCount1.text = "+${selectedTasks[0][2]}"
-            taskDescription1.text = selectedTasks[0][3].toString()
+            if (selectedTasks.isNotEmpty()) {
+                taskText1.text = selectedTasks[0][0].toString()
+                taskcoinCount1.text = "+${selectedTasks[0][2]}"
+                taskDescription1.text = selectedTasks[0][3].toString()
+            } else {
+                taskText1.text = "No tasks available"
+                taskText2.text = "No tasks available"
+                taskText3.text = "No tasks available"
+                taskText4.text = "No tasks available"
+                taskText5.text = "No tasks available"
+                // Set other task text views to "No tasks available" as needed
+                return@apply
+            }
 
-            taskText2.text = selectedTasks[1][0].toString()
-            taskcoinCount2.text = "+${selectedTasks[1][2]}"
-            taskDescription2.text = selectedTasks[1][3].toString()
+            if (selectedTasks.size > 1) {
+                taskText2.text = selectedTasks[1][0].toString()
+                taskcoinCount2.text = "+${selectedTasks[1][2]}"
+                taskDescription2.text = selectedTasks[1][3].toString()
+            } else {
+                taskText2.text = "No tasks available"
+                taskText3.text = "No tasks available"
+                taskText4.text = "No tasks available"
+                taskText5.text = "No tasks available"
+                // Set other task text views to "No tasks available" as needed
+                return@apply
+            }
 
-            taskText3.text = selectedTasks[2][0].toString()
-            taskcoinCount3.text = "+${selectedTasks[2][2]}"
-            taskDescription3.text = selectedTasks[2][3].toString()
+            if (selectedTasks.size > 2) {
+                taskText3.text = selectedTasks[2][0].toString()
+                taskcoinCount3.text = "+${selectedTasks[2][2]}"
+                taskDescription3.text = selectedTasks[2][3].toString()
+            } else {
+                taskText3.text = "No tasks available"
+                taskText4.text = "No tasks available"
+                taskText5.text = "No tasks available"
+                // Set other task text views to "No tasks available" as needed
+                return@apply
+            }
 
-            taskText4.text = selectedTasks[3][0].toString()
-            taskcoinCount4.text = "+${selectedTasks[3][2]}"
-            taskDescription4.text = selectedTasks[3][3].toString()
+            if (selectedTasks.size > 3) {
+                taskText4.text = selectedTasks[3][0].toString()
+                taskcoinCount4.text = "+${selectedTasks[3][2]}"
+                taskDescription4.text = selectedTasks[3][3].toString()
+            } else {
+                taskText4.text = "No tasks available"
+                taskText5.text = "No tasks available"
+                // Set other task text views to "No tasks available" as needed
+                return@apply
+            }
 
-            taskText5.text = selectedTasks[4][0].toString()
-            taskcoinCount5.text = "+${selectedTasks[4][2]}"
-            taskDescription5.text = selectedTasks[4][3].toString()
+            if (selectedTasks.size > 4) {
+                taskText5.text = selectedTasks[4][0].toString()
+                taskcoinCount5.text = "+${selectedTasks[4][2]}"
+                taskDescription5.text = selectedTasks[4][3].toString()
+            } else {
+                taskText5.text = "No tasks available"
+                // Set other task text views to "No tasks available" as needed
+                return@apply
+            }
 
+
+//            taskText6.text = selectedTasks[5][0].toString()
+//            taskcoinCount6.text = "+${selectedTasks[5][2]}"
+//            taskDescription6.text = selectedTasks[5][3].toString()
+
+//            taskText7.text = selectedTasks[6][0].toString()
+//            taskcoinCount7.text = "+${selectedTasks[6][2]}"
+//            taskDescription7.text = selectedTasks[6][3].toString()
+//
+//            taskText8.text = selectedTasks[7][0].toString()
+//            taskcoinCount8.text = "+${selectedTasks[7][2]}"
+//            taskDescription8.text = selectedTasks[7][3].toString()
+
+            (activity as MainActivity).getTaskPreferences(
+                reference,
+                requireContext()
+            ) { _, taskComplete ->
+                val buttons = listOf(
+                    binding.coinButton8,
+                    binding.coinButton7,
+                    binding.coinButton6,
+                    binding.coinButton5,
+                    binding.coinButton4,
+                    binding.coinButton3,
+                    binding.coinButton2,
+                    binding.coinButton1
+                )
+                val numberOfCompletedTasks = taskComplete.count { it }
+                buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false }
+                buttons.take(numberOfCompletedTasks).forEach {
+                    it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY)
+                }
+            }
+            (activity as MainActivity).getCoins(reference, requireContext()) {
+                binding.petcoinText.text = it.toString()
+                
             taskText6.text = selectedTasks[5][0].toString()
             taskcoinCount6.text = "+${selectedTasks[5][2]}"
             taskDescription6.text = selectedTasks[5][3].toString()
@@ -228,49 +360,36 @@ class CalendarFragment : Fragment() {
             taskText8.text = selectedTasks[7][0].toString()
             taskcoinCount8.text = "+${selectedTasks[7][2]}"
             taskDescription8.text = selectedTasks[7][3].toString()
+
             }
-        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {_, taskComplete ->
-            val buttons = listOf(
-                binding.coinButton8,
-                binding.coinButton7,
-                binding.coinButton6,
-                binding.coinButton5,
-                binding.coinButton4,
-                binding.coinButton3,
-                binding.coinButton2,
-                binding.coinButton1
-            )
-            val numberOfCompletedTasks = taskComplete.count { it }
-            buttons.take(numberOfCompletedTasks).forEach { it.isEnabled = false}
-            buttons.take(numberOfCompletedTasks).forEach { it.backgroundTintList = ColorStateList.valueOf(Color.DKGRAY) }
-        }
-        (activity as MainActivity).getCoins(reference, requireContext()) {
-            binding.petcoinText.text = it.toString()
         }
     }
 
-    private fun getMonth(): String {
-        val calendar = Calendar.getInstance()
-        val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
-        return monthFormat.format(calendar.time)
-    }
+        private fun getMonth(): String {
+            val calendar = Calendar.getInstance()
+            val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
+            return monthFormat.format(calendar.time)
+        }
 
-    private fun getYear(): String {
-        val calendar = Calendar.getInstance()
-        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
-        return yearFormat.format(calendar.time)
-    }
+        private fun getYear(): String {
+            val calendar = Calendar.getInstance()
+            val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+            return yearFormat.format(calendar.time)
+        }
 
-    private fun getStreakDays(callback: (MutableList<Int>) -> Unit) {
-        (activity as MainActivity).getStreak(reference, requireContext()) {streakData ->
-            val days: MutableList<Int> = mutableListOf()
-            for (i in streakData.indices) {
-                if (streakData[i]) {
-                    days.add(i + 1)
+        private fun getStreakDays(callback: (MutableList<Int>) -> Unit) {
+            (activity as MainActivity).getStreak(
+                reference,
+                requireContext()
+            ) { streakData ->
+                val days: MutableList<Int> = mutableListOf()
+                for (i in streakData.indices) {
+                    if (streakData[i]) {
+                        days.add(i + 1)
+                    }
                 }
+                callback(days)
             }
-            callback(days)
         }
     }
-}
 

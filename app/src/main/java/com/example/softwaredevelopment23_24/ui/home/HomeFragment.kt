@@ -67,17 +67,20 @@ class HomeFragment : Fragment() {
                 binding.progressText.text = "${completedTasks}/8"
                 binding.taskprogressBar.progress = completedTasks
             }
+
+            getStreakNum {
+                binding.txtStreak.text = it.toString()
+            }
+
+            (activity as MainActivity).getCoins(reference, requireContext()) {
+                binding.petcoinText.text = it.toString()
+            }
+
         } catch (e: Exception) {
             Log.d("HomeFragment.kt", e.toString())
         }
 
-        getStreakNum {
-            binding.txtStreak.text = it.toString()
-        }
 
-        (activity as MainActivity).getCoins(reference, requireContext()) {
-            binding.petcoinText.text = it.toString()
-        }
 
         generateTasks {
             binding.hometaskText1.text = it[0][0].toString()

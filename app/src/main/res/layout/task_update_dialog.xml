@@ -19,16 +19,17 @@
             android:id="@+id/txtTaskUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/task_update"
             android:textColor="@color/yellow"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.219" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btnMinusProgress"
@@ -49,11 +50,12 @@
             android:layout_marginTop="7dp"
             android:progressDrawable="@drawable/task_progress_bar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
 
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTaskUpdate"
-            app:layout_constraintVertical_bias="0.207" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btnAddProgress"
@@ -67,33 +69,50 @@
             app:layout_constraintTop_toTopOf="@+id/prgUpdateStatus"
             app:layout_constraintVertical_bias="0.49" />
 
-        <Button
-            android:id="@+id/btnTaskUpCancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:padding="12dp"
-            android:text="@string/cancel"
-            android:textColor="@color/purple"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/prgUpdateStatus"
-            app:layout_constraintTop_toBottomOf="@+id/prgUpdateStatus"
-            app:layout_constraintVertical_bias="0.86"
-            app:strokeColor="@color/purple"
-            app:strokeWidth="2dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prgUpdateStatus">
 
-        <Button
-            android:id="@+id/btnTaskUpdate"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/orange"
-            android:padding="12dp"
-            android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/prgUpdateStatus"
-            app:layout_constraintTop_toBottomOf="@+id/prgUpdateStatus" />
+            <Button
+                android:id="@+id/btnTaskUpCancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="25dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:padding="12dp"
+                android:text="@string/cancel"
+                android:textColor="@color/purple"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/prgUpdateStatus"
+                app:layout_constraintTop_toBottomOf="@+id/prgUpdateStatus"
+                app:layout_constraintVertical_bias="0.86"
+                app:strokeColor="@color/purple"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnTaskUpdate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/orange"
+                android:padding="12dp"
+                android:text="@string/save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/prgUpdateStatus"
+                app:layout_constraintTop_toBottomOf="@+id/prgUpdateStatus" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
