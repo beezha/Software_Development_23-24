@@ -328,8 +328,6 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
                 val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
-
-//                if ((lastLoginDay == null || lastLoginTime == null) || !isSameDay(lastLoginTime!!, lastLoginDay, currentDay)) {
                 if ( lastLoginTime == null || lastLoginDay == null || !isSameDay(lastLoginTime, lastLoginDay, currentDay)) {
                     val newValues = hashMapOf(
                         "taskStatus1" to false,

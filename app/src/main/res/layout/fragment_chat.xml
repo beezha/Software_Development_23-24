@@ -32,46 +32,55 @@
         android:id="@+id/chatBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/chat_background"
-        android:layout_marginTop="70dp" />
-
+        android:layout_marginTop="70dp"
+        android:src="@drawable/chat_background" />
     <FrameLayout
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="71dp"
-        android:layout_gravity="bottom|center_horizontal">
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/txtResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/chatBackground" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="405dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="71dp">
 
         <EditText
             android:id="@+id/etMessage"
             android:layout_width="310dp"
             android:layout_height="69dp"
+            android:autofillHints=""
             android:background="@drawable/chat_edit_text_background"
             android:drawableTint="@color/purple"
+            android:elevation="100dp"
             android:ems="10"
             android:hint="@string/message"
             android:inputType="text"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textColor="@color/light_warm_gray"
-            android:elevation="100dp"/>
+            android:textColor="@color/light_warm_gray" />
 
         <Button
             android:id="@+id/btnSend"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_margin="16dp"
-            android:background="@drawable/send_image" />
-
-
-        <TextView
-            android:id="@+id/txtResponse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/etMessage"
-            app:layout_constraintEnd_toEndOf="@+id/chatBackground"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/chatBackground" />
+            android:layout_gravity="right"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/send_image"
+            android:clickable="true"
+            android:elevation="16dp"
+            android:gravity="right"
+            android:padding="8dp" />
 
     </FrameLayout>
 

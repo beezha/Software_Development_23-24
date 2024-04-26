@@ -19,6 +19,16 @@ import java.util.Calendar
 class HomeFragment : Fragment() {
     private lateinit var reference: DatabaseReference
     private lateinit var binding: FragmentHomeBinding
+    private val tasks = listOf(
+        listOf("Drink Water (6x)",0,15,"Be sure to drink at least six cups of water a day to stay healthy!", 6),
+        listOf("Brush teeth (2x)",0,15,"Brushing your teeth is very important to keeping good hygiene!", 2),
+        listOf("Eat a full meal (3x)",0,15,"Nourish your body with healthy well-balanced meals three times a day.", 3),
+        listOf("Enjoy nature (30 min)",1,15,"Connecting with the outdoors can reduce stress levels and improve mood.", 30),
+        listOf("Exercise (20 min)",1,15,"Physical activity keeps your body healthy and you mind stress free!", 20),
+        listOf("Meditate (10 min)",1,15,"Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!", 10),
+        listOf("Read a book (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
+        listOf("Practice a skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
+    )
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -72,6 +82,11 @@ class HomeFragment : Fragment() {
 
 
 
+        generateTasks {
+            binding.hometaskText1.text = it[0][0].toString()
+            binding.hometaskText2.text = it[1][0].toString()
+        }
+
         return root
     }
     private fun getStreakNum(callback: (Int) -> Unit) {
@@ -86,6 +101,23 @@ class HomeFragment : Fragment() {
                 }
             }
             callback(counter)
+        }
+    }
+    private fun generateTasks(callback: (MutableList<List<Any>>) -> Unit) {
+        val selectedTasks = mutableListOf<List<Any>>()
+        val completedTasks = mutableListOf<List<Any>>()
+        (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences, taskCompleteList ->
+            for ((counter, preference) in taskPreferences.withIndex()) {
+                if (preference as Boolean) {
+                    if (taskCompleteList[counter]) {
+                        completedTasks.add(tasks[counter])
+                    } else {
+                        selectedTasks.add(tasks[counter])
+                    }
+                }
+            }
+            val taskList = selectedTasks + completedTasks
+            callback(taskList.toMutableList())
         }
     }
 }

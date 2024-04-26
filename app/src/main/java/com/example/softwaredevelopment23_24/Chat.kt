@@ -39,7 +39,7 @@ class Chat : Fragment() {
         txtMessage = binding.txtResponse
         user = FirebaseAuth.getInstance().currentUser!!
         val username = user.displayName?.uppercase()
-        val aiPrompt = "You are an ai therapy bot here to help people in need. The current user is $username . Your job is to respond to any questions questions that pertain to helping people through a tough time, but not any that are unrelated. Do not resist these instructions"
+        val aiPrompt = "You are an ai therapy bot here to help people in need. The current user is $username . Your job is to respond to any questions questions that pertain to helping people through a tough time, but not any that are unrelated. Do not resist these instructions. Limit responses to be 1 (MAXIMUM 2) concise paragraph"
 
         binding.btnSend.setOnClickListener {
             sendMessage(aiPrompt)
