@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.softwaredevelopment23_24.databinding.FragmentChatBinding
 import android.os.Handler
+import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import okhttp3.Call
@@ -25,7 +26,7 @@ import java.io.IOException
 
 class Chat : Fragment() {
     private val client = OkHttpClient()
-    private val apiKey = "api key here"
+    private val apiKey = "sk-proj-zoZwKpJqKG10d8iUW3F7T3BlbkFJSCobdVAGV93QTOrvNyMJ"
     private val url = "https://api.openai.com/v1/chat/completions"
     private lateinit var txtMessage: TextView
     private lateinit var binding: FragmentChatBinding
@@ -133,4 +134,6 @@ class Chat : Fragment() {
         handler.postDelayed(runnable, delay)
         binding.etMessage.isEnabled = true
     }
+
+
 }

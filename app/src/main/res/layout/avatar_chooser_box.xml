@@ -3,122 +3,147 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/avatarBox"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    app:cardCornerRadius="20dp">
+    android:layout_width="350dp"
+    android:layout_height="335dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="370dp"
-        android:layout_height="230dp">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="210dp"
-            android:layout_height="230dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <com.google.android.material.button.MaterialButton
+
+            <ImageButton
                 android:id="@+id/avatar1"
                 android:layout_width="90dp"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/pfp1"
                 android:elevation="5dp"
-                app:shapeAppearanceOverlay="@style/SoftwareDevelopment2324.Button.Rounded" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/changeText" />
 
-            <com.google.android.material.button.MaterialButton
+            <ImageButton
                 android:id="@+id/avatar2"
                 android:layout_width="90dp"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_toEndOf="@+id/avatar1"
+                android:background="@drawable/pfp2"
                 android:elevation="5dp"
-                app:shapeAppearanceOverlay="@style/SoftwareDevelopment2324.Button.Rounded" />
+                app:layout_constraintStart_toEndOf="@+id/avatar1"
+                app:layout_constraintTop_toBottomOf="@+id/changeText" />
 
-            <com.google.android.material.button.MaterialButton
+            <ImageButton
                 android:id="@+id/avatar4"
                 android:layout_width="90dp"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/avatar2"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_toEndOf="@+id/avatar3"
+                android:background="@drawable/pfp4"
                 android:elevation="5dp"
-                app:shapeAppearanceOverlay="@style/SoftwareDevelopment2324.Button.Rounded" />
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/avatar1"
+                app:layout_constraintVertical_bias="0.0" />
 
-            <com.google.android.material.button.MaterialButton
+            <ImageButton
                 android:id="@+id/avatar3"
                 android:layout_width="90dp"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_below="@+id/avatar1"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:background="@drawable/pfp3"
+                android:elevation="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/avatar2"
+                app:layout_constraintTop_toBottomOf="@+id/changeText" />
+
+            <ImageButton
+                android:id="@+id/avatar5"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="135dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/pfp5"
                 android:elevation="5dp"
-                app:shapeAppearanceOverlay="@style/SoftwareDevelopment2324.Button.Rounded" />
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/avatar4"
+                app:layout_constraintTop_toBottomOf="@+id/avatar2"
+                app:layout_constraintVertical_bias="1.0" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/changeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/change"
+                android:textColor="@color/yellow"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="160dp"
-            android:layout_height="230dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/relativeLayout2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/avatar_chooser_background" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="25dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintStart_toEndOf="@+id/relativeLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/changeText"
-            app:srcCompat="@drawable/account_circle" />
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:padding="2dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/purple"
+                    app:strokeColor="@color/purple"
+                    app:strokeWidth="2dp" />
 
-        <TextView
-            android:id="@+id/changeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/change"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                <Button
+                    android:id="@+id/avatarsaveButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
+                    android:padding="8dp"
+                    android:text="@string/save" />
 
-        <Button
-            android:id="@+id/avatarsaveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/save"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-            app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            </LinearLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+
+

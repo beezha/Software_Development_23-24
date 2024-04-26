@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.softwaredevelopment23_24.databinding.FragmentPetBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -179,4 +180,5 @@ class Pet : Fragment() {
             }
         }
     }
+
 }
