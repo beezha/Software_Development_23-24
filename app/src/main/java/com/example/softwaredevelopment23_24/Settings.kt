@@ -27,6 +27,7 @@ class Settings : Fragment() {
         userAuth = FirebaseAuth.getInstance()
         user = userAuth.currentUser!!
         val userID = user.uid
+
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
         binding.logoutButton.setOnClickListener {
@@ -35,7 +36,9 @@ class Settings : Fragment() {
         binding.saveButton.setOnClickListener {
             checkUpdates()
         }
-
+        binding.avatarsettingsImage.setOnClickListener {
+            AvatarDialog().show(childFragmentManager, "AvatarBox.kt")
+        }
         return binding.root
     }
 

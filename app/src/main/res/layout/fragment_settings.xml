@@ -237,14 +237,14 @@
                 android:layout_gravity="center_horizontal" />
 
             <!--    Redirects to avatar_chooser_box.xml-->
-            <ImageView
+            <ImageButton
                 android:id="@+id/avatarsettingsImage"
-                android:layout_width="210dp"
-                android:layout_height="210dp"
-                android:layout_marginTop="150dp"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="170dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="100dp"
-                android:src="@drawable/account_circle" />
+                android:background="@drawable/pfp1" />
 
         </FrameLayout>
 

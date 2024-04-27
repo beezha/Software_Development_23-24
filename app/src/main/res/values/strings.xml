@@ -44,9 +44,9 @@
     <string name="confirm_logout">CONFIRM LOGOUT</string>
     <string name="cancel">CANCEL</string>
     <string name="upload">Upload Photo</string>
-    <string name="change">Change Avatar</string>
+    <string name="change">CHANGE AVATAR</string>
     <string name="disconnect">DISCONNECT</string>
-    <string name="message">Message USER</string>
+    <string name="message">MESSAGE</string>
     <string name="default_web_client_id">489600567548-j8hc64q7gj0gajin0dn9o6p9hfbai9ti.apps.googleusercontent.com</string>
     <string name="login">LOGIN</string>
     <string name="googleSign">Sign In With Google</string>

@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.softwaredevelopment23_24.databinding.FragmentChatBinding
 import android.os.Handler
+import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import okhttp3.Call
@@ -133,4 +134,6 @@ class Chat : Fragment() {
         handler.postDelayed(runnable, delay)
         binding.etMessage.isEnabled = true
     }
+
+
 }

@@ -38,7 +38,37 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController((navController))
 
+
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    // Navigate to HomeFragment without adding to back stack
+                    navController.popBackStack(R.id.navigation_home, false)
+                    true
+                }
+                R.id.navigation_calendar -> {
+                    navController.navigate(R.id.navigation_calendar)
+                    true
+                }
+                R.id.navigation_pet -> {
+                    navController.navigate(R.id.navigation_pet)
+                    true
+                }
+                R.id.navigation_chat -> {
+                    navController.navigate(R.id.navigation_chat)
+                    true
+                }
+                R.id.navigation_settings -> {
+                    navController.navigate(R.id.navigation_settings)
+                    true
+                }
+                // Add other cases if needed
+                else -> false
+            }
+        }
+
         user = FirebaseAuth.getInstance()
+
 
         if (user.currentUser != null) {
             val userID = user.currentUser!!.uid
@@ -328,7 +358,6 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
                 val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
-
                 if ( lastLoginTime == null || lastLoginDay == null || !isSameDay(lastLoginTime, lastLoginDay, currentDay)) {
                     val newValues = hashMapOf(
                         "taskStatus1" to false,
