@@ -55,10 +55,10 @@ class Settings : Fragment() {
         if (username.isNotEmpty()) {
             updates["username"] = username
         }
-        else if (email.isNotEmpty()) {
+        if (email.isNotEmpty()) {
             updates["email"] = email
         }
-        else if (password.isNotEmpty()) {
+       if (password.isNotEmpty()) {
             if (checkPassword(password)) {
                 updates["password"] = password
             }
