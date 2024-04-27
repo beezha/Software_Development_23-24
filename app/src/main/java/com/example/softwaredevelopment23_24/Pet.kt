@@ -213,22 +213,22 @@ class Pet : Fragment() {
                         }
                     }
                 }
-            reference.updateChildren(newValues) // updates the database with the new values
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        // successful database update
-                        loadPetStats() //loads UI to be in sync with database (or else it would happen to fast)
-                        button.isEnabled = true
-                    } else {
-                        // unsuccessful database update
-                        Toast.makeText(
-                            requireContext(),
-                            "Please Try Again",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                reference.updateChildren(newValues) // updates the database with the new values
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            // successful database update
+                            loadPetStats() //loads UI to be in sync with database (or else it would happen to fast)
+                            button.isEnabled = true
+                        } else {
+                            // unsuccessful database update
+                            Toast.makeText(
+                                requireContext(),
+                                "Please Try Again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
-            //else case for when coin amount is too low
+                //else case for when coin amount is too low
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -254,7 +254,7 @@ class Pet : Fragment() {
                     )
                     reference.updateChildren(updatedName as Map<String, Any>)
                         .addOnSuccessListener { loadPetName() }
-                    }
+                }
             }
             else {
                 binding.etPetName.text = Editable.Factory.getInstance().newEditable(petName)
