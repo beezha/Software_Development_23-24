@@ -74,18 +74,18 @@ class CalendarFragment : Fragment() {
             "Meditate (10 min)",
             1,
             15,
-            "Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!",
+            "Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes balance!",
             10
         ),
         listOf(
-            "Read (10 min)",
+            "Literature (10 min)",
             1,
             15,
             "Reading stimulates the mind and lets you escape from day to day worries!",
             10
         ),
         listOf(
-            "Hone a Skill (15 min)",
+            "Hone Skills (15 min)",
             1,
             15,
             "Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!",

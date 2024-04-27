@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,67 +16,75 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cowhiskertitle" />
+
     <Button
         android:id="@+id/btnEmailPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="444dp"
+        android:layout_marginTop="40dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="@+id/etPass"
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="@+id/etPass"
-        app:layout_constraintTop_toTopOf="@+id/settingsBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/etPass" />
 
     <Button
         android:id="@+id/btnGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="160dp"
         android:elevation="100dp"
         android:text="@string/googleSign"
         app:layout_constraintBottom_toBottomOf="@+id/settingsBackground"
         app:layout_constraintEnd_toEndOf="@+id/btnEmailPass"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="@+id/btnEmailPass" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="336dp"
         android:layout_height="48dp"
+        android:layout_marginTop="-60dp"
         android:background="@drawable/edit_text_background"
-        android:elevation="100dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:paddingStart="10dp"
         android:textColor="@color/purple"
-        app:layout_constraintBottom_toTopOf="@+id/etPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/settingsBackground"
-        app:layout_constraintTop_toTopOf="@+id/settingsBackground"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/etPass"
         android:layout_width="336dp"
         android:layout_height="48dp"
-        android:layout_marginTop="308dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/edit_text_background"
-        android:elevation="100dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:textColor="@color/purple"
-        app:layout_constraintBottom_toTopOf="@+id/btnEmailPass"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="@+id/settingsBackground"
-        app:layout_constraintTop_toTopOf="@+id/settingsBackground" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <TextView
         android:id="@+id/textViewOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="28dp"
         android:fontFamily="sans-serif-black"
         android:text="----- or -----"
         android:textSize="16sp"
@@ -84,20 +93,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnEmailPass"
         app:layout_constraintTop_toBottomOf="@+id/btnEmailPass"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintVertical_bias="0.474" />
 
     <TextView
         android:id="@+id/txtRegister"
         android:layout_width="93dp"
         android:layout_height="48dp"
         android:clickable="true"
-        android:textAlignment="center"
         android:text="@string/register"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/settingsBackground"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnGoogle"
-        app:layout_constraintVertical_bias="0.819" />
+        app:layout_constraintVertical_bias="0.407" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
