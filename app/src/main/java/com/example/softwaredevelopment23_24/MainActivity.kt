@@ -1,8 +1,11 @@
 package com.example.softwaredevelopment23_24
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -149,7 +152,8 @@ class MainActivity : AppCompatActivity() {
             "dayStreak29" to false,
             "dayStreak30" to false,
             "dayStreak31" to false,
-            "loginMonth" to currentMonth
+            "loginMonth" to currentMonth,
+            "avatar" to 1
         )
         database.child("users").child(userID).setValue(userData)
             .addOnFailureListener {
@@ -469,5 +473,36 @@ class MainActivity : AppCompatActivity() {
         } else {
             false
         }
+    }
+
+    fun getAvatar(
+        reference: DatabaseReference,
+        context: Context,
+        view: View,
+        callback: (Drawable?) -> Unit) {
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val avatarInt = snapshot.child("avatar").getValue<Int>()
+                val avatarView: ImageView? = when (avatarInt) {
+                    1 -> view.findViewById(R.id.avatar1)
+                    2 -> view.findViewById(R.id.avatar2)
+                    3 -> view.findViewById(R.id.avatar3)
+                    4 -> view.findViewById(R.id.avatar4)
+                    5 -> view.findViewById(R.id.avatar5)
+                    else -> null
+                }
+                val avatarImage = avatarView?.background
+                callback(avatarImage)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not find avatar",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
     }
 }

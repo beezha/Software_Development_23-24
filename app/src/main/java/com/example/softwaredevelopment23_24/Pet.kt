@@ -30,11 +30,15 @@ class Pet : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val view = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         binding = FragmentPetBinding.inflate(inflater, container, false)
         user = FirebaseAuth.getInstance().currentUser!!
         val userID = user.uid
         reference = database.reference.child("users").child(userID)
         loadUI() // initial load of the UI
+        (activity as MainActivity).getAvatar(reference, requireContext(), view) {
+            binding.avatarPetImage.background = it
+        }
 
         // saves changes to pet name
         binding.btnPetSaveName.setOnClickListener{

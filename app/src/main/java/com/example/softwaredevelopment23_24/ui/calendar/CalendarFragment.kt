@@ -173,6 +173,7 @@ class CalendarFragment : Fragment() {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         val user = FirebaseAuth.getInstance().currentUser!!
         val userID = user.uid
+        val views = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         val view = binding.root
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
@@ -204,6 +205,10 @@ class CalendarFragment : Fragment() {
         val currentYear = getYear()
         binding.monthText.text = currentMonth
         binding.yearText.text = currentYear
+
+        (activity as MainActivity).getAvatar(reference, requireContext(), views) {
+            binding.avatarCalendarImage.background = it
+        }
 
         binding.coinButton1.setOnClickListener {
             showTaskCon(0)
