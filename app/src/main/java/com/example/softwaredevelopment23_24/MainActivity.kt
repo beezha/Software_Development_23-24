@@ -87,8 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun generateDatabase(userID: String, username: String, email:String, context: Context) {
-        val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+    fun generateDatabase(reference: DatabaseReference, userID: String, username: String, email:String, context: Context, onComplete: () -> Unit) {
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         val currentTime = System.currentTimeMillis()
@@ -155,7 +154,8 @@ class MainActivity : AppCompatActivity() {
             "loginMonth" to currentMonth,
             "avatar" to 1
         )
-        database.child("users").child(userID).setValue(userData)
+        reference.child("users").child(userID).setValue(userData)
+            .addOnSuccessListener { onComplete.invoke() }
             .addOnFailureListener {
                 Toast.makeText(
                     context,
