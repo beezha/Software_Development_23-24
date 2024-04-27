@@ -115,9 +115,11 @@
         android:id="@+id/etPetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:background="@android:color/transparent"
         android:elevation="100dp"
+        android:focusable="false"
         android:fontFamily="sans-serif-black"
         android:imeOptions="actionDone"
         android:inputType="text|textCapWords|textNoSuggestions"
@@ -126,8 +128,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/statsBackground"
         app:layout_constraintStart_toStartOf="@+id/statsBackground"
-        app:layout_constraintTop_toTopOf="@+id/statsBackground"
-        android:layout_gravity="center_horizontal" />
+        app:layout_constraintTop_toTopOf="@+id/statsBackground" />
 
     <ImageButton
         android:id="@+id/btnPetName"
