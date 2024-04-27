@@ -1,7 +1,5 @@
 package com.example.softwaredevelopment23_24
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class AvatarDialog : DialogFragment() {
+    private lateinit var reference: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,6 +23,9 @@ class AvatarDialog : DialogFragment() {
 
         val avatarSettingsImage = requireActivity().findViewById<ImageButton>(R.id.avatarsettingsImage)
         val avatarImage = requireActivity().findViewById<ImageView>(R.id.avatarImage)
+        val user = FirebaseAuth.getInstance()
+        val userID = user.currentUser!!.uid
+        reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
         val avatar1 = view.findViewById<ImageButton>(R.id.avatar1)
         val avatar2 = view.findViewById<ImageButton>(R.id.avatar2)
@@ -42,10 +46,21 @@ class AvatarDialog : DialogFragment() {
                 else -> null
             }
 
+            val avatar = when {
+                avatar1.isSelected -> 1
+                avatar2.isSelected -> 2
+                avatar3.isSelected -> 3
+                avatar4.isSelected -> 4
+                avatar5.isSelected -> 5
+                else -> 0
+            }
+
             // Set the background of avatarsettingsImage
             selectedAvatarDrawable?.let {
                 avatarSettingsImage.background = it
             }
+
+            updateAvatar(avatar)
 
             // Dismiss the dialog
             dismiss()
@@ -69,5 +84,12 @@ class AvatarDialog : DialogFragment() {
     private fun toggleAvatarSelection(avatar: ImageButton) {
         // Toggle the selected state of the avatar
         avatar.isSelected = !avatar.isSelected
+    }
+
+    private fun updateAvatar(avatar: Int) {
+        val newValues = hashMapOf(
+            "avatar" to avatar
+        )
+        reference.updateChildren(newValues as Map<String, Any>)
     }
 }

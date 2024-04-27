@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View {
+        val view = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         reference = FirebaseDatabase.getInstance().reference.child("action_homeFragment_to_calendarFragment")
         val root: View = binding.root
@@ -99,6 +100,9 @@ class HomeFragment : Fragment() {
 
             generateTasks {
                 binding.hometaskText1.text = it[0][0].toString()
+            }
+            (activity as MainActivity).getAvatar(reference, requireContext(), view) {
+                binding.avatarHomeImage.background = it
             }
 
         } catch (e: Exception) {
