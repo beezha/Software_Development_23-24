@@ -99,7 +99,9 @@ class HomeFragment : Fragment() {
             }
 
             generateTasks {
-                binding.hometaskText1.text = it[0][0].toString()
+                if (it.isNotEmpty()) {
+                    binding.hometaskText1.text = it[0][0].toString()
+                }
             }
             (activity as MainActivity).getAvatar(reference, requireContext(), view) {
                 binding.avatarHomeImage.background = it
@@ -130,7 +132,7 @@ class HomeFragment : Fragment() {
         val completedTasks = mutableListOf<List<Any>>()
         (activity as MainActivity).getTaskPreferences(reference, requireContext()) {taskPreferences, taskCompleteList ->
             for ((counter, preference) in taskPreferences.withIndex()) {
-                if (preference as Boolean) {
+                if (preference as? Boolean == true) {
                     if (taskCompleteList[counter]) {
                         completedTasks.add(tasks[counter])
                     } else {

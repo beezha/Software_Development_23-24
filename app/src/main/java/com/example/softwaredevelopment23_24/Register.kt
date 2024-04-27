@@ -58,8 +58,9 @@ class Register : Fragment() {
                                         "Registration successful",
                                         Toast.LENGTH_SHORT
                                     ).show() //HERE LATER ME
-                                    MainActivity().generateDatabase(user.uid, username, email, requireContext())
-                                    findNavController().navigate(R.id.navigation_login)
+                                    MainActivity().generateDatabase(database, user.uid, username, email, requireContext()) {
+                                        findNavController().navigate(R.id.navigation_login)
+                                    }
                                 } else {
                                     Toast.makeText(
                                         requireContext(),
