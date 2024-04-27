@@ -121,7 +121,7 @@
         android:elevation="100dp"
         android:fontFamily="sans-serif-black"
         android:imeOptions="actionDone"
-        android:inputType="text|textCapWords"
+        android:inputType="text|textCapWords|textNoSuggestions"
         android:text="@string/pet_name"
         android:textColor="@color/white"
         android:textSize="30sp"
@@ -134,18 +134,28 @@
         android:id="@+id/btnPetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="100dp"
-        android:layout_gravity="right"
+        android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
         android:elevation="100dp"
         android:src="@drawable/baseline_edit_24"
         app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/etPetName"
-        app:layout_constraintEnd_toEndOf="@+id/statsBackground"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toEndOf="@+id/etPetName"
-        app:layout_constraintTop_toTopOf="@+id/etPetName" />
+        android:contentDescription="@string/edit_pet_name_info" />
+
+    <ImageButton
+        android:id="@+id/btnPetSaveName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:background="@android:color/transparent"
+        android:elevation="100dp"
+        android:src="@drawable/baseline_save_24"
+        android:visibility="gone"
+        app:tint="@color/white"
+        android:contentDescription="@string/save_pet_name_info" />
 
     <TextView
         android:id="@+id/hungerText"
@@ -153,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="68dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:elevation="100dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"

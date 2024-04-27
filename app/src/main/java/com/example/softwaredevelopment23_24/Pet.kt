@@ -1,12 +1,17 @@
 package com.example.softwaredevelopment23_24
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.example.softwaredevelopment23_24.databinding.FragmentPetBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,11 +36,27 @@ class Pet : Fragment() {
         reference = database.reference.child("users").child(userID)
         loadUI() // initial load of the UI
 
-        // checking for a change to the pet name
-        binding.btnPetName.setOnClickListener{
+        // saves changes to pet name
+        binding.btnPetSaveName.setOnClickListener{
             val newName = binding.etPetName.text.toString()
             updatePetName(newName)
         }
+        binding.etPetName.setOnEditorActionListener { _, action, _ ->
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                val newName = binding.etPetName.text.toString()
+                updatePetName(newName)
+                true
+            }
+            else {
+                false
+            }
+        }
+
+        // start editing pet name
+        binding.btnPetName.setOnClickListener {
+            startEditing()
+        }
+
         // checking each button for when they are clicked
         binding.hungerButton.setOnClickListener{
             spendPoints(it, reference)
@@ -52,6 +73,17 @@ class Pet : Fragment() {
     private fun loadUI() {
         loadPetName()
         loadPetStats()
+    }
+
+    private fun startEditing() {
+        binding.btnPetName.isGone = true
+        binding.btnPetSaveName.isVisible = true
+        binding.etPetName.requestFocus()
+
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.etPetName, InputMethodManager.SHOW_IMPLICIT)
+
+        binding.etPetName.setSelection(binding.etPetName.text.length)
     }
 
     private fun loadPetName() {
@@ -166,7 +198,10 @@ class Pet : Fragment() {
                         "petName" to newName
                     )
                     reference.updateChildren(updatedName as Map<String, Any>)
-                        .addOnSuccessListener { loadPetName() }
+                        .addOnSuccessListener {
+                            loadPetName()
+                            exitEditing()
+                        }
                     }
             }
             else {
@@ -178,5 +213,14 @@ class Pet : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun exitEditing() {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etPetName.windowToken, 0)
+        binding.etPetName.clearFocus()
+
+        binding.btnPetName.isVisible = true
+        binding.btnPetSaveName.isGone = true
     }
 }
