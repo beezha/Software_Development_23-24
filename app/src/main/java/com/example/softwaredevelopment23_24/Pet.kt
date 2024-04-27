@@ -6,13 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.softwaredevelopment23_24.databinding.FragmentPetBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import pl.droidsonroids.gif.AnimationListener
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 import kotlin.properties.Delegates
 
 // TODO: make UI updates cleaner when points are spent
@@ -21,6 +26,9 @@ class Pet : Fragment() {
     private lateinit var user: FirebaseUser
     private var database =  FirebaseDatabase.getInstance()
     private lateinit var reference: DatabaseReference
+    private lateinit var petwidgetImage: GifImageView
+    private lateinit var originalGif: GifDrawable
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +38,7 @@ class Pet : Fragment() {
         user = FirebaseAuth.getInstance().currentUser!!
         val userID = user.uid
         reference = database.reference.child("users").child(userID)
+
         loadUI() // initial load of the UI
 
         // checking for a change to the pet name
@@ -48,6 +57,13 @@ class Pet : Fragment() {
             spendPoints(it, reference)
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        petwidgetImage = view.findViewById(R.id.petwidgetImage)
+        originalGif = GifDrawable(resources, R.drawable.idle_animation_final)
+        petwidgetImage.setImageDrawable(originalGif)
     }
 
     private fun loadUI() {
@@ -85,6 +101,7 @@ class Pet : Fragment() {
         var newValues = HashMap<String, Any>()
         var newStat by Delegates.notNull<Int>()
         var newCoins by Delegates.notNull<Int>()
+
         (activity as MainActivity).generateStats(reference, requireContext()) { petHunger, petThirst, petEnjoyment, coins ->
             // check to make sure that coin total is above 5
             if (coins >= 5) {
@@ -100,8 +117,32 @@ class Pet : Fragment() {
                                 "petHunger" to minOf(newStat, 100),
                                 "coins" to newCoins
                             )
+                            val hungerGif = GifDrawable(resources, R.drawable.eat_animation)
+
+                            // Stop the original GIF and hide it
+                            originalGif.stop()
+
+
+                            // Change the GIF to the new one
+                            petwidgetImage.setImageDrawable(hungerGif)
+                            hungerGif.start()
+
+                            // Set an animation listener on the new GIF
+                            hungerGif.addAnimationListener(object : AnimationListener {
+                                override fun onAnimationCompleted(loopNumber: Int) {
+                                    // Animation of the new GIF has completed
+                                    // Hide the new GIF
+                                    petwidgetImage.visibility = View.GONE
+
+                                    // Show the original GIF
+                                    petwidgetImage.setImageDrawable(originalGif)
+                                    petwidgetImage.visibility = View.VISIBLE
+                                    originalGif.start()
+                                }
+                            })
                         }
                     }
+
                     binding.thirstButton -> {
                         if (petThirst >= 100) {
                             statErrorMessage()
@@ -112,18 +153,63 @@ class Pet : Fragment() {
                                 "petThirst" to minOf(newStat, 100),
                                 "coins" to newCoins
                             )
+                            val thirstGif = GifDrawable(resources, R.drawable.drink)
+
+                            // Stop the original GIF and hide it
+                            originalGif.stop()
+
+                            // Change the GIF to the new one
+                            petwidgetImage.setImageDrawable(thirstGif)
+                            thirstGif.start()
+
+                            // Set an animation listener on the new GIF
+                            thirstGif.addAnimationListener(object : AnimationListener {
+                                override fun onAnimationCompleted(loopNumber: Int) {
+                                    // Animation of the new GIF has completed
+                                    // Hide the new GIF
+                                    petwidgetImage.visibility = View.GONE
+
+                                    // Show the original GIF
+                                    petwidgetImage.setImageDrawable(originalGif)
+                                    petwidgetImage.visibility = View.VISIBLE
+                                    originalGif.start()
+                                }
+                            })
                         }
                     }
+
                     else -> {
                         if (petEnjoyment >= 100) {
                             statErrorMessage()
-                        } else{
+                        } else {
                             newStat = petEnjoyment + 15
                             newCoins = coins - 5
                             newValues = hashMapOf(
                                 "petEnjoyment" to minOf(newStat, 100),
                                 "coins" to newCoins
                             )
+                            val enjoymentGif = GifDrawable(resources, R.drawable.play_animation)
+
+                            // Stop the original GIF and hide it
+                            originalGif.stop()
+
+                            // Change the GIF to the new one
+                            petwidgetImage.setImageDrawable(enjoymentGif)
+                            enjoymentGif.start()
+
+                            // Set an animation listener on the new GIF
+                            enjoymentGif.addAnimationListener(object : AnimationListener {
+                                override fun onAnimationCompleted(loopNumber: Int) {
+                                    // Animation of the new GIF has completed
+                                    // Hide the new GIF
+                                    petwidgetImage.visibility = View.GONE
+
+                                    // Show the original GIF
+                                    petwidgetImage.setImageDrawable(originalGif)
+                                    petwidgetImage.visibility = View.VISIBLE
+                                    originalGif.start()
+                                }
+                            })
                         }
                     }
                 }

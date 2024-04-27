@@ -78,14 +78,14 @@ class CalendarFragment : Fragment() {
             10
         ),
         listOf(
-            "Read a Book (10 min)",
+            "Read (10 min)",
             1,
             15,
             "Reading stimulates the mind and lets you escape from day to day worries!",
             10
         ),
         listOf(
-            "Practice a Skill (15 min)",
+            "Hone a Skill (15 min)",
             1,
             15,
             "Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!",

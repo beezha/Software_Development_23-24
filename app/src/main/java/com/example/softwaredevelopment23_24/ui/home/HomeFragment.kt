@@ -29,8 +29,8 @@ class HomeFragment : Fragment() {
         listOf("Explore (30 min)",1,15,"Connecting with nature can reduce stress levels and improve mood.", 30),
         listOf("Exercise (20 min)",1,15,"Physical activity keeps your body healthy and you mind stress free!", 20),
         listOf("Meditate (10 min)",1,15,"Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!", 10),
-        listOf("Read a Book (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
-        listOf("Practice a Skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
+        listOf("Read (10 min)",1,15,"Reading stimulates the mind and lets you escape from day to day worries!", 10),
+        listOf("Hone a Skill (15 min)",1,15,"Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!", 15),
     )
     private fun someFunction() {
         if (::reference.isInitialized) {
