@@ -123,6 +123,7 @@
         android:fontFamily="sans-serif-black"
         android:imeOptions="actionDone"
         android:inputType="text|textCapWords|textNoSuggestions"
+        android:singleLine="true"
         android:text="@string/pet_name"
         android:textColor="@color/white"
         android:textSize="30sp"
