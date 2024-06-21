@@ -1,8 +1,11 @@
 package com.example.softwaredevelopment23_24
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +41,37 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController((navController))
 
+
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    // Navigate to HomeFragment without adding to back stack
+                    navController.popBackStack(R.id.navigation_home, false)
+                    true
+                }
+                R.id.navigation_calendar -> {
+                    navController.navigate(R.id.navigation_calendar)
+                    true
+                }
+                R.id.navigation_pet -> {
+                    navController.navigate(R.id.navigation_pet)
+                    true
+                }
+                R.id.navigation_chat -> {
+                    navController.navigate(R.id.navigation_chat)
+                    true
+                }
+                R.id.navigation_settings -> {
+                    navController.navigate(R.id.navigation_settings)
+                    true
+                }
+                // Add other cases if needed
+                else -> false
+            }
+        }
+
         user = FirebaseAuth.getInstance()
+
 
         if (user.currentUser != null) {
             val userID = user.currentUser!!.uid
@@ -54,8 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun generateDatabase(userID: String, username: String, email:String, context: Context) {
-        val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+    fun generateDatabase(reference: DatabaseReference, userID: String, username: String, email:String, context: Context, onComplete: () -> Unit) {
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         val currentTime = System.currentTimeMillis()
@@ -119,9 +151,11 @@ class MainActivity : AppCompatActivity() {
             "dayStreak29" to false,
             "dayStreak30" to false,
             "dayStreak31" to false,
-            "loginMonth" to currentMonth
+            "loginMonth" to currentMonth,
+            "avatar" to 1
         )
-        database.child("users").child(userID).setValue(userData)
+        reference.child("users").child(userID).setValue(userData)
+            .addOnSuccessListener { onComplete.invoke() }
             .addOnFailureListener {
                 Toast.makeText(
                     context,
@@ -439,5 +473,36 @@ class MainActivity : AppCompatActivity() {
         } else {
             false
         }
+    }
+
+    fun getAvatar(
+        reference: DatabaseReference,
+        context: Context,
+        view: View,
+        callback: (Drawable?) -> Unit) {
+        reference.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val avatarInt = snapshot.child("avatar").getValue<Int>()
+                val avatarView: ImageView? = when (avatarInt) {
+                    1 -> view.findViewById(R.id.avatar1)
+                    2 -> view.findViewById(R.id.avatar2)
+                    3 -> view.findViewById(R.id.avatar3)
+                    4 -> view.findViewById(R.id.avatar4)
+                    5 -> view.findViewById(R.id.avatar5)
+                    else -> null
+                }
+                val avatarImage = avatarView?.background
+                callback(avatarImage)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    context,
+                    "Could not find avatar",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
     }
 }

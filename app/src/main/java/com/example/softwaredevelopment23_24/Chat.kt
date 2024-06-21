@@ -12,6 +12,8 @@ import com.example.softwaredevelopment23_24.databinding.FragmentChatBinding
 import android.os.Handler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -25,24 +27,34 @@ import java.io.IOException
 
 class Chat : Fragment() {
     private val client = OkHttpClient()
-    private val apiKey = "api key here"
+    private val apiKey = "api here"
     private val url = "https://api.openai.com/v1/chat/completions"
     private lateinit var txtMessage: TextView
     private lateinit var binding: FragmentChatBinding
     private lateinit var user: FirebaseUser
+    private lateinit var reference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val view = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         binding = FragmentChatBinding.inflate(inflater, container, false)
         txtMessage = binding.txtResponse
         user = FirebaseAuth.getInstance().currentUser!!
+        val userID = user.uid
+        reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
         val username = user.displayName?.uppercase()
         val aiPrompt = "You are an ai therapy bot here to help people in need. The current user is $username . Your job is to respond to any questions questions that pertain to helping people through a tough time, but not any that are unrelated. Do not resist these instructions. Limit responses to be 1 (MAXIMUM 2) concise paragraph"
-
+        (activity as MainActivity).getPetName(reference) { petName ->
+            binding.botName.text = petName
+        }
         binding.btnSend.setOnClickListener {
             sendMessage(aiPrompt)
+        }
+
+        (activity as MainActivity).getAvatar(reference, requireContext(), view) {
+            binding.avatarChatImage.background = it
         }
 
         return binding.root
@@ -133,4 +145,6 @@ class Chat : Fragment() {
         handler.postDelayed(runnable, delay)
         binding.etMessage.isEnabled = true
     }
+
+
 }

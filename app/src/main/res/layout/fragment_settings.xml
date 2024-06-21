@@ -70,6 +70,7 @@
                     android:hint="Name"
                     android:inputType="textPersonName"
                     android:paddingStart="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/purple" />
 
                 <TextView
@@ -93,8 +94,9 @@
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:hint="@string/ex_email"
-                    android:inputType="textPersonName"
+                    android:inputType="textEmailAddress"
                     android:paddingStart="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/purple" />
 
                 <TextView
@@ -118,8 +120,9 @@
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:hint="@string/old_password"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPassword"
                     android:paddingStart="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/purple" />
 
                 <TextView
@@ -145,6 +148,7 @@
                     android:hint="@string/new_password"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/purple" />
 
                 <TextView
@@ -170,6 +174,7 @@
                     android:hint="@string/conf_new_password"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/purple" />
 
                 <FrameLayout
@@ -237,14 +242,14 @@
                 android:layout_gravity="center_horizontal" />
 
             <!--    Redirects to avatar_chooser_box.xml-->
-            <ImageView
+            <ImageButton
                 android:id="@+id/avatarsettingsImage"
-                android:layout_width="210dp"
-                android:layout_height="210dp"
-                android:layout_marginTop="150dp"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="170dp"
                 android:layout_gravity="center_horizontal"
                 android:elevation="100dp"
-                android:src="@drawable/account_circle" />
+                android:background="@drawable/pfp1" />
 
         </FrameLayout>
 

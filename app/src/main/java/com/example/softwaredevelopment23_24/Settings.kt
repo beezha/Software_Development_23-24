@@ -23,11 +23,17 @@ class Settings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val view = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         userAuth = FirebaseAuth.getInstance()
         user = userAuth.currentUser!!
         val userID = user.uid
+
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+
+        (activity as MainActivity).getAvatar(reference, requireContext(), view) {
+            binding.avatarsettingsImage.background = it
+        }
 
         binding.logoutButton.setOnClickListener {
             LogoutDialog().show(childFragmentManager, "LogoutDialog.kt")
@@ -35,7 +41,9 @@ class Settings : Fragment() {
         binding.saveButton.setOnClickListener {
             checkUpdates()
         }
-
+        binding.avatarsettingsImage.setOnClickListener {
+            AvatarDialog().show(childFragmentManager, "AvatarBox.kt")
+        }
         return binding.root
     }
 
@@ -47,10 +55,10 @@ class Settings : Fragment() {
         if (username.isNotEmpty()) {
             updates["username"] = username
         }
-        else if (email.isNotEmpty()) {
+        if (email.isNotEmpty()) {
             updates["email"] = email
         }
-        else if (password.isNotEmpty()) {
+       if (password.isNotEmpty()) {
             if (checkPassword(password)) {
                 updates["password"] = password
             }

@@ -46,4 +46,10 @@
         android:name="com.example.softwaredevelopment23_24.Chat"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+    <action
+        android:id="@+id/action_homeFragment_to_calendarFragment"
+        app:destination="@id/navigation_calendar"/>
+    <action
+        android:id="@+id/action_homeFragment_to_petFragment"
+        app:destination="@id/navigation_pet"/>
 </navigation>

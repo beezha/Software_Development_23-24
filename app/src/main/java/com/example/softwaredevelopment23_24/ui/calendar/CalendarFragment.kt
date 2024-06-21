@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.softwaredevelopment23_24.MainActivity
@@ -42,24 +43,24 @@ class CalendarFragment : Fragment() {
             6
         ),
         listOf(
-            "Brush teeth (2x)",
+            "Brush Teeth (2x)",
             0,
             15,
             "Brushing your teeth is very important to keeping good hygiene!",
             2
         ),
         listOf(
-            "Eat a full meal (3x)",
+            "Eat a Full Meal (3x)",
             0,
             15,
             "Nourish your body with healthy well-balanced meals three times a day.",
             3
         ),
         listOf(
-            "Enjoy nature (30 min)",
+            "Explore (30 min)",
             1,
             15,
-            "Connecting with the outdoors can reduce stress levels and improve mood.",
+            "Connecting with nature can reduce stress levels and improve mood.",
             30
         ),
         listOf(
@@ -73,18 +74,18 @@ class CalendarFragment : Fragment() {
             "Meditate (10 min)",
             1,
             15,
-            "Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes emotional balance!",
+            "Meditation helps the mind reduce the effects of anxiety, increase self-awareness, and promotes balance!",
             10
         ),
         listOf(
-            "Read a book (10 min)",
+            "Literature (10 min)",
             1,
             15,
             "Reading stimulates the mind and lets you escape from day to day worries!",
             10
         ),
         listOf(
-            "Practice a skill (15 min)",
+            "Hone Skills (15 min)",
             1,
             15,
             "Practicing your favorite hobby makes you feel accomplished and helps boost your self-esteem!",
@@ -172,6 +173,7 @@ class CalendarFragment : Fragment() {
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         val user = FirebaseAuth.getInstance().currentUser!!
         val userID = user.uid
+        val views = inflater.inflate(R.layout.avatar_chooser_box, container, false)
         val view = binding.root
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
@@ -203,6 +205,10 @@ class CalendarFragment : Fragment() {
         val currentYear = getYear()
         binding.monthText.text = currentMonth
         binding.yearText.text = currentYear
+
+        (activity as MainActivity).getAvatar(reference, requireContext(), views) {
+            binding.avatarCalendarImage.background = it
+        }
 
         binding.coinButton1.setOnClickListener {
             showTaskCon(0)
@@ -348,7 +354,7 @@ class CalendarFragment : Fragment() {
             }
             (activity as MainActivity).getCoins(reference, requireContext()) {
                 binding.petcoinText.text = it.toString()
-                
+
             taskText6.text = selectedTasks[5][0].toString()
             taskcoinCount6.text = "+${selectedTasks[5][2]}"
             taskDescription6.text = selectedTasks[5][3].toString()
@@ -391,5 +397,7 @@ class CalendarFragment : Fragment() {
                 callback(days)
             }
         }
+
+
     }
 
