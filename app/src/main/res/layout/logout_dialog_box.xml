@@ -6,7 +6,7 @@
     android:id="@+id/logoutDialog"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/white"
+    android:backgroundTint="@color/white"
     app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +20,7 @@
             android:layout_marginTop="25dp"
             android:fontFamily="sans-serif-black"
             android:text="@string/confirm_logout"
-            android:textColor="@color/yellow"
+            android:textColor="@color/green"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +59,8 @@
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
                 android:text="@string/cancel"
-                android:textColor="@color/purple"
-                app:strokeColor="@color/purple"
+                android:textColor="@color/teal"
+                app:strokeColor="@color/teal"
                 app:strokeWidth="2dp"
                 tools:layout_editor_absoluteX="68dp"
                 tools:layout_editor_absoluteY="104dp" />

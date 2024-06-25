@@ -22,7 +22,6 @@ class AvatarDialog : DialogFragment() {
         val view = inflater.inflate(R.layout.avatar_chooser_box, container, false)
 
         val avatarSettingsImage = requireActivity().findViewById<ImageButton>(R.id.avatarsettingsImage)
-        val avatarImage = requireActivity().findViewById<ImageView>(R.id.avatarImage)
         val user = FirebaseAuth.getInstance()
         val userID = user.currentUser!!.uid
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)

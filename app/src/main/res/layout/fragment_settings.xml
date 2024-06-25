@@ -24,7 +24,7 @@
             android:layout_gravity="right"
             android:fontFamily="sans-serif-black"
             android:text="CO-WHISKER"
-            android:textColor="@color/yellow"
+            android:textColor="@color/green"
             android:textSize="25sp" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -56,7 +56,7 @@
                     android:paddingStart="46dp"
                     android:paddingTop="117dp"
                     android:text="@string/username"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/teal"
                     android:textSize="18sp" />
 
                 <EditText
@@ -71,7 +71,7 @@
                     android:inputType="textPersonName"
                     android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/teal" />
 
                 <TextView
                     android:id="@+id/lastnameText"
@@ -82,7 +82,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:paddingStart="46dp"
                     android:text="@string/email"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/teal"
                     android:textSize="18sp" />
 
                 <EditText
@@ -97,7 +97,7 @@
                     android:inputType="textEmailAddress"
                     android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/teal" />
 
                 <TextView
                     android:id="@+id/emailText"
@@ -108,7 +108,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:paddingStart="46dp"
                     android:text="@string/old_password"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/teal"
                     android:textSize="18sp" />
 
                 <EditText
@@ -123,7 +123,7 @@
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/teal" />
 
                 <TextView
                     android:id="@+id/oldpasswordText"
@@ -134,7 +134,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:paddingStart="46dp"
                     android:text="@string/new_password"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/teal"
                     android:textSize="18sp" />
 
                 <EditText
@@ -149,7 +149,7 @@
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/teal" />
 
                 <TextView
                     android:id="@+id/newpasswordText"
@@ -160,7 +160,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:paddingStart="46dp"
                     android:text="@string/conf_new_password"
-                    android:textColor="@color/purple"
+                    android:textColor="@color/teal"
                     android:textSize="18sp" />
 
                 <EditText
@@ -175,7 +175,7 @@
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textColor="@color/purple" />
+                    android:textColor="@color/teal" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"

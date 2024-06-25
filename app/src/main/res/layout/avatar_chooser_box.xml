@@ -99,7 +99,7 @@
                 android:layout_marginTop="25dp"
                 android:fontFamily="sans-serif-black"
                 android:text="@string/change"
-                android:textColor="@color/yellow"
+                android:textColor="@color/green"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,8 +126,8 @@
                     android:backgroundTint="@color/white"
                     android:padding="2dp"
                     android:text="@string/cancel"
-                    android:textColor="@color/purple"
-                    app:strokeColor="@color/purple"
+                    android:textColor="@color/teal"
+                    app:strokeColor="@color/teal"
                     app:strokeWidth="2dp" />
 
                 <Button

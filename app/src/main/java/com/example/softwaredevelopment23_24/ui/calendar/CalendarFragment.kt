@@ -15,9 +15,9 @@ import androidx.fragment.app.Fragment
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.softwaredevelopment23_24.MainActivity
 import com.example.softwaredevelopment23_24.TaskUpdate
 import com.example.softwaredevelopment23_24.task_Confirm
@@ -177,7 +177,6 @@ class CalendarFragment : Fragment() {
         val view = binding.root
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
-        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbar)
         val toolbarText = view.findViewById<TextView>(R.id.toolbarText)
         val startSize = resources.getDimensionPixelSize(R.dimen.start_size)
         val endSize = resources.getDimensionPixelSize(R.dimen.end_size)
@@ -192,6 +191,16 @@ class CalendarFragment : Fragment() {
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val percentage = abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
             textSizeAnimator.currentPlayTime = (percentage * textSizeAnimator.duration).toLong()
+
+            val green = ContextCompat.getColor(requireContext(), R.color.green)
+            val calendarToolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.calendarToolbar)
+
+            if (percentage > 0.65f) {
+                calendarToolbar.setBackgroundColor(green) // Change to desired color
+            } else {
+                calendarToolbar.setBackgroundColor(Color.TRANSPARENT) // Reset to transparent or another color
+                appBarLayout.setBackgroundColor(Color.TRANSPARENT) // Reset to transparent or another color
+            }
         })
 
         val calendarGridView = view.findViewById<GridView>(R.id.calendarGridView)

@@ -17,9 +17,9 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 <com.google.android.material.appbar.CollapsingToolbarLayout
-android:id="@+id/collapsingToolbar"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
+    android:id="@+id/collapsingToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@drawable/curved_toolbar"
     app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -52,7 +52,7 @@ android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
-        android:background="@drawable/toolbar_background"
+        android:background="@android:color/transparent"
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:layout_collapseMode="pin"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -244,7 +244,7 @@ android:layout_height="match_parent"
                 android:id="@+id/calendarGridView"
                 android:layout_width="280dp"
                 android:layout_height="205dp"
-                android:background="@color/purple"
+                android:background="@color/teal"
                 android:horizontalSpacing="1dp"
                 android:numColumns="7"
                 android:stretchMode="columnWidth"
@@ -299,7 +299,7 @@ android:layout_height="match_parent"
                 android:layout_gravity="left"
                 android:gravity="center"
                 android:text="1."
-                android:textColor="@color/purple"
+                android:textColor="@color/teal"
                 android:textSize="25sp" />
 
             <TextView
@@ -312,7 +312,7 @@ android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="left"
                 android:text="@string/task_name1"
-                android:textColor="@color/purple"
+                android:textColor="@color/teal"
                 android:textSize="20sp"
                 android:clickable="true"/>
 
@@ -359,7 +359,7 @@ android:layout_height="match_parent"
                 android:paddingTop="72dp"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/task_description1"
-                android:textColor="@color/purple" />
+                android:textColor="@color/teal" />
 
         <ImageView
             android:id="@+id/dottedLine1"
@@ -387,7 +387,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="2."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -400,7 +400,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name2"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -447,7 +447,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description1"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine2"
@@ -475,7 +475,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="3."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -488,7 +488,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name3"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -535,7 +535,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description3"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine3"
@@ -563,7 +563,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="4."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -576,7 +576,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name4"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -623,7 +623,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description4"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine4"
@@ -651,7 +651,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="5."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -664,7 +664,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name5"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -711,7 +711,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description1"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine5"
@@ -739,7 +739,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="6."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -752,7 +752,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name6"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -799,7 +799,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description1"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine6"
@@ -827,7 +827,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="7."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -840,7 +840,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name7"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -887,7 +887,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description1"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                         <ImageView
                             android:id="@+id/dottedLine7"
@@ -915,7 +915,7 @@ android:layout_height="match_parent"
                             android:layout_gravity="left"
                             android:gravity="center"
                             android:text="8."
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="25sp" />
 
                         <TextView
@@ -928,7 +928,7 @@ android:layout_height="match_parent"
                             android:gravity="center"
                             android:layout_gravity="left"
                             android:text="@string/task_name8"
-                            android:textColor="@color/purple"
+                            android:textColor="@color/teal"
                             android:textSize="20sp"
                             android:clickable="true"/>
 
@@ -975,7 +975,7 @@ android:layout_height="match_parent"
                             android:paddingTop="72dp"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/task_description8"
-                            android:textColor="@color/purple" />
+                            android:textColor="@color/teal" />
 
                     </FrameLayout>
 

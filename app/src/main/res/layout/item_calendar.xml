@@ -3,7 +3,7 @@
     android:id="@+id/calendarDayTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/purple"
+    android:background="@color/teal"
     android:gravity="center"
     android:padding="10dp"
     android:textColor="@color/white"

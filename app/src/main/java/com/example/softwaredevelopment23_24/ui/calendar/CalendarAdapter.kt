@@ -35,7 +35,7 @@ class CalendarAdapter(private val mContext: Context, private val days: List<Date
         textView.text = dayOfMonth
 
         if (selectedDays.contains(position + 1)) {
-            textView.setTextColor(mContext.resources.getColor(R.color.yellow))
+            textView.setTextColor(mContext.resources.getColor(R.color.green))
         } else {
             textView.setTextColor(mContext.resources.getColor(android.R.color.white))
         }
