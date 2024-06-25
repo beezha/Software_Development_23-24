@@ -37,11 +37,6 @@
         tools:layout="@layout/fragment_pet"
         />
     <fragment
-        android:id="@+id/navigation_beginning_chat"
-        android:name="com.example.softwaredevelopment23_24.beginningChat"
-        android:label="fragment_beginning_chat"
-        tools:layout="@layout/fragment_beginning_chat" />
-    <fragment
         android:id="@+id/navigation_chat"
         android:name="com.example.softwaredevelopment23_24.Chat"
         android:label="fragment_chat"
@@ -52,4 +47,7 @@
     <action
         android:id="@+id/action_homeFragment_to_petFragment"
         app:destination="@id/navigation_pet"/>
+    <action
+        android:id="@+id/action_Fragment_to_settingsFragment"
+        app:destination="@id/navigation_settings"/>
 </navigation>

@@ -66,4 +66,8 @@
     <string name="ex_email">1234@example.com</string>
     <string name="edit_pet_name_info">edit pet name button</string>
     <string name="save_pet_name_info">save pet name button</string>
+    <string name="mood">CURRENT MOOD</string>
+    <string name="fantastic">Fantastic</string>
+    <string name="neutral">Neutral</string>
+    <string name="terrible">Terrible</string>
 </resources>

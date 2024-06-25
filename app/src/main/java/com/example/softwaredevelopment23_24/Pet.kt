@@ -24,6 +24,7 @@ import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import kotlin.properties.Delegates
 import android.os.Handler
+import androidx.navigation.fragment.findNavController
 
 // TODO: make UI updates cleaner when points are spent
 class Pet : Fragment() {
@@ -69,6 +70,11 @@ class Pet : Fragment() {
         (activity as MainActivity).getAvatar(reference, requireContext(), view) {
             binding.avatarPetImage.background = it
         }
+
+        binding.avatarPetImage.setOnClickListener{
+            findNavController().navigate(R.id.action_Fragment_to_settingsFragment)
+        }
+
         // saves changes to pet name
         binding.btnPetSaveName.setOnClickListener{
             val newName = binding.etPetName.text.toString()

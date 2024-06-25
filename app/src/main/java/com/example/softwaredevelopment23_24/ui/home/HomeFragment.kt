@@ -107,6 +107,10 @@ class HomeFragment : Fragment() {
                 binding.avatarHomeImage.background = it
             }
 
+            binding.avatarHomeImage.setOnClickListener{
+                findNavController().navigate(R.id.action_Fragment_to_settingsFragment)
+            }
+
         } catch (e: Exception) {
             Log.d("HomeFragment.kt", e.toString())
         }

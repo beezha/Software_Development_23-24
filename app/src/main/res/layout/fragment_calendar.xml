@@ -122,7 +122,7 @@
                 android:layout_gravity="top|center_horizontal"
                 android:background="@drawable/calendar_background"
                 android:elevation="5dp"
-                android:layout_marginBottom="37dp">
+                android:layout_marginBottom="15dp">
 
 
             <TextView
@@ -151,86 +151,6 @@
             android:textSize="20sp"
             android:layout_gravity="top|left"/>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/daysoftheWeek"-->
-<!--            android:layout_width="306dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:elevation="100dp"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:paddingTop="32dp">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="S"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="M"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="T"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="W"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="T"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="F"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="sans-serif-black"-->
-<!--                android:text="S"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp" />-->
-<!--        </LinearLayout>-->
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -253,6 +173,98 @@
         </LinearLayout>
 
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="336dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/task_title_background"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/moodtitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="100dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/mood"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:padding="15dp"
+                    android:layout_gravity="center|center_vertical"/>
+
+            </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="336dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:background="@drawable/task_background">
+
+            <ImageButton
+                android:id="@+id/fantasticBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="start"
+                android:background="@drawable/fun_image"
+                android:backgroundTint="@color/blue_mood"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <ImageButton
+                android:id="@+id/neutralBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/neutral_image"
+                android:backgroundTint="@color/mauve"
+                android:layout_marginTop="10dp" />
+
+            <ImageButton
+                android:id="@+id/terribleBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="end"
+                android:background="@drawable/bad_image"
+                android:backgroundTint="@color/maroon"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingStart="15dp"
+                android:paddingBottom="20dp"
+                android:text="@string/fantastic"
+                android:textColor="@color/blue_mood"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingBottom="20dp"
+                android:text="@string/neutral"
+                android:textColor="@color/mauve"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/terrible"
+                android:textColor="@color/maroon"
+                android:textSize="25sp" />
+
+        </FrameLayout>
 
             <FrameLayout
                 android:layout_width="336dp"

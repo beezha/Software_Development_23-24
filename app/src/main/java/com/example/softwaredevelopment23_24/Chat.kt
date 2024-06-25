@@ -12,6 +12,7 @@ import com.example.softwaredevelopment23_24.databinding.FragmentChatBinding
 import android.os.Handler
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -91,6 +92,10 @@ class Chat : Fragment() {
 
         (activity as MainActivity).getPetName(reference) { petName ->
             binding.botName.text = petName
+        }
+
+        binding.avatarChatImage.setOnClickListener{
+            findNavController().navigate(R.id.action_Fragment_to_settingsFragment)
         }
 
         binding.btnSend.setOnClickListener {
