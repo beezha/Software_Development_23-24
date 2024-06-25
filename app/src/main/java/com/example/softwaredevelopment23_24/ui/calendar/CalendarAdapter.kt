@@ -1,5 +1,6 @@
 package com.example.softwaredevelopment23_24.ui.calendar
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -8,7 +9,7 @@ import com.example.softwaredevelopment23_24.R
 import java.util.*
 import android.view.LayoutInflater
 
-class CalendarAdapter(private val mContext: Context, private val days: List<Date>, private val selectedDays: List<Int>) : BaseAdapter() {
+class CalendarAdapter(private val mContext: Context, private val days: List<Date>, private val selectedDays: List<Int>, private var highlights: MutableMap<Int, Int> = mutableMapOf()) : BaseAdapter() {
 
     override fun getCount(): Int {
         return days.size
@@ -35,11 +36,24 @@ class CalendarAdapter(private val mContext: Context, private val days: List<Date
         textView.text = dayOfMonth
 
         if (selectedDays.contains(position + 1)) {
-            textView.setTextColor(mContext.resources.getColor(R.color.yellow))
+            textView.setTextColor(mContext.resources.getColor(R.color.green))
         } else {
             textView.setTextColor(mContext.resources.getColor(android.R.color.white))
         }
 
+        highlights[dayOfMonth.toInt()]?.let { drawableRes ->
+            try {
+                convertView?.setBackgroundResource(drawableRes)
+            } catch (e: Resources.NotFoundException) {
+                // Handle the case where the resource is not found
+                e.printStackTrace()
+            }
+        }
+
         return convertView
+    }
+    fun setHighlightedDay(day: Int, drawable: Int) {
+        highlights[day] = drawable
+        notifyDataSetChanged()
     }
 }

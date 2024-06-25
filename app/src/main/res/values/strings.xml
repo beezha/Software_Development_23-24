@@ -51,7 +51,7 @@
     <string name="login">LOGIN</string>
     <string name="googleSign">Sign In With Google</string>
     <string name="password">Password</string>
-    <string name="register">Register Now</string>
+    <string name="register">REGISTER NOW</string>
     <string name="short_tasks">SHORT TASKS</string>
     <string name="confirm_task">CONFIRM TASK</string>
     <string name="are_you_sure_you_want_to_start_this_task">Are you sure you want to start this task?</string>
@@ -66,4 +66,12 @@
     <string name="ex_email">1234@example.com</string>
     <string name="edit_pet_name_info">edit pet name button</string>
     <string name="save_pet_name_info">save pet name button</string>
+    <string name="mood">CURRENT MOOD</string>
+    <string name="fantastic">Fantastic</string>
+    <string name="neutral">Neutral</string>
+    <string name="terrible">Terrible</string>
+    <string name="channel_pet_status_name">Pet Status Alerts</string>
+    <string name="channel_pet_status_description">Notifications when pet stats hit 0</string>
+    <string name="channel_daily_reminder_name">Daily Reminders</string>
+    <string name="channel_daily_reminder_description">Daily reminders for keeping your streak</string>
 </resources>

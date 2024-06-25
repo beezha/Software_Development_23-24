@@ -1,7 +1,17 @@
 package com.example.softwaredevelopment23_24
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +19,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.softwaredevelopment23_24.databinding.ActivityMainBinding
@@ -21,14 +35,20 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import java.util.Calendar
 
-const val thirstDivisor: Int = 2
-const val enjoymentDivisor: Int = 3
-const val hungerDivisor: Int = 5
+const val THIRST_DIVISOR: Int = 2
+const val ENJOYMENT_DIVISOR: Int = 3
+const val HUNGER_DIVISOR: Int = 5
+const val PET_STATUS_CHANNEL_ID = "PET_STATUS_CHANNEL"
+const val DAILY_REMINDER_CHANNEL_ID = "DAILY_REMINDER_CHANNEL"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var reference: DatabaseReference
     private lateinit var user: FirebaseAuth
+    private var petHunger: Int = 50
+    private var petThirst: Int = 50
+    private var petEnjoyment: Int = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +59,14 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment)
 
-        navView.setupWithNavController((navController))
 
+        navView.setupWithNavController(navController)
+
+        createNotificationChannels()
 
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    // Navigate to HomeFragment without adding to back stack
                     navController.popBackStack(R.id.navigation_home, false)
                     true
                 }
@@ -65,13 +86,11 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.navigation_settings)
                     true
                 }
-                // Add other cases if needed
                 else -> false
             }
         }
 
         user = FirebaseAuth.getInstance()
-
 
         if (user.currentUser != null) {
             val userID = user.currentUser!!.uid
@@ -81,13 +100,131 @@ class MainActivity : AppCompatActivity() {
                 resetStreak(reference, this)
                 navController.navigate(R.id.navigation_home)
             }
-            navController.navigate(R.id.navigation_home)
         } else {
             navController.navigate(R.id.navigation_login)
         }
+
+        generateStats(reference, this) { hunger, thirst, enjoyment, _ ->
+            petHunger = hunger
+            petThirst = thirst
+            petEnjoyment = enjoyment
+
+            getPetName(reference) { petName ->
+                val nameText = petName ?: "Your pet"
+
+
+                if (petHunger <= 0) {
+                    sendNotification(
+                        this,
+                        PET_STATUS_CHANNEL_ID,
+                        "Your pet needs attention!",
+                        "$nameText is hungry \uD83D\uDE16"
+                    )
+                }
+
+                if (petThirst <= 0) {
+                    sendNotification(
+                        this,
+                        PET_STATUS_CHANNEL_ID,
+                        "Time for pet care duties!",
+                        "$nameText is thirsty \uD83E\uDD75"
+                    )
+                }
+
+                if (petEnjoyment <= 0) {
+                    sendNotification(
+                        this,
+                        PET_STATUS_CHANNEL_ID,
+                        "Your pet misses you",
+                        "$nameText is bored \uD83D\uDE2A"
+                    )
+                }
+            }
+        }
+        val midnight = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.DAY_OF_YEAR, 1) // Next day
+        }.timeInMillis
+
+        val currentTime = System.currentTimeMillis()
+        val timeUntilMidnight = midnight - currentTime
+        val timeBeforeMidnight = timeUntilMidnight - (60 * 60 * 1000) // One hour before midnight
+
+        val reminderTime = currentTime + timeBeforeMidnight
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, reminderTime, pendingIntent)
+
+        sendNotification(this, DAILY_REMINDER_CHANNEL_ID, "It's almost midnight!", "Complete a task to continue your streak!")
     }
 
-    fun generateDatabase(reference: DatabaseReference, userID: String, username: String, email:String, context: Context, onComplete: () -> Unit) {
+    private fun createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channels = listOf(
+                NotificationChannel(
+                    PET_STATUS_CHANNEL_ID,
+                    getString(R.string.channel_pet_status_name),
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = getString(R.string.channel_pet_status_description)
+                },
+                NotificationChannel(
+                    DAILY_REMINDER_CHANNEL_ID,
+                    getString(R.string.channel_daily_reminder_name),
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = getString(R.string.channel_daily_reminder_description)
+                }
+            )
+
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            channels.forEach { channel ->
+                notificationManager.createNotificationChannel(channel)
+            }
+        }
+    }
+
+    private fun sendNotification(context: Context, channelId: String, title: String, message: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val soundUri = Uri.parse("android.resource://${context.packageName}/${R.raw.notification_sound}")
+
+        val builder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setSound(soundUri)
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // Request the missing permissions
+            ActivityCompat.requestPermissions(
+                context as Activity,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                1
+            )
+            return
+        }
+
+
+        with(NotificationManagerCompat.from(context)) {
+            notify(System.currentTimeMillis().toInt(), builder.build()) // Unique notification ID
+        }
+    }
+
+    fun generateDatabase(reference: DatabaseReference, userID: String, username: String, email: String, context: Context, onComplete: () -> Unit) {
         val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         val currentTime = System.currentTimeMillis()
@@ -163,13 +300,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
     }
 
     fun generateStats(
         reference: DatabaseReference,
         context: Context,
-        callback: (petHunger: Int, petThirst: Int, petEnjoyment: Int, userCoins: Int) -> Unit) {
+        callback: (petHunger: Int, petThirst: Int, petEnjoyment: Int, userCoins: Int) -> Unit
+    ) {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val petThirst = (snapshot.child("petThirst").getValue(Int::class.java) ?: 0)
@@ -187,7 +324,6 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         })
-        return
     }
 
     fun updateLoginTime(reference: DatabaseReference, context: Context) {
@@ -197,9 +333,9 @@ class MainActivity : AppCompatActivity() {
                 if (snapshot.exists() && snapshot.hasChild("loginTime")) {
                     val loginTime = snapshot.child("loginTime").getValue(Long::class.java)
                     val timeDifference = (currentTime - loginTime!!) / 60000
-                    val hungerDepreciation = timeDifference / hungerDivisor
-                    val thirstDepreciation = timeDifference / thirstDivisor
-                    val enjoymentDepreciation = timeDifference / enjoymentDivisor
+                    val hungerDepreciation = timeDifference / HUNGER_DIVISOR
+                    val thirstDepreciation = timeDifference / THIRST_DIVISOR
+                    val enjoymentDepreciation = timeDifference / ENJOYMENT_DIVISOR
 
                     val petHunger = (snapshot.child("petHunger").value as Long - hungerDepreciation).toInt()
                     val petThirst = (snapshot.child("petThirst").value as Long - thirstDepreciation).toInt()
@@ -213,14 +349,14 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     reference.updateChildren(timeData as Map<String, Any>)
-                        .addOnCompleteListener{
-                           if (!it.isSuccessful) {
-                               Toast.makeText(
-                                   context,
-                                   "Failed to update login time",
-                                   Toast.LENGTH_SHORT
-                               ).show()
-                           }
+                        .addOnCompleteListener {
+                            if (!it.isSuccessful) {
+                                Toast.makeText(
+                                    context,
+                                    "Failed to update login time",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                 } else {
                     Toast.makeText(
@@ -230,6 +366,7 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     context,
@@ -239,8 +376,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
     fun getPetName(reference: DatabaseReference, callback: (String?) -> Unit) {
-        reference.child("petName").addListenerForSingleValueEvent(object: ValueEventListener {
+        reference.child("petName").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val petName = snapshot.getValue(String::class.java)
                 callback(petName)
@@ -255,8 +393,8 @@ class MainActivity : AppCompatActivity() {
     fun getTaskPreferences(
         reference: DatabaseReference,
         context: Context,
-        callback: (taskPreferences: List<Any?>, taskCompleteList: List<Boolean>) -> Unit) {
-
+        callback: (taskPreferences: List<Any?>, taskCompleteList: List<Boolean>) -> Unit
+    ) {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val task1 = snapshot.child("task1").value
@@ -277,14 +415,12 @@ class MainActivity : AppCompatActivity() {
                 val taskStatus7 = snapshot.child("taskStatus7").getValue(Boolean::class.java) ?: false
                 val taskStatus8 = snapshot.child("taskStatus8").getValue(Boolean::class.java) ?: false
 
-                val taskPreferences = listOf(task1, task2, task3, task4,
-                    task5, task6, task7, task8)
-                val taskCompleteList = listOf(taskStatus1, taskStatus2,
-                    taskStatus3, taskStatus4, taskStatus5, taskStatus6,
-                    taskStatus7, taskStatus8)
+                val taskPreferences = listOf(task1, task2, task3, task4, task5, task6, task7, task8)
+                val taskCompleteList = listOf(taskStatus1, taskStatus2, taskStatus3, taskStatus4, taskStatus5, taskStatus6, taskStatus7, taskStatus8)
 
                 callback(taskPreferences, taskCompleteList)
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     context,
@@ -298,8 +434,8 @@ class MainActivity : AppCompatActivity() {
     fun getCoins(
         reference: DatabaseReference,
         context: Context,
-        callback: (coins: Int) -> Unit) {
-
+        callback: (coins: Int) -> Unit
+    ) {
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val coins = snapshot.child("coins").getValue<Int>()
@@ -322,30 +458,20 @@ class MainActivity : AppCompatActivity() {
         reference: DatabaseReference,
         context: Context,
         taskIndex: Int,
-        callback: (taskProgress: Int) -> Unit) {
-
+        callback: (taskProgress: Int) -> Unit
+    ) {
         var taskProgress: Int
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 taskProgress = when (taskIndex) {
-                    1 -> {
-                        snapshot.child("task1Progress").getValue<Int>()!!
-                    }
-
-                    2 -> {
-                        snapshot.child("task2Progress").getValue<Int>()!!
-                    }
-
-                    3 -> {
-                        snapshot.child("task3Progress").getValue<Int>()!!
-                    }
-
-                    else -> {
-                        0
-                    }
+                    1 -> snapshot.child("task1Progress").getValue<Int>()!!
+                    2 -> snapshot.child("task2Progress").getValue<Int>()!!
+                    3 -> snapshot.child("task3Progress").getValue<Int>()!!
+                    else -> 0
                 }
                 callback(taskProgress)
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     context,
@@ -362,7 +488,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val lastLoginDay = snapshot.child("loginDay").getValue<Long>()
                 val lastLoginTime = snapshot.child("loginTime").getValue<Long>()
-                if ( lastLoginTime == null || lastLoginDay == null || !isSameDay(lastLoginTime, lastLoginDay, currentDay)) {
+                if (lastLoginTime == null || lastLoginDay == null || !isSameDay(lastLoginTime, lastLoginDay, currentDay)) {
                     val newValues = hashMapOf(
                         "taskStatus1" to false,
                         "taskStatus2" to false,
@@ -383,6 +509,7 @@ class MainActivity : AppCompatActivity() {
                     onComplete.invoke()
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(
                     context,

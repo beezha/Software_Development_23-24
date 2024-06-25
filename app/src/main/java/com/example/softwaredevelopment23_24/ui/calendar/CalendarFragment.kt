@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -15,9 +16,10 @@ import androidx.fragment.app.Fragment
 import com.example.softwaredevelopment23_24.databinding.FragmentCalendarBinding
 import com.example.softwaredevelopment23_24.R
 import android.widget.GridView
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.example.softwaredevelopment23_24.MainActivity
 import com.example.softwaredevelopment23_24.TaskUpdate
 import com.example.softwaredevelopment23_24.task_Confirm
@@ -33,6 +35,8 @@ class CalendarFragment : Fragment() {
 
     private lateinit var binding: FragmentCalendarBinding
     private lateinit var reference: DatabaseReference
+    private lateinit var calendarAdapter: CalendarAdapter
+    private var highlights: Map<Int, Int> = emptyMap()
 
     private val tasks = listOf(
         listOf(
@@ -134,6 +138,11 @@ class CalendarFragment : Fragment() {
                         taskList.remove(task)
                         taskList.add(task)
                         if (it.isSuccessful) {
+                            val mediaPlayer = MediaPlayer.create(requireContext(), R.raw.coin_sound)
+                            mediaPlayer.start()
+                            mediaPlayer.setOnCompletionListener {
+                                mediaPlayer.release()
+                            }
                             refreshTasks(taskList)
                         } else {
                             Toast.makeText(
@@ -177,7 +186,6 @@ class CalendarFragment : Fragment() {
         val view = binding.root
         reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
 
-        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbar)
         val toolbarText = view.findViewById<TextView>(R.id.toolbarText)
         val startSize = resources.getDimensionPixelSize(R.dimen.start_size)
         val endSize = resources.getDimensionPixelSize(R.dimen.end_size)
@@ -192,14 +200,26 @@ class CalendarFragment : Fragment() {
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val percentage = abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
             textSizeAnimator.currentPlayTime = (percentage * textSizeAnimator.duration).toLong()
+
+            val green = ContextCompat.getColor(requireContext(), R.color.green)
+            val calendarToolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.calendarToolbar)
+
+            if (percentage > 0.65f) {
+                calendarToolbar.setBackgroundColor(green) // Change to desired color
+            } else {
+                calendarToolbar.setBackgroundColor(Color.TRANSPARENT) // Reset to transparent or another color
+                appBarLayout.setBackgroundColor(Color.TRANSPARENT) // Reset to transparent or another color
+            }
         })
 
         val calendarGridView = view.findViewById<GridView>(R.id.calendarGridView)
         val days = getDaysOfMonth()
 
-        getStreakDays { selectedDays ->
-            val adapter = CalendarAdapter(requireContext(), days, selectedDays)
-            calendarGridView.adapter = adapter
+        getStreakDays(highlights) { selectedDays ->
+            getHighlightsFromFirebase { highlights ->
+                calendarAdapter = CalendarAdapter(requireContext(), days, selectedDays, highlights)
+                calendarGridView.adapter = calendarAdapter
+            }
         }
         val currentMonth = getMonth()
         val currentYear = getYear()
@@ -208,6 +228,20 @@ class CalendarFragment : Fragment() {
 
         (activity as MainActivity).getAvatar(reference, requireContext(), views) {
             binding.avatarCalendarImage.background = it
+        }
+
+        binding.avatarCalendarImage.setOnClickListener{
+            findNavController().navigate(R.id.action_Fragment_to_settingsFragment)
+        }
+
+        binding.fantasticBtn.setOnClickListener {
+            highlightCurrentDay(R.drawable.fantastic_highlight)
+        }
+        binding.neutralBtn.setOnClickListener {
+            highlightCurrentDay(R.drawable.neutral_highlight)
+        }
+        binding.terribleBtn.setOnClickListener {
+            highlightCurrentDay(R.drawable.terrible_highlight)
         }
 
         binding.coinButton1.setOnClickListener {
@@ -239,6 +273,45 @@ class CalendarFragment : Fragment() {
             refreshTasks(selectedTasks)
         }
         return view
+    }
+
+    private fun saveHighlightToFirebase(day: Int, drawable: Int) {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userID = user.uid
+        val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+        val highlightsRef = reference.child("highlights")
+
+        highlightsRef.child(day.toString()).setValue(drawable)
+    }
+
+    private fun highlightCurrentDay(drawable: Int) {
+        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        calendarAdapter.setHighlightedDay(currentDay, drawable)
+        saveHighlightToFirebase(currentDay, drawable)
+    }
+
+    private fun getHighlightsFromFirebase(callback: (MutableMap<Int, Int>) -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userID = user!!.uid
+        val reference = FirebaseDatabase.getInstance().reference.child("users").child(userID)
+        val highlightsRef = reference.child("highlights")
+
+        highlightsRef.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val result = task.result
+                val highlights = mutableMapOf<Int, Int>()
+                result?.children?.forEach { snapshot ->
+                    val day = snapshot.key?.toIntOrNull()
+                    val drawable = snapshot.getValue(Int::class.java)
+                    if (day != null && drawable != null) {
+                        highlights[day] = drawable
+                    }
+                }
+                callback(highlights)
+            } else {
+                callback(mutableMapOf()) // Return an empty mutable map in case of failure
+            }
+        }
     }
 
     private fun getDaysOfMonth(): List<Date> {
@@ -383,20 +456,20 @@ class CalendarFragment : Fragment() {
             return yearFormat.format(calendar.time)
         }
 
-        private fun getStreakDays(callback: (MutableList<Int>) -> Unit) {
-            (activity as MainActivity).getStreak(
-                reference,
-                requireContext()
-            ) { streakData ->
-                val days: MutableList<Int> = mutableListOf()
-                for (i in streakData.indices) {
-                    if (streakData[i]) {
-                        days.add(i + 1)
-                    }
+    private fun getStreakDays(highlights: Map<Int, Int>, callback: (MutableList<Int>) -> Unit) {
+        (activity as MainActivity).getStreak(
+            reference,
+            requireContext()
+        ) { streakData ->
+            val days: MutableList<Int> = mutableListOf()
+            for (i in streakData.indices) {
+                if (streakData[i]) {
+                    days.add(i + 1)
                 }
-                callback(days)
             }
+            callback(days)
         }
+    }
 
 
     }

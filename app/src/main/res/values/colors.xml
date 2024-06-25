@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple">#59344F</color>
-    <color name="purple_unactivated">#A0844A</color>
-    <color name="yellow">#E0CA3C</color>
-    <color name="light_yellow">#F1E7A6</color>
+    <color name="teal">#344F5C</color>
+    <color name="teal_unactivated">#637E72</color>
+    <color name="green">#92AC86</color>
+    <color name="light_green">#C8CFBC</color>
     <color name="red">#FF3E41</color>
     <color name="blue">#7D84B2</color>
-    <color name="orange">#E57A44</color>
+    <color name="orange">#E15855</color>
     <color name="black">#FF000000</color>
-    <color name="white">#EEF0F2</color>
+    <color name="white">#FCEFEF</color>
     <color name="cold_gray">#81909F</color>
     <color name="light_cold_gray">#D7DCE1</color>
     <color name="warm_gray">#D0CECE</color>
     <color name="light_warm_gray">#BDC5CD</color>
     <color name="purple_gray">#786A75</color>
-    <color name="gold">#BF9000</color>
+    <color name="gold">#F0BB52</color>
+    <color name="blue_mood">#A3CEF1</color>
+    <color name="mauve">#946E83</color>
+    <color name="maroon">#5F1A37</color>
 </resources>
+
