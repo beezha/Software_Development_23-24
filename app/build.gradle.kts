@@ -59,4 +59,5 @@ dependencies {
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("com.google.firebase:firebase-bom:32.8.0")
 }

@@ -70,4 +70,8 @@
     <string name="fantastic">Fantastic</string>
     <string name="neutral">Neutral</string>
     <string name="terrible">Terrible</string>
+    <string name="channel_pet_status_name">Pet Status Alerts</string>
+    <string name="channel_pet_status_description">Notifications when pet stats hit 0</string>
+    <string name="channel_daily_reminder_name">Daily Reminders</string>
+    <string name="channel_daily_reminder_description">Daily reminders for keeping your streak</string>
 </resources>
