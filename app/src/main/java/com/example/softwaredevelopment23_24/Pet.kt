@@ -1,6 +1,8 @@
 package com.example.softwaredevelopment23_24
 
 import android.content.Context
+import android.media.MediaPlayer
+import android.media.SoundPool
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -21,6 +23,7 @@ import pl.droidsonroids.gif.AnimationListener
 import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import kotlin.properties.Delegates
+import android.os.Handler
 
 // TODO: make UI updates cleaner when points are spent
 class Pet : Fragment() {
@@ -30,6 +33,10 @@ class Pet : Fragment() {
     private lateinit var reference: DatabaseReference
     private lateinit var petwidgetImage: GifImageView
     private lateinit var originalGif: GifDrawable
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var sound: SoundPool
+    private var soundIDs = HashMap<String, Int>()
+    private var loaded = false
 
 
     override fun onCreateView(
@@ -42,6 +49,23 @@ class Pet : Fragment() {
         val userID = user.uid
         reference = database.reference.child("users").child(userID)
         loadUI() // initial load of the UI
+
+        mediaPlayer = MediaPlayer()
+
+        // Initialize the SoundPool
+        sound = SoundPool.Builder()
+            .setMaxStreams(1)
+            .build()
+
+        // Load all sound files into the SoundPool
+        soundIDs["sound1"] = sound.load(requireContext(), R.raw.eating_sound, 1)
+        soundIDs["sound2"] = sound.load(requireContext(), R.raw.drinking_sound, 1)
+        soundIDs["sound3"] = sound.load(requireContext(), R.raw.fun_sound, 1)
+
+        sound.setOnLoadCompleteListener { _, _, _ ->
+            loaded = true
+        }
+
         (activity as MainActivity).getAvatar(reference, requireContext(), view) {
             binding.avatarPetImage.background = it
         }
@@ -160,6 +184,13 @@ class Pet : Fragment() {
                             petwidgetImage.setImageDrawable(hungerGif)
                             hungerGif.start()
 
+                            Handler().postDelayed({
+                                mediaPlayer.start()
+                                if (loaded) {
+                                    sound.play(soundIDs["sound1"]!!, 1.0f, 1.0f, 1, 0, 1.0f)
+                                }
+                            }, 1000)
+
                             // Set an animation listener on the new GIF
                             hungerGif.addAnimationListener(object : AnimationListener {
                                 override fun onAnimationCompleted(loopNumber: Int) {
@@ -195,6 +226,13 @@ class Pet : Fragment() {
                             petwidgetImage.setImageDrawable(thirstGif)
                             thirstGif.start()
 
+                            Handler().postDelayed({
+                                mediaPlayer.start()
+                                if (loaded) {
+                                    sound.play(soundIDs["sound2"]!!, 1.0f, 1.0f, 1, 0, 1.0f)
+                                }
+                            }, 1000)
+
                             // Set an animation listener on the new GIF
                             thirstGif.addAnimationListener(object : AnimationListener {
                                 override fun onAnimationCompleted(loopNumber: Int) {
@@ -229,6 +267,11 @@ class Pet : Fragment() {
                             // Change the GIF to the new one
                             petwidgetImage.setImageDrawable(enjoymentGif)
                             enjoymentGif.start()
+
+                            mediaPlayer.start()
+                            if (loaded) {
+                                sound.play(soundIDs["sound3"]!!, 1.0f, 1.0f, 1, 0, 1.0f)
+                            }
 
                             // Set an animation listener on the new GIF
                             enjoymentGif.addAnimationListener(object : AnimationListener {

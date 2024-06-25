@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -134,6 +135,11 @@ class CalendarFragment : Fragment() {
                         taskList.remove(task)
                         taskList.add(task)
                         if (it.isSuccessful) {
+                            val mediaPlayer = MediaPlayer.create(requireContext(), R.raw.coin_sound)
+                            mediaPlayer.start()
+                            mediaPlayer.setOnCompletionListener {
+                                mediaPlayer.release()
+                            }
                             refreshTasks(taskList)
                         } else {
                             Toast.makeText(

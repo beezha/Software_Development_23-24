@@ -51,7 +51,7 @@
     <string name="login">LOGIN</string>
     <string name="googleSign">Sign In With Google</string>
     <string name="password">Password</string>
-    <string name="register">Register Now</string>
+    <string name="register">REGISTER NOW</string>
     <string name="short_tasks">SHORT TASKS</string>
     <string name="confirm_task">CONFIRM TASK</string>
     <string name="are_you_sure_you_want_to_start_this_task">Are you sure you want to start this task?</string>
